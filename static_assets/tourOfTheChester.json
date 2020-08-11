@@ -1,0 +1,198 @@
+{
+   "nav_icon": "chester_icon.png",
+   "firstPhotoId":"112379",
+   "firstPhotoRotation":150,
+   "soundEffects": {
+      "navButton": {
+         "onEnter": {
+            "uri": "switch-flip.wav",
+            "attributionUri": "https://www.freesound.org/people/ianstargem/sounds/278205/"
+         },
+         "onClick": {
+            "uri": "menu-click.wav",
+            "attributionUri": "https://www.freesound.org/people/fins/sounds/146721/"
+         }
+      },
+      "infoButton": {
+         "onEnter": {
+            "uri": "switch-flip.wav",
+            "attributionUri": "https://www.freesound.org/people/ianstargem/sounds/278205/"
+         }
+      }
+   },
+   "photos":{
+      "112362":{
+         "rotationOffset": -150,
+         "uri":"360mipo_5 - Panorama.jpg",
+         "tooltips":[
+            {
+               "text":"Sala 1",
+               "rotationY": -40,
+               "linkedPhotoId":"112379"
+            },
+            {
+               "type": "panelimage",
+               "rotationY": -9.929,
+               "width": 204,
+               "height": 276,
+               "text": "Escultura 1. Esto es una prueba.",
+               "attribution": "Universidad de Cuenca.",
+               "source":"Escultura 1.jpg"
+            }
+         ]
+      },
+      "112379":{
+         "rotationOffset": -120,
+         "uri":"360mipo_6 - Panorama.jpg",
+         "tooltips":[
+            {
+               "text":"Sala 2",
+               "rotationY": -40,
+               "linkedPhotoId":"112362"
+            },
+            {
+               "text":"Sala 3",
+               "rotationY": 40,
+               "linkedPhotoId":"112355"
+            },
+            {
+               "type": "panelimage",
+               "rotationY": -107,
+               "width": 300,
+               "height": 300,
+               "source": "Escultura 2.jpg",
+               "text": "Escultura 2. Esto es una prueba.",
+               "attribution": "Universidad de Cuenca."
+            },
+            {
+               "type": "panelimage",
+               "source":"Escultura 5.jpg",
+               "text": "Escultura 5. Esto es una prueba.",
+               "attribution": "Universidad de Cuenca.",
+               "rotationY": 4,
+               "width": 300,
+               "height": 300
+            },
+            {
+               "type": "panelimage",
+               "title": "Escultura 3",
+               "source":"Escultura 3.jpg",
+               "text": "Escultura 3. Esto es una prueba.",
+               "attribution": "Universidad de Cuenca.",
+               "rotationY": -20,
+               "width": 300,
+               "height": 300
+            }
+         ]
+      },
+      "112355":{
+         "rotationOffset": -30,
+         "uri":"360mipo_7 - Panorama.jpg",
+         "tooltips":[
+            {
+               "text":"Sala 1",
+               "rotationY": 290,
+               "linkedPhotoId":"112379"
+            },
+            {
+               "type": "panelimage",
+               "rotationY": -45,
+               "width": 300,
+               "height": 300,
+               "source":"Escultura 4.jpg",
+               "text": "Escultura 4. Esto es una prueba.",
+               "attribution": "Universidad de Cuenca."
+            }
+         ]
+      },
+      "112392":{
+         "rotationOffset": 80,
+         "uri":"the-chester--v112392.prefilter.jpg",
+         "tooltips":[
+            {
+               "text":"The Snug",
+               "rotationY": -11.33789063,
+               "linkedPhotoId":"112371"
+            },
+            {
+               "text":"Biergarten",
+               "rotationY": -112.2363281,
+               "linkedPhotoId":"112351"
+            }
+         ]
+      },
+      "112399":{
+         "rotationOffset": 90,
+         "uri":"the-chester--v112399.prefilter.jpg",
+         "tooltips":[
+            {
+               "text":"Restaurant",
+               "rotationY": -115,
+               "linkedPhotoId":"112362"
+            },
+            {
+               "type": "video",
+               "rotationY": 80,
+               "width": 512,
+               "height": 248,
+               "source":"Three-Cocktails.webm",
+               "muted":true
+            },
+            {
+               "type": "image",
+               "rotationY": -53,
+               "width": 204,
+               "height": 276,
+               "source":"chalkboard-menu.jpg",
+               "attribution": "Photo by currystrumpet on flickr",
+               "attributionUri": "https://www.flickr.com/photos/currystrumpet/7895715748"
+            }
+         ]
+      },
+      "112371":{
+         "rotationOffset": -20,
+         "uri":"the-chester--v112371.prefilter.jpg",
+         "tooltips":[
+            {
+               "text":"Biergarten",
+               "rotationY": -92.02148438,
+               "linkedPhotoId":"112392"
+            },
+            {
+               "type": "textblock",
+               "text": "Cosy athmosphere with fine leather seats. Relax with friends and select from a wide range of German beers. The late-night bites menu includes pretzels, hot wings, and sliders.",
+               "rotationY": 100.42,
+               "width": 200,
+               "height": 200
+            }
+         ]
+      },
+      "112393":{
+         "rotationOffset": 140,
+         "uri":"the-chester--v112393.prefilter.jpg",
+         "tooltips":[
+            {
+               "text":"Biergarten",
+               "rotationY": 29.348,
+               "linkedPhotoId":"112355"
+            }
+         ]
+      },
+      "112351":{
+         "rotationOffset": -80,
+         "uri":"the-chester--v112351.prefilter.jpg",
+         "tooltips":[
+            {
+               "text":"Biergarten",
+               "rotationY": -102.793,
+               "linkedPhotoId":"112392"
+            },
+            {
+               "text":"Biergarten",
+               "rotationY": 63.843,
+               "linkedPhotoId":"112355"
+            }
+         ]
+      }
+   }
+}
