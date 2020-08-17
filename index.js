@@ -136,7 +136,7 @@ class TourAppTemplate extends React.Component {
                 <TourInfoButton
                   onEnterSound={asset(soundEffects.navButton.onEnter.uri)}
                   showOnLeft={showOnLeft}
-                  source={asset('info_icon.png')}
+                  source={asset(data.info_icon)}
                   tooltip={tooltip}
                 />
               </Hotspot>

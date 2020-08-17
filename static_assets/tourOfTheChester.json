@@ -1,5 +1,6 @@
 {
    "nav_icon": "chester_icon.png",
+   "info_icon": "info_icon.png", 
    "firstPhotoId":"112379",
    "firstPhotoRotation":150,
    "soundEffects": {
@@ -18,6 +19,12 @@
             "uri": "switch-flip.wav",
             "attributionUri": "https://www.freesound.org/people/ianstargem/sounds/278205/"
          }
+      },
+      "ambient": {
+         "uri": "cafe.wav",
+         "attributionUri": "https://www.freesound.org/people/PapercutterJohn/sounds/322031/",
+         "loop": true,
+         "volume": 0.01
       }
    },
    "photos":{
