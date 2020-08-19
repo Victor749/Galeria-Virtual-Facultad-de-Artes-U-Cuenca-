@@ -20,12 +20,12 @@ class TourHotspot extends React.Component {
   };
 
   render() {
-    const {width, height, children, rotationY} = this.props;
+    const {width, height, children, rotationY, rotationX} = this.props;
     return (
      <WorkInProgressSurface
         surfaceWidth={width}
         surfaceHeight={height}
-        style={{transform: [{rotateY: `${rotationY}deg`}, {translate: [0, 0, -TOUR_HOTSPOT_DISTANCE]}]}}>
+        style={{transform: [{rotateY: `${rotationY}deg`}, {rotateX: `${rotationX}deg`}, {translate: [0, 0, -TOUR_HOTSPOT_DISTANCE]}]}}>
         <View style={[styles.hotspot, {width: width, height: height}]}>
           {children}
         </View>
