@@ -67,6 +67,9 @@ class TourAppTemplate extends React.Component {
       return null;
     }
 
+    
+    
+
     const {useDynamicSurface, mainSurfaceWidth, mainSurfaceHeight} = this.props;
     const {locationId, nextLocationId, data} = this.state;
     const photoData = (locationId && data.photos[locationId]) || null;
@@ -132,14 +135,19 @@ class TourAppTemplate extends React.Component {
                 key={index}
                 useDynamicSurface={useDynamicSurface}
                 mainSurfaceWidth={mainSurfaceWidth}
-                rotationY={rotationY}>
+                rotationY={rotationY}
+                width={800}
+                height={600}>
                 <TourInfoButton
                   onEnterSound={asset(soundEffects.navButton.onEnter.uri)}
                   showOnLeft={showOnLeft}
                   source={asset(data.info_icon)}
                   tooltip={tooltip}
+                  parentWidth={800}
+                  parentHeight={600}
                 />
               </Hotspot>
+              
             );
           }
           return (
@@ -149,7 +157,9 @@ class TourAppTemplate extends React.Component {
               key={tooltip.linkedPhotoId}
               useDynamicSurface={useDynamicSurface}
               mainSurfaceWidth={mainSurfaceWidth}
-              rotationY={rotationY}>
+              rotationY={rotationY}
+              >
+              
               <TourNavButton
                 isLoading={isLoading}
                 onClickSound={asset(soundEffects.navButton.onClick.uri)}

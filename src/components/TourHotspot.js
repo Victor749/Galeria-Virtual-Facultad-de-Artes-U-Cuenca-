@@ -15,12 +15,14 @@ const TOUR_HOTSPOT_DISTANCE = 4;
  */
 class TourHotspot extends React.Component {
   static defaultProps = {
-    width: 1200,
+    width: 2400,
     height: 600,
   };
 
   render() {
     const {width, height, children, rotationY} = this.props;
+    console.log(width);
+    console.log(height);
     return (
      <WorkInProgressSurface
         surfaceWidth={width}

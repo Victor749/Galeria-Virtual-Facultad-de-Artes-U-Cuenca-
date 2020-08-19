@@ -12,6 +12,7 @@
 
 import React from 'React';
 import ReactNative from 'ReactNative';
+import {asset, Text, Image, View, StyleSheet} from 'react-360';
 import requireNativeComponent from 'requireNativeComponent';
 
 import type {ViewProps} from 'ViewPropTypes';
@@ -40,7 +41,7 @@ export type Props = ViewProps & {
 export default class WorkInProgressSurface extends ReactNative.NativeComponent<Props> {
   render() {
     const {style, ...props} = this.props;
-    return <RKSurface {...props} style={[style, {position: 'absolute'}]} />;
+    return <RKSurface {...props} style={[style, {position: 'relative'}]} />;
   }
 }
 

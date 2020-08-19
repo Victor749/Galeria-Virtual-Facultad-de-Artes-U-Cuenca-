@@ -4,7 +4,7 @@
 'use strict';
 
 import React from 'react';
-import {Animated, Image, View, VrButton} from 'react-360';
+import {Animated, Image, View, VrButton, StyleSheet, Text} from 'react-360';
 import TourTooltip from 'TourTooltip.react';
 
 /**
@@ -15,9 +15,9 @@ class TourInfoButton extends React.Component {
   static defaultProps = {
     fadeIn: 500,
     fadeOut: 500,
-    height: 60,
+    height: 40,
     onInput: null,
-    width: 60,
+    width: 40,
     showOnLeft: false,
   };
 
@@ -57,7 +57,10 @@ class TourInfoButton extends React.Component {
       source,
       showOnLeft,
       tooltip,
+      parentWidth,
+      parentHeight,
     } = this.props;
+
     return (
       <VrButton
         ignoreLongClick={true}
@@ -67,10 +70,11 @@ class TourInfoButton extends React.Component {
         onEnterSound={onEnterSound}
         onExitSound={onExitSound}
         onLongClickSound={onLongClickSound}>
+
         <Image
           style={{
-            height: height,
-            width: width,
+            height: width,
+            width: height,
             flexDirection: 'row',
             alignItems: 'center',
           }}
@@ -88,11 +92,12 @@ class TourInfoButton extends React.Component {
                 opacity: this.state.opacityAnim,
                 position: 'absolute',
               },
-              showOnLeft ? {right: 80} : {left: 80},
+              showOnLeft ? {right: -parentWidth/2} : {left: -parentWidth/2},
             ]}
             onEnter={this.state.hasFocus ? this._fadeIn : undefined}>
-            <TourTooltip tooltip={tooltip} visible={this.state.hasFocus} />
+            <TourTooltip parentWidth={parentWidth} parentHeight={parentHeight} tooltip={tooltip} visible={this.state.hasFocus} />
           </Animated.View>
+
         </Image>
       </VrButton>
     );
