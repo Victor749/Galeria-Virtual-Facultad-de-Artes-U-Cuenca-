@@ -40,7 +40,7 @@ class TourAppTemplate extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/api/json')
+    fetch('http://localhost:3000/museo/api/json')
       .then(response => response.json())
       .then(responseData => {
         this.init(responseData);
