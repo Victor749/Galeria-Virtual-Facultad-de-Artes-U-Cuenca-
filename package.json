@@ -10,11 +10,17 @@
     "test": "jest"
   },
   "dependencies": {
-    "react": "16.3.2",
-    "react-native": "~0.55.4",
-    "three": "^0.87.0",
+    "js-cookie": "^2.2.1",
+    "react": "^16.3.2",
     "react-360": "~1.1.0",
-    "react-360-web": "~1.1.0"
+    "react-360-web": "~1.1.0",
+    "react-cookie": "^1.0.5",
+    "react-dom": "^16.13.1",
+    "react-native": "~0.55.4",
+    "react-native-cookies": "^3.3.0",
+    "react-script-tag": "^1.1.2",
+    "three": "^0.87.0",
+    "universal-cookie": "^4.0.3"
   },
   "devDependencies": {
     "babel-jest": "^19.0.0",

@@ -14,6 +14,58 @@ import TourInfoButton from 'TourInfoButton.react';
 import TourLoadingSpinner from 'TourLoadingSpinner.react';
 import TourHotspot from 'TourHotspot.react';
 import TourCylinderHotspot from 'TourCylinderHotspot.react';
+import ScriptTag from 'react-script-tag';
+import {setCurrent} from './prueba';
+//import cookie from 'react-cookie';
+//import Cookies from 'universal-cookie';
+import { CookiesProvider } from 'react-cookie';
+//import client from './client.js';
+//import Cookies from 'js-cookie';
+//const { useContext, createContext } = React;
+//import ReactDOM from 'react-dom';
+//import menu from 'menu';
+//import {withCookies} from 'react-cookie';
+
+//const cookies = new Cookies();
+
+function setData(actual, f){
+  console.log(actual);
+  setCurrent(actual);
+  //valor = actual;
+  //setCurrent(actual);
+  //const cookies = new Cookies();
+  //cookies = cookie.getCookies();
+  //cookies.set('actual', actual, { path: '/' });
+  //console.log(cookies.get('actual'));
+ // console.log(window);
+  //mensaje();
+  //window.value = actual;
+ /* window.postMessage('hey');
+  window.value = actual;
+  console.log(window);
+  console.log(window.path);
+  //console.log(window);
+  
+  //console.log(window.getValue());
+  //const cookies = new Cookies();
+  //cookies.set('myCat', 'Pacman', { path: '/' });
+  //console.log(cookies.get('myCat')); // Pacman
+  //console.log(f.refs.posActual);
+  //ReactDOM.findDOMNode(f.refs.posActual).value = actual;
+  //console.log(ReactDOM.findDOMNode(f.refs));
+  //.value = value;
+  /*const cookies = new Cookies();
+  cookies.set('myCat', actual+"", { path: '/' });
+  console.log(cookies.get('myCat'));*/
+  /*
+  if(cookies.get('myCat') === undefined){
+    
+  }*/
+  
+  //document.getElementById('posActual').value = actual;
+  
+  
+}
 
 const Hotspot = (props) => {
   const {useDynamicSurface, mainSurfaceWidth, ...otherProps} = props;
@@ -26,6 +78,7 @@ const Hotspot = (props) => {
 
 const AudioModule = NativeModules.AudioModule;
 const ENV_TRANSITION_TIME = 1000;
+
 
 class TourAppTemplate extends React.Component {
   static defaultProps = {
@@ -42,13 +95,22 @@ class TourAppTemplate extends React.Component {
     };
   }
 
+  
+
   componentDidMount() {
     fetch(asset(this.props.tourSource).uri)
       .then(response => response.json())
       .then(responseData => {
         this.init(responseData);
+        //const script = document.createElement("script");
+        //script.src = "./menu.js";
+        //script.async = true;
+        //document.body.appendChild(script);
+        setData(responseData.firstPhotoId, this);
+
       })
       .done();
+    
   }
 
   init(tourConfig) {
@@ -60,6 +122,7 @@ class TourAppTemplate extends React.Component {
       rotation: tourConfig.firstPhotoRotation +
         (tourConfig.photos[tourConfig.firstPhotoId].rotationOffset || 0),
     });
+    
   }
 
   render() {
@@ -102,14 +165,21 @@ class TourAppTemplate extends React.Component {
         });
       this._loadingTimeout = setTimeout(() => {
         this._loadingTimeout = null;
+        //value = locationId;
+        //console.log('hey', value);
+        //document.getElementById("posActual").val(nextLocationId);
+       // console.log(ReactDOM.findDOMNode(this.refs.posActual));
+       setData(nextLocationId, this);
         this.setState({
           // Now that ths new photo is loaded, update the locationId.
           locationId: nextLocationId,
         });
       }, ENV_TRANSITION_TIME);
     }
-
+    
     return (
+      
+    
     <View style={{
       width: mainSurfaceWidth,
       height: mainSurfaceHeight,
@@ -140,6 +210,7 @@ class TourAppTemplate extends React.Component {
                   tooltip={tooltip}
                 />
               </Hotspot>
+              
             );
           }
           return (
@@ -169,7 +240,10 @@ class TourAppTemplate extends React.Component {
             </Hotspot>
           );
         })}
+        
+      
       </View>
+      
     );
   }
 }
@@ -184,4 +258,8 @@ const styles = StyleSheet.create({
 
 // register the root component
 // this will be used from client.js by r360.createRoot('TourAppTemplate' ...)
+//console.log(value);
+
+
 AppRegistry.registerComponent('TourAppTemplate', () => TourAppTemplate);
+

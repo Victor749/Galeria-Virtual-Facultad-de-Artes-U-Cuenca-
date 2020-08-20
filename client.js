@@ -4,6 +4,12 @@
 import {ReactInstance, Surface} from 'react-360-web';
 import RCTWorkInProgressSurface from './RCTWorkInProgressSurface'
 
+//import Cookies from 'universal-cookie';
+
+//const cookies = new Cookies();
+
+window.f1 = function (data) { console.log(data) };
+
 function init(bundle, parent, options = {}) {
 
   // initialise instant game
@@ -14,6 +20,8 @@ function init(bundle, parent, options = {}) {
       FBInstant.startGameAsync();
     });
   }
+
+  
 
   const useDynamicSurface = options.useDynamicSurface;
   let mainSurfaceWidth;
@@ -57,7 +65,12 @@ function init(bundle, parent, options = {}) {
       mainSurfaceHeight: mainSurfaceHeight,
     }),
     mainSurface, //r360.getDefaultSurface()
+
   );
+ 
 }
 
+
 window.React360 = {init};
+//cookies.set('actual', 5, { path: '/' });
+//console.log(cookies.get('actual'));
