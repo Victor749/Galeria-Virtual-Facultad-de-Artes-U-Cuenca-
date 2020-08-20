@@ -5,7 +5,12 @@ var test;
 
 
 export function setCurrent(actual) {
+  //var myWorker = new Worker("http://localhost:8081/index.html");
   test = actual;
+  postMessage(test);
+  
+  //postMessage(actual+'');
+ // self.postMessage(actual);
   //const setCookie = useCookies(['actual']);
   //setCookie('actual', actual, { path: '/' });
   

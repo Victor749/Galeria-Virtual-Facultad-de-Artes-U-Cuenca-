@@ -15,31 +15,38 @@
   </head>
   <body>
     <!-- Attachment point for your app -->
-    <div id="pos"></div>
+    
     <div id="container" style="background-color: black;">
       <ul class="nav nav-pills ">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" ><img src="static_assets/menuB.png" height=25 width=25></a>
+        
+        <li class="nav-item dropdown" >
+          <a class="nav-link dropdown-toggle" style="padding-right: 0px;" data-toggle="dropdown" href="#" role="button" ><img src="./static_assets/menuB.png" height=25 width=25></a>
         <div class="dropdown-menu" style="">
-          <h6><a class="dropdown-item" href="#" onclick="salas()">Salas</a></h6>
+          <h6><a class="dropdown-item" href="#" onclick="showData('#sala')">Salas</a></h6>
             <div id="sala" class="pl-3">
               
             </div>
-            <h6><a class="dropdown-item" href="#" onclick="tema()">Tema Curatorial</a></h6>
+            <h6><a class="dropdown-item" href="#" onclick="showData('#temaC')">Tema Curatorial</a></h6>
             <div id="temaC" class="pl-3">
               
             </div>
-            <h6><a class="dropdown-item" href="#" onclick="expositores()">Expositores</a></h6>
+            <h6><a class="dropdown-item" href="#" onclick="showData('#expositores')">Expositores</a></h6>
             <div id="expositores" class="pl-3">
               
             </div>
-            <h6><a class="dropdown-item" href="#" onclick="curadores()">Curadores</a></h6>
+            <h6><a class="dropdown-item" href="#" onclick="showData('#curadores')">Curadores</a></h6>
             <div id="curadores" class="pl-3">
               
             </div>
           </div>
         </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" style="padding-left: 0px;" role="button" id="btnSonido" estado="inactivo"><img id="imgSonido" src="./static_assets/inactiveA.png" height=25 width=25/></a>
+        </li>
       </ul>
+      
+      
+      
     </div>
     <script src="./client.bundle?platform=vr"></script>
     <script src="https://connect.facebook.net/en_US/fbinstant.6.2.js"></script>
@@ -49,7 +56,7 @@
         'index.bundle?platform=vr&dev=true',
         document.getElementById('container'),
         {
-          bridgeFile: 'NonBlobBridge.js',
+          //bridgeFile: 'NonBlobBridge.js',
           assetRoot: 'static_assets/',
           useDynamicSurface: true,
         }

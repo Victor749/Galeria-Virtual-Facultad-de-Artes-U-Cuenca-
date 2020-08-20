@@ -3,12 +3,12 @@
 
 import {ReactInstance, Surface} from 'react-360-web';
 import RCTWorkInProgressSurface from './RCTWorkInProgressSurface'
-
+import BrowserInfoModule from './BrowserInfoModule';
 //import Cookies from 'universal-cookie';
 
 //const cookies = new Cookies();
 
-window.f1 = function (data) { console.log(data) };
+
 
 function init(bundle, parent, options = {}) {
 
@@ -51,6 +51,9 @@ function init(bundle, parent, options = {}) {
         view: RCTWorkInProgressSurface,
       },
     ],
+    nativeModules: [
+      ctx => new BrowserInfoModule(ctx),
+    ],
     ...options,
   });
 
@@ -63,6 +66,7 @@ function init(bundle, parent, options = {}) {
       useDynamicSurface: useDynamicSurface,
       mainSurfaceWidth: mainSurfaceWidth,
       mainSurfaceHeight: mainSurfaceHeight,
+      estado: 'inactivo',
     }),
     mainSurface, //r360.getDefaultSurface()
 

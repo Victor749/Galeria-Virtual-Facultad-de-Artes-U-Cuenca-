@@ -28,43 +28,28 @@ import { CookiesProvider } from 'react-cookie';
 
 //const cookies = new Cookies();
 
-function setData(actual, f){
-  console.log(actual);
-  setCurrent(actual);
-  //valor = actual;
-  //setCurrent(actual);
-  //const cookies = new Cookies();
-  //cookies = cookie.getCookies();
-  //cookies.set('actual', actual, { path: '/' });
-  //console.log(cookies.get('actual'));
- // console.log(window);
-  //mensaje();
-  //window.value = actual;
- /* window.postMessage('hey');
-  window.value = actual;
-  console.log(window);
-  console.log(window.path);
-  //console.log(window);
+const BrowserInfo = NativeModules.BrowserInfo;
+const AudioModule = NativeModules.AudioModule;
+
+
+function setData(actual, ambient){
   
-  //console.log(window.getValue());
-  //const cookies = new Cookies();
-  //cookies.set('myCat', 'Pacman', { path: '/' });
-  //console.log(cookies.get('myCat')); // Pacman
-  //console.log(f.refs.posActual);
-  //ReactDOM.findDOMNode(f.refs.posActual).value = actual;
-  //console.log(ReactDOM.findDOMNode(f.refs));
-  //.value = value;
-  /*const cookies = new Cookies();
-  cookies.set('myCat', actual+"", { path: '/' });
-  console.log(cookies.get('myCat'));*/
-  /*
-  if(cookies.get('myCat') === undefined){
-    
-  }*/
-  
-  //document.getElementById('posActual').value = actual;
-  
-  
+  BrowserInfo.setLocationId(actual);
+  estado = BrowserInfo.getEstadoActual();
+  console.log(estado);
+  //play(estado, ambient);
+}
+
+function play(estado, ambient){
+  console.log(estado, ambient);
+  if (estado == 'activo') {
+      AudioModule.playEnvironmental({
+        source: asset(ambient.uri),
+        volume: ambient.volume,
+      });
+    } else {
+      AudioModule.stopEnvironmental();
+    }
 }
 
 const Hotspot = (props) => {
@@ -76,7 +61,7 @@ const Hotspot = (props) => {
   }
 };
 
-const AudioModule = NativeModules.AudioModule;
+
 const ENV_TRANSITION_TIME = 1000;
 
 
@@ -92,6 +77,7 @@ class TourAppTemplate extends React.Component {
       locationId: null,
       nextLocationId: null,
       rotation: null,
+      //estado: props.estado,
     };
   }
 
@@ -106,7 +92,7 @@ class TourAppTemplate extends React.Component {
         //script.src = "./menu.js";
         //script.async = true;
         //document.body.appendChild(script);
-        setData(responseData.firstPhotoId, this);
+        setData(responseData.firstPhotoId, responseData.soundEffects.ambient);
 
       })
       .done();
@@ -139,17 +125,7 @@ class TourAppTemplate extends React.Component {
     const isLoading = nextLocationId !== locationId;
     const soundEffects = data.soundEffects;
     const ambient = data.soundEffects.ambient;
-
-    if (ambient) {
-      // play an environmental audio
-      AudioModule.playEnvironmental({
-        source: asset(ambient.uri),
-        volume: ambient.volume,
-      });
-    } else {
-      AudioModule.stopEnvironmental();
-    }
-
+    
     if (nextLocationId !== locationId && this._loadingTimeout == null) {
       const nextPhotoData = (nextLocationId && data.photos[nextLocationId]) || null;
       const nextRotation =
@@ -169,7 +145,7 @@ class TourAppTemplate extends React.Component {
         //console.log('hey', value);
         //document.getElementById("posActual").val(nextLocationId);
        // console.log(ReactDOM.findDOMNode(this.refs.posActual));
-       setData(nextLocationId, this);
+       setData(nextLocationId, ambient);
         this.setState({
           // Now that ths new photo is loaded, update the locationId.
           locationId: nextLocationId,
