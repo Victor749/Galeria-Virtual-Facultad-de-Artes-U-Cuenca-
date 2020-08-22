@@ -28,15 +28,45 @@ import { CookiesProvider } from 'react-cookie';
 
 //const cookies = new Cookies();
 
+
+//import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
+
+
+
 const BrowserInfo = NativeModules.BrowserInfo;
 const AudioModule = NativeModules.AudioModule;
 
+import BatchedBridge from 'react-native/Libraries/BatchedBridge/BatchedBridge';
+import lodash from 'lodash';
+
+class BrowserBridge {
+  constructor() {
+      this._subscribers = {};
+  }
+
+  subscribe(handler) {
+      const key = String(Math.random());
+      this._subscribers[key] = handler;
+      return () => {
+          delete this._subscribers[key];
+      };
+  }
+
+  notifyEvent(idSala) {
+      lodash.forEach(this._subscribers, handler => {
+          handler(idSala);
+      });
+  }
+}
+
+const browserBridge = new BrowserBridge();
+BatchedBridge.registerCallableModule(BrowserBridge.name, browserBridge);
 
 function setData(actual, ambient){
   
   BrowserInfo.setLocationId(actual);
-  estado = BrowserInfo.getEstadoActual();
-  console.log(estado);
+  //estado = BrowserInfo.getEstadoActual();
+  //console.log(actual);
   //play(estado, ambient);
 }
 
@@ -79,6 +109,10 @@ class TourAppTemplate extends React.Component {
       rotation: null,
       //estado: props.estado,
     };
+    this.onBrowserEvent = this.onBrowserEvent.bind(this);
+    /*RCTDeviceEventEmitter.addListener('cambioSala', (arg1) => {
+      console.log(arg1);
+    });*/
   }
 
   
@@ -96,7 +130,23 @@ class TourAppTemplate extends React.Component {
 
       })
       .done();
-    
+      this.unsubscribe = browserBridge.subscribe(this.onBrowserEvent);
+  }
+
+  onBrowserEvent(idSala) {
+    // Do action on event here
+   // console.log(idSala, 'boom ya ');
+    this.setState({
+      nextLocationId: idSala,
+    });
+    this.render();
+  }
+
+  componentWillUnmount() {
+      if (this.unsubscribe) {
+          this.unsubscribe();
+          delete this.unsubscribe;
+      }
   }
 
   init(tourConfig) {
@@ -110,6 +160,8 @@ class TourAppTemplate extends React.Component {
     });
     
   }
+
+  
 
   render() {
     if (!this.state.data) {
@@ -152,6 +204,8 @@ class TourAppTemplate extends React.Component {
         });
       }, ENV_TRANSITION_TIME);
     }
+
+
     
     return (
       
@@ -164,6 +218,7 @@ class TourAppTemplate extends React.Component {
     }}>
       {tooltips &&
         tooltips.map((tooltip, index) => {
+          tooltipActual = tooltip;
           let rotationY = tooltip.rotationY + rotation;
           rotationY = (rotationY + 360) % 360; 
           const showOnLeft = !useDynamicSurface && rotationY > 180 && rotationY < 210;
@@ -202,11 +257,8 @@ class TourAppTemplate extends React.Component {
                 onClickSound={asset(soundEffects.navButton.onClick.uri)}
                 onEnterSound={asset(soundEffects.navButton.onEnter.uri)}
                 onInput={() => {
-                  // Update nextLocationId, not locationId, so tooltips match
-                  // the currently visible pano; pano will update locationId
-                  // after loading the new image.
                   this.setState({
-                    nextLocationId: tooltip.linkedPhotoId,
+                  nextLocationId: tooltip.linkedPhotoId,
                   });
                 }}
                 showOnLeft={showOnLeft}
