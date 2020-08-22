@@ -52,9 +52,9 @@ class BrowserBridge {
       };
   }
 
-  notifyEvent(idSala) {
+  notifyEvent(accion, dato1) {
       lodash.forEach(this._subscribers, handler => {
-          handler(idSala);
+          handler(accion, dato1);
       });
   }
 }
@@ -62,17 +62,10 @@ class BrowserBridge {
 const browserBridge = new BrowserBridge();
 BatchedBridge.registerCallableModule(BrowserBridge.name, browserBridge);
 
-function setData(actual, ambient){
-  
-  BrowserInfo.setLocationId(actual);
-  //estado = BrowserInfo.getEstadoActual();
-  //console.log(actual);
-  //play(estado, ambient);
-}
 
 function play(estado, ambient){
   console.log(estado, ambient);
-  if (estado == 'activo') {
+  if (estado == 'activo' && ambient) {
       AudioModule.playEnvironmental({
         source: asset(ambient.uri),
         volume: ambient.volume,
@@ -107,7 +100,7 @@ class TourAppTemplate extends React.Component {
       locationId: null,
       nextLocationId: null,
       rotation: null,
-      //estado: props.estado,
+      estado: null,
     };
     this.onBrowserEvent = this.onBrowserEvent.bind(this);
     /*RCTDeviceEventEmitter.addListener('cambioSala', (arg1) => {
@@ -126,20 +119,32 @@ class TourAppTemplate extends React.Component {
         //script.src = "./menu.js";
         //script.async = true;
         //document.body.appendChild(script);
-        setData(responseData.firstPhotoId, responseData.soundEffects.ambient);
-
+        BrowserInfo.setLocationId(responseData.firstPhotoId);
       })
       .done();
       this.unsubscribe = browserBridge.subscribe(this.onBrowserEvent);
   }
 
-  onBrowserEvent(idSala) {
+  onBrowserEvent(info, dato1) {
     // Do action on event here
    // console.log(idSala, 'boom ya ');
-    this.setState({
-      nextLocationId: idSala,
-    });
-    this.render();
+  accion = info.split(';')[0];
+   switch (accion) {
+    case 'cambioSala':
+      this.setState({
+        nextLocationId: dato1,
+      });
+      this.render();
+      break;
+    case 'cambioAudio':
+      this.setState({estado: info.split(';')[1]});
+      play(this.state.estado, dato1);
+      break;
+    default:
+      //Declaraciones ejecutadas cuando ninguno de los valores coincide con el valor de la expresión
+      break;
+    }
+    
   }
 
   componentWillUnmount() {
@@ -157,6 +162,7 @@ class TourAppTemplate extends React.Component {
       nextLocationId: tourConfig.firstPhotoId,
       rotation: tourConfig.firstPhotoRotation +
         (tourConfig.photos[tourConfig.firstPhotoId].rotationOffset || 0),
+      estado: 'inactivo',
     });
     
   }
@@ -177,7 +183,9 @@ class TourAppTemplate extends React.Component {
     const isLoading = nextLocationId !== locationId;
     const soundEffects = data.soundEffects;
     const ambient = data.soundEffects.ambient;
-    
+    const estado = this.state.estado;
+    play(estado, ambient);
+    BrowserInfo.setAmbient(ambient);
     if (nextLocationId !== locationId && this._loadingTimeout == null) {
       const nextPhotoData = (nextLocationId && data.photos[nextLocationId]) || null;
       const nextRotation =
@@ -193,11 +201,7 @@ class TourAppTemplate extends React.Component {
         });
       this._loadingTimeout = setTimeout(() => {
         this._loadingTimeout = null;
-        //value = locationId;
-        //console.log('hey', value);
-        //document.getElementById("posActual").val(nextLocationId);
-       // console.log(ReactDOM.findDOMNode(this.refs.posActual));
-       setData(nextLocationId, ambient);
+        BrowserInfo.setLocationId(nextLocationId);
         this.setState({
           // Now that ths new photo is loaded, update the locationId.
           locationId: nextLocationId,

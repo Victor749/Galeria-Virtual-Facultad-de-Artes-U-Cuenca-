@@ -7,13 +7,14 @@ import {Module} from 'react-360-web';
  * to the React application.
 */
 
-var link = 'http://localhost:3000/museo/api/';
+var link = 'http://localhost:3000/';
 var idSalaG;
+var ambient;
+
 function clean(id){
     element = document.getElementById(id);
     while(element.hasChildNodes()){
         element.removeChild(element.firstChild);
-        //console.log('e');
     }
 }
 
@@ -22,26 +23,85 @@ $( "#btnSonido" ).click(function() {
     imgS = document.getElementById('imgSonido');
     if(estadoAnt === 'activo'){
         document.getElementById('btnSonido').setAttribute('estado', 'inactivo');
-        imgS.setAttribute('src', './static_assets/inactiveA.png')
+        imgS.setAttribute('src', 'http://localhost:3000/static_assets/inactiveA.png')
     }else{
         document.getElementById('btnSonido').setAttribute('estado', 'activo');
-        imgS.setAttribute('src', './static_assets/activeA.png')
+        imgS.setAttribute('src', 'http://localhost:3000/static_assets/activeA.png')
     }
-    
+    window.dispatchEvent(new Event('cambioAudio'));
 });
 
 $("#btn_sala").click(function() {
-    //console.log('nuevo', document.getElementById('changeSala').value);
     idSalaG = document.getElementById('changeSala').value;
-    //getSala(nuevoId);
-
     window.dispatchEvent(new Event('cambioSala'));
-    //goSala2(nuevoId);
+
+});
+
+$('#btnCatalogo').click(function() {
+    infoC = '[{"temaCuratorial": "tema",'+
+    '"obras": ['+
+        '{"titulo": "tituloObra",'+
+         '"autor": "autorObra",'+
+         '"asignatura": "asign",'+
+         '"ciclo": "1",'+
+         '"facebook": "linkFace",'+
+         '"instagram": "linkInsta",'+
+         '"web": "linkWeb",'+
+         '"dimensiones": "dim",'+
+         '"fecha": "8/8/2020",'+
+         '"tutor": "nomTutor",'+
+         '"descripcion": "desc",'+
+         '"nombreElemento": "nElem"'+
+        '},'+
+        '{"titulo": "tituloObra",'+
+         '"autor": "autorObra",'+
+         '"asignatura": "asign",'+
+         '"ciclo": "1",'+
+         '"facebook": "linkFace",'+
+         '"instagram": "linkInsta",'+
+         '"web": "linkWeb",'+
+         '"dimensiones": "dim",'+
+         '"fecha": "8/8/2020",'+
+         '"tutor": "nomTutor",'+
+         '"descripcion": "desc",'+
+         '"nombreElemento": "nElem"'+
+        '}'+
+    ']},'+ 
+    '{"temaCuratorial": "tema",'+
+    '"obras": ['+
+        '{"titulo": "tituloObra",'+
+         '"autor": "autorObra",'+
+         '"asignatura": "asign",'+
+         '"ciclo": "1",'+
+         '"facebook": "linkFace",'+
+         '"instagram": "linkInsta",'+
+         '"web": "linkWeb",'+
+         '"dimensiones": "dim",'+
+         '"fecha": "8/8/2020",'+
+         '"tutor": "nomTutor",'+
+         '"descripcion": "desc",'+
+         '"nombreElemento": "nElem"'+
+        '},'+
+        '{"titulo": "tituloObra",'+
+         '"autor": "autorObra",'+
+         '"asignatura": "asign",'+
+         '"ciclo": "1",'+
+         '"facebook": "linkFace",'+
+         '"instagram": "linkInsta",'+
+         '"web": "linkWeb",'+
+         '"dimensiones": "dim",'+
+         '"fecha": "8/8/2020",'+
+         '"tutor": "nomTutor",'+
+         '"descripcion": "desc",'+
+         '"nombreElemento": "nElem"'+
+        '}]}]';
+        console.log(JSON.parse(infoC));
+        
+
 });
 
 
-
-
+        
 
 
 
@@ -51,15 +111,18 @@ export default class BrowserInfoModule extends Module {
     super('BrowserInfo');
     this._rnctx = ctx;
     this._bridgeName = 'BrowserBridge';
-    //this.userAgent = navigator.userAgent;
     window.addEventListener('cambioSala', e => {
-        //console.log(idSalaG);
-       //console.log('hey');
         if (!this._rnctx) {
             return;
         }
-        //console.log('hey 2');
-        this._rnctx.callFunction(this._bridgeName, 'notifyEvent', [idSalaG]);
+        this._rnctx.callFunction(this._bridgeName, 'notifyEvent', ['cambioSala', idSalaG]);
+    });
+    window.addEventListener('cambioAudio', e => {
+        if (!this._rnctx) {
+            return;
+        }
+        //dato = ambient+";" + document.getElementById('btnSonido').getAttribute('estado');
+        this._rnctx.callFunction(this._bridgeName, 'notifyEvent', ['cambioAudio;'+document.getElementById('btnSonido').getAttribute('estado'), ambient]);
     });
   }
 
@@ -70,13 +133,16 @@ export default class BrowserInfoModule extends Module {
    */
   
 
-  getSala(id){
-      console.log(id, 'get');
-    this._rnctx.callFunction('RCTDeviceEventEmitter', 'emit', [
-        id,
-    ]);
-  }
+    getSala(id){
+        console.log(id, 'get');
+        this._rnctx.callFunction('RCTDeviceEventEmitter', 'emit', [
+            id,
+        ]);
+    }
 
+    setAmbient(ambiente){
+        ambient = ambiente;
+    }
 
     setLocationId(id) {
         //aqui  hago consulta con id_sala envio datos
@@ -87,19 +153,21 @@ export default class BrowserInfoModule extends Module {
         listaC = [];
         temaC = '';
         let ajaxRequest = new XMLHttpRequest();
-        ajaxRequest.open("GET", link+"curatorial/"+id, true);
+        ajaxRequest.open("GET", link+"salas/api/curatorial/"+id, false);
         ajaxRequest.onreadystatechange = function() {
             if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
-                listaSalas = JSON.parse(ajaxRequest.responseText);
-                for (var i=0;i<listaSalas.length;i++){
-                    sala = listaSalas[i];
-                    temaC = sala.temaCuratorial;
-                    listaE = sala.expositores;
-                    listaC = sala.curadores;
-                    listaEaux = [];
-                    listaCaux = [];
+                info = JSON.parse(ajaxRequest.responseText);
+                if(! info.temaCuratorial === 'undefined'){
+                    temaC = info.temaCuratorial;
                     cod = '<h6><a class="dropdown-item" href="#">'+temaC+'</a></h6>';
-                        $('#temaC').append(cod);
+                    $('#temaC').append(cod);
+                }
+                
+                listaE = info.expositores;
+                listaC = info.curadores;
+                listaEaux = [];
+                listaCaux = [];
+                if(!listaC === 'undefined'){
                     for ( var i = 0; i<listaC.length; i++){
                         if(!listaCaux.includes(listaC[i])){
                             cod = '<h6><a class="dropdown-item" href="#">'+listaC[i]+' - '+id+'</a></h6>';
@@ -107,7 +175,9 @@ export default class BrowserInfoModule extends Module {
                             listaCaux.push(listaC[i]);
                         }
                         
-                        }
+                    }
+                }
+                if(!listaE === 'undefined'){
                     for ( var i = 0; i<listaE.length; i++){
                         if(!listaEaux.includes(listaE[i])){
                             cod = '<h6><a class="dropdown-item" href="#">'+listaE[i]+' - '+id+'</a></h6>';
@@ -116,6 +186,7 @@ export default class BrowserInfoModule extends Module {
                         }
                     }
                 }
+                
             }
         }
         ajaxRequest.send(null);
@@ -124,7 +195,6 @@ export default class BrowserInfoModule extends Module {
 
     getEstadoActual(){
         element = document.getElementById('btnSonido').getAttribute('estado');
-        //console.log(element);
         return element;
     }
 

@@ -66,7 +66,6 @@ function init(bundle, parent, options = {}) {
       useDynamicSurface: useDynamicSurface,
       mainSurfaceWidth: mainSurfaceWidth,
       mainSurfaceHeight: mainSurfaceHeight,
-      estado: 'inactivo',
     }),
     mainSurface, //r360.getDefaultSurface()
 

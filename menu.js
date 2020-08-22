@@ -5,7 +5,6 @@ var link = 'http://localhost:3000/museo/api/';
 
 
 $(document).ready(function() {
-    //document.cookie = "actual=0";
     $('.dropdown-menu').on("click.bs.dropdown", function (e) {
         e.stopPropagation();              
     });
@@ -23,7 +22,7 @@ function getSalas(){
     $('#expositores').hide();
     $('#curadores').hide();
     let ajaxRequest = new XMLHttpRequest();
-    ajaxRequest.open("GET", link+"salas", true);
+    ajaxRequest.open("GET", link+"salas", false);
     ajaxRequest.onreadystatechange = function() {
         if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
             listaSalas = JSON.parse(ajaxRequest.responseText);
