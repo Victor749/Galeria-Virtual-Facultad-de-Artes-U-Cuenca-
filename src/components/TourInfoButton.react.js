@@ -51,6 +51,7 @@ class TourInfoButton extends React.Component {
       width,
       onInput,
       onClickSound,
+      metodo,
       onEnterSound,
       onExitSound,
       onLongClickSound,
@@ -64,13 +65,15 @@ class TourInfoButton extends React.Component {
     return (
       <VrButton
         ignoreLongClick={true}
-        onInput={onInput}
+        onClick={e => {metodo("\n\npppssss")}}
         onExit={this._fadeOut}
         onClickSound={onClickSound}
         onEnterSound={onEnterSound}
         onExitSound={onExitSound}
-        onLongClickSound={onLongClickSound}>
-
+        onLongClickSound={onLongClickSound}
+        // onClick={this._fadeIn}
+        >  
+        
         <Image
           style={{
             height: width,
@@ -78,8 +81,9 @@ class TourInfoButton extends React.Component {
             flexDirection: 'row',
             alignItems: 'center',
           }}
-          onEnter={this._fadeIn}
+          
           source={source}>
+
           <Animated.View
             // Use animation on opacity to fade in/out the tooltip
             // When opacity is 0, the tooltip is invisible, and 

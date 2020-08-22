@@ -14,6 +14,7 @@ import TourInfoButton from 'TourInfoButton.react';
 import TourLoadingSpinner from 'TourLoadingSpinner.react';
 import TourHotspot from 'TourHotspot.react';
 import TourCylinderHotspot from 'TourCylinderHotspot.react';
+import { ReactInstance } from 'react-360-web';
 
 const Hotspot = (props) => {
   const {useDynamicSurface, mainSurfaceWidth, ...otherProps} = props;
@@ -24,8 +25,9 @@ const Hotspot = (props) => {
   }
 };
 
+const MiModulo = NativeModules.MiModulo;
 const AudioModule = NativeModules.AudioModule;
-const ENV_TRANSITION_TIME = 1000;
+const ENV_TRANSITION_TIME = 500;
 
 class TourAppTemplate extends React.Component {
   static defaultProps = {
@@ -62,15 +64,14 @@ class TourAppTemplate extends React.Component {
     });
   }
 
+  
+
   render() {
     if (!this.state.data) {
       return null;
     }
 
-    
-    
-
-    const {useDynamicSurface, mainSurfaceWidth, mainSurfaceHeight} = this.props;
+    const {useDynamicSurface, mainSurfaceWidth, mainSurfaceHeight, handleModal} = this.props;
     const {locationId, nextLocationId, data} = this.state;
     const photoData = (locationId && data.photos[locationId]) || null;
     const tooltips = (photoData && photoData.tooltips) || null;
@@ -79,6 +80,8 @@ class TourAppTemplate extends React.Component {
     const isLoading = nextLocationId !== locationId;
     const soundEffects = data.soundEffects;
     const ambient = data.soundEffects.ambient;
+
+  
 
     if (ambient) {
       // play an environmental audio
@@ -113,7 +116,7 @@ class TourAppTemplate extends React.Component {
     }
 
     return (
-    <View style={{
+    <View  style={{
       width: mainSurfaceWidth,
       height: mainSurfaceHeight,
       justifyContent: 'center',
@@ -145,6 +148,7 @@ class TourAppTemplate extends React.Component {
                   tooltip={tooltip}
                   parentWidth={800}
                   parentHeight={600}
+                  metodo={MiModulo.doSomething}
                 />
               </Hotspot>
               
@@ -159,7 +163,6 @@ class TourAppTemplate extends React.Component {
               mainSurfaceWidth={mainSurfaceWidth}
               rotationY={rotationY}
               >
-              
               <TourNavButton
                 isLoading={isLoading}
                 onClickSound={asset(soundEffects.navButton.onClick.uri)}
