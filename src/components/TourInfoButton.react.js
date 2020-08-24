@@ -65,7 +65,7 @@ class TourInfoButton extends React.Component {
     return (
       <VrButton
         ignoreLongClick={true}
-        onClick={e => {metodo("\n\npppssss")}}
+        onClick={e => {metodo("\n\npppssss", "https://cdn.jpegmini.com/user/images/slider_puffin_jpegmini.jpg")}}
         onExit={this._fadeOut}
         onClickSound={onClickSound}
         onEnterSound={onEnterSound}

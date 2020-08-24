@@ -11,14 +11,15 @@ class ModalControl extends React.Component{
   constructor() {
     super();
     this.state = {
-      show2: false
+      show2: true,
+      imageSource: null
     }
   }
 
-  handleChange = () => {
+  handleChange = (imageUrl) => {
       console.log(this);
       console.log("Soy Pablo SOlano");
-      this.setState({show2: false});
+      this.setState({show2: false, imageSource: imageUrl});
   }
 
   handleShow = () => {
@@ -29,7 +30,7 @@ class ModalControl extends React.Component{
 
   render(){
     return(
-      <ModalMio show2={this.state.show2} handleChange={this.handleChange}/>
+      <ModalMio show2={this.state.show2} imageSource={this.state.imageSource} handleChange={this.handleChange}/>
     );
   }
 }
@@ -56,10 +57,10 @@ class MiModulo extends Module {
   }
 
 // This method will be exposed to the React app
-  doSomething(parameter){
+  doSomething(parameter, imageUrl){
     console.log("Hola");
     console.log(parameter);
-    x.handleShow();
+    x.handleShow(imageUrl);
   }
 }
 

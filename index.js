@@ -71,6 +71,8 @@ class TourAppTemplate extends React.Component {
       return null;
     }
 
+    console.log(this.state);
+
     const {useDynamicSurface, mainSurfaceWidth, mainSurfaceHeight, handleModal} = this.props;
     const {locationId, nextLocationId, data} = this.state;
     const photoData = (locationId && data.photos[locationId]) || null;
