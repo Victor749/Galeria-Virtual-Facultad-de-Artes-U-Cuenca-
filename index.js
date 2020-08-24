@@ -30,10 +30,7 @@ const AudioModule = NativeModules.AudioModule;
 const ENV_TRANSITION_TIME = 500;
 
 class TourAppTemplate extends React.Component {
-  static defaultProps = {
-    tourSource: 'tourOfTheChester.json',
-  };
-
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -45,7 +42,7 @@ class TourAppTemplate extends React.Component {
   }
 
   componentDidMount() {
-    fetch(asset(this.props.tourSource).uri)
+    fetch('http://localhost:3000/museo/api/json')
       .then(response => response.json())
       .then(responseData => {
         this.init(responseData);
@@ -128,6 +125,7 @@ class TourAppTemplate extends React.Component {
         tooltips.map((tooltip, index) => {
           let rotationY = tooltip.rotationY + rotation;
           rotationY = (rotationY + 360) % 360; 
+          let rotationX = tooltip.rotationX;
           const showOnLeft = !useDynamicSurface && rotationY > 180 && rotationY < 210;
           // Iterate through items related to this location, creating either
           // info buttons, which show tooltip on hover, or nav buttons, which
@@ -141,15 +139,12 @@ class TourAppTemplate extends React.Component {
                 useDynamicSurface={useDynamicSurface}
                 mainSurfaceWidth={mainSurfaceWidth}
                 rotationY={rotationY}
-                width={800}
-                height={600}>
+                rotationX={rotationX}>
                 <TourInfoButton
                   onEnterSound={asset(soundEffects.navButton.onEnter.uri)}
                   showOnLeft={showOnLeft}
                   source={asset(data.info_icon)}
                   tooltip={tooltip}
-                  parentWidth={800}
-                  parentHeight={600}
                   metodo={MiModulo.doSomething}
                 />
               </Hotspot>
@@ -164,7 +159,7 @@ class TourAppTemplate extends React.Component {
               useDynamicSurface={useDynamicSurface}
               mainSurfaceWidth={mainSurfaceWidth}
               rotationY={rotationY}
-              >
+              rotationX={rotationX}>
               <TourNavButton
                 isLoading={isLoading}
                 onClickSound={asset(soundEffects.navButton.onClick.uri)}
