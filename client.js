@@ -3,7 +3,7 @@
 
 import {ReactInstance, Surface} from 'react-360-web';
 import RCTWorkInProgressSurface from './RCTWorkInProgressSurface'
-import BrowserInfoModule from './BrowserInfoModule';
+import BrowserInfoModule from './src/modules/BrowserInfoModule';
 //import Cookies from 'universal-cookie';
 
 //const cookies = new Cookies();

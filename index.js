@@ -14,11 +14,10 @@ import TourInfoButton from 'TourInfoButton.react';
 import TourLoadingSpinner from 'TourLoadingSpinner.react';
 import TourHotspot from 'TourHotspot.react';
 import TourCylinderHotspot from 'TourCylinderHotspot.react';
-import ScriptTag from 'react-script-tag';
-import {setCurrent} from './prueba';
+//const { jsPDF } = require("jspdf");
 //import cookie from 'react-cookie';
 //import Cookies from 'universal-cookie';
-import { CookiesProvider } from 'react-cookie';
+//import { CookiesProvider } from 'react-cookie';
 //import client from './client.js';
 //import Cookies from 'js-cookie';
 //const { useContext, createContext } = React;
@@ -90,7 +89,7 @@ const ENV_TRANSITION_TIME = 1000;
 
 class TourAppTemplate extends React.Component {
   static defaultProps = {
-    tourSource: 'tourOfTheChester.json',
+    tourSource: 'http://localhost:3000/museo/api/json',
   };
 
   constructor(props) {
@@ -111,7 +110,7 @@ class TourAppTemplate extends React.Component {
   
 
   componentDidMount() {
-    fetch(asset(this.props.tourSource).uri)
+    fetch(this.props.tourSource)
       .then(response => response.json())
       .then(responseData => {
         this.init(responseData);
@@ -123,6 +122,9 @@ class TourAppTemplate extends React.Component {
       })
       .done();
       this.unsubscribe = browserBridge.subscribe(this.onBrowserEvent);
+      /*const doc = new jsPDF();
+      doc.text("Hello world!", 10, 10);
+      doc.save("a4.pdf");*/
   }
 
   onBrowserEvent(info, dato1) {

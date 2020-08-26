@@ -1,5 +1,6 @@
 
 import {Module} from 'react-360-web';
+
 //import type {ReactNativeContext} from '../ReactNativeContext';
 
 /**
@@ -17,6 +18,7 @@ function clean(id){
         element.removeChild(element.firstChild);
     }
 }
+
 
 $( "#btnSonido" ).click(function() {
     estadoAnt = document.getElementById('btnSonido').getAttribute('estado');
@@ -36,74 +38,6 @@ $("#btn_sala").click(function() {
     window.dispatchEvent(new Event('cambioSala'));
 
 });
-
-$('#btnCatalogo').click(function() {
-    infoC = '[{"temaCuratorial": "tema",'+
-    '"obras": ['+
-        '{"titulo": "tituloObra",'+
-         '"autor": "autorObra",'+
-         '"asignatura": "asign",'+
-         '"ciclo": "1",'+
-         '"facebook": "linkFace",'+
-         '"instagram": "linkInsta",'+
-         '"web": "linkWeb",'+
-         '"dimensiones": "dim",'+
-         '"fecha": "8/8/2020",'+
-         '"tutor": "nomTutor",'+
-         '"descripcion": "desc",'+
-         '"nombreElemento": "nElem"'+
-        '},'+
-        '{"titulo": "tituloObra",'+
-         '"autor": "autorObra",'+
-         '"asignatura": "asign",'+
-         '"ciclo": "1",'+
-         '"facebook": "linkFace",'+
-         '"instagram": "linkInsta",'+
-         '"web": "linkWeb",'+
-         '"dimensiones": "dim",'+
-         '"fecha": "8/8/2020",'+
-         '"tutor": "nomTutor",'+
-         '"descripcion": "desc",'+
-         '"nombreElemento": "nElem"'+
-        '}'+
-    ']},'+ 
-    '{"temaCuratorial": "tema",'+
-    '"obras": ['+
-        '{"titulo": "tituloObra",'+
-         '"autor": "autorObra",'+
-         '"asignatura": "asign",'+
-         '"ciclo": "1",'+
-         '"facebook": "linkFace",'+
-         '"instagram": "linkInsta",'+
-         '"web": "linkWeb",'+
-         '"dimensiones": "dim",'+
-         '"fecha": "8/8/2020",'+
-         '"tutor": "nomTutor",'+
-         '"descripcion": "desc",'+
-         '"nombreElemento": "nElem"'+
-        '},'+
-        '{"titulo": "tituloObra",'+
-         '"autor": "autorObra",'+
-         '"asignatura": "asign",'+
-         '"ciclo": "1",'+
-         '"facebook": "linkFace",'+
-         '"instagram": "linkInsta",'+
-         '"web": "linkWeb",'+
-         '"dimensiones": "dim",'+
-         '"fecha": "8/8/2020",'+
-         '"tutor": "nomTutor",'+
-         '"descripcion": "desc",'+
-         '"nombreElemento": "nElem"'+
-        '}]}]';
-        console.log(JSON.parse(infoC));
-        
-
-});
-
-
-        
-
-
 
 export default class BrowserInfoModule extends Module {
    // _rnctx: ReactNativeContext;
@@ -144,8 +78,16 @@ export default class BrowserInfoModule extends Module {
         ambient = ambiente;
     }
 
-    setLocationId(id) {
+    setLocationId(id_coming) {
         //aqui  hago consulta con id_sala envio datos
+        console.log(id_coming.split('-')[1]);
+        id = 1;
+        if(id_coming.split('-').length > 0 ){
+            id = id_coming.split('-')[1];
+        }else{
+            id=id_coming;
+        }
+        console.log(id);
         clean('curadores');
         clean('expositores');
         clean('temaC');
@@ -157,7 +99,7 @@ export default class BrowserInfoModule extends Module {
         ajaxRequest.onreadystatechange = function() {
             if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
                 info = JSON.parse(ajaxRequest.responseText);
-                if(! info.temaCuratorial === 'undefined'){
+                if(!(typeof info.temaCuratorial === 'undefined')){
                     temaC = info.temaCuratorial;
                     cod = '<h6><a class="dropdown-item" href="#">'+temaC+'</a></h6>';
                     $('#temaC').append(cod);
@@ -167,7 +109,7 @@ export default class BrowserInfoModule extends Module {
                 listaC = info.curadores;
                 listaEaux = [];
                 listaCaux = [];
-                if(!listaC === 'undefined'){
+                if(!(typeof listaC === 'undefined')){
                     for ( var i = 0; i<listaC.length; i++){
                         if(!listaCaux.includes(listaC[i])){
                             cod = '<h6><a class="dropdown-item" href="#">'+listaC[i]+' - '+id+'</a></h6>';
@@ -177,7 +119,7 @@ export default class BrowserInfoModule extends Module {
                         
                     }
                 }
-                if(!listaE === 'undefined'){
+                if(!( typeof listaE === 'undefined')){
                     for ( var i = 0; i<listaE.length; i++){
                         if(!listaEaux.includes(listaE[i])){
                             cod = '<h6><a class="dropdown-item" href="#">'+listaE[i]+' - '+id+'</a></h6>';
