@@ -4,7 +4,7 @@
 'use strict';
 
 import React from 'react';
-import {Animated, Image, View, VrButton, StyleSheet, Text} from 'react-360';
+import {Animated, Image, View, VrButton, StyleSheet, Text, asset} from 'react-360';
 import TourTooltip from 'TourTooltip.react';
 
 /**
@@ -22,12 +22,26 @@ class TourInfoButton extends React.Component {
   };
 
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       hasFocus: false,
       opacityAnim: new Animated.Value(0),
+      obraId: this.props.obraId,
+      obra: null
     };
+    this.setObra();
   }
+
+  setObra = () => {
+    fetch(`http://localhost:3000/obras/api/json/${this.state.obraId}`)
+      .then(response => response.json())
+      .then(responseData => {
+        this.setState({ obra: responseData});
+      })
+      .catch(e => {console.log(e)})
+      .done();
+  }
+
 
   _fadeIn = () => {
     Animated.timing(this.state.opacityAnim, {
@@ -62,10 +76,24 @@ class TourInfoButton extends React.Component {
       parentHeight,
     } = this.props;
 
+    console.log("Source: ");
+    console.log(source);
+    console.log(this.state.obraId);
+    console.log(this.state.obra);
+
+    let rutaElemento = '';
+
+    if(this.state.obra != null){
+      const {nombreElemento} = this.state.obra;
+      rutaElemento = asset(nombreElemento).uri;
+    }
+    
+    // console.log(rutaElemento);
+
     return (
       <VrButton
         ignoreLongClick={true}
-        onClick={e => {metodo("\n\npppssss", "https://cdn.jpegmini.com/user/images/slider_puffin_jpegmini.jpg")}}
+        onClick={e => {metodo(this.state.obra, rutaElemento)}}
         onExit={this._fadeOut}
         onClickSound={onClickSound}
         onEnterSound={onEnterSound}
@@ -98,8 +126,9 @@ class TourInfoButton extends React.Component {
               },
               showOnLeft ? {right: -parentWidth/2} : {left: -parentWidth/2},
             ]}
+            
             onEnter={this.state.hasFocus ? this._fadeIn : undefined}>
-            <TourTooltip parentWidth={parentWidth} parentHeight={parentHeight} tooltip={tooltip} visible={this.state.hasFocus} />
+             {/* <TourTooltip parentWidth={parentWidth} parentHeight={parentHeight} tooltip={tooltip} visible={this.state.hasFocus} /> */}
           </Animated.View>
 
         </Image>

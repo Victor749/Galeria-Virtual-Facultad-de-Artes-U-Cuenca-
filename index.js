@@ -42,16 +42,20 @@ class TourAppTemplate extends React.Component {
   }
 
   componentDidMount() {
+    console.log('1');
+    console.log(this.state);
     fetch('http://localhost:3000/museo/api/json')
       .then(response => response.json())
       .then(responseData => {
         this.init(responseData);
       })
+      .catch(e => {console.log(e)})
       .done();
   }
 
   init(tourConfig) {
     // Initialize the tour based on data file.
+    console.log('2');
     this.setState({
       data: tourConfig,
       locationId: null,
@@ -68,6 +72,7 @@ class TourAppTemplate extends React.Component {
       return null;
     }
 
+    console.log('3');
     console.log(this.state);
 
     const {useDynamicSurface, mainSurfaceWidth, mainSurfaceHeight, handleModal} = this.props;
@@ -146,6 +151,7 @@ class TourAppTemplate extends React.Component {
                   source={asset(data.info_icon)}
                   tooltip={tooltip}
                   metodo={MiModulo.doSomething}
+                  obraId = {tooltip.idObra}
                 />
               </Hotspot>
               

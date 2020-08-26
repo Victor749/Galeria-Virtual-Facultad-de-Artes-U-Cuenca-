@@ -12,25 +12,47 @@ class ModalControl extends React.Component{
     super();
     this.state = {
       show2: true,
-      imageSource: null
+      imageSource: null,
+      autor :  null,
+      titulo :  null,
+      asignatura :  null,
+      ciclo :  null,
+      tutor :  null,
+      dimensiones :  null,
+      fechaProducccion : null,
+      rutaElemento: null,
+      descripcion: null
     }
   }
 
-  handleChange = (imageUrl) => {
+  handleChange = () => {
       console.log(this);
       console.log("Soy Pablo SOlano");
-      this.setState({show2: false, imageSource: imageUrl});
+      this.setState({show2: false});
   }
 
-  handleShow = () => {
+  handleShow = (obra, rutaElemento) => {
     console.log(this);
     console.log("Soy Pablo SOlano 22222222");
-    this.setState({show2: true});
+    this.setState(
+      {
+      show2: true,
+      autor: obra.autor,
+      titulo : obra.titulo,
+      asignatura : obra.asignatura,
+      ciclo : obra.ciclo,
+      tutor : obra.tutor,
+      dimensiones : obra.dimensiones,
+      fechaProducccion : obra.fechaProducccion,
+      rutaElemento : rutaElemento,
+      descripcion: obra.descripcion
+    }); 
 }
 
   render(){
+    const {...estado} = this.state;
     return(
-      <ModalMio show2={this.state.show2} imageSource={this.state.imageSource} handleChange={this.handleChange}/>
+      <ModalMio handleChange={this.handleChange} {...estado} />
     );
   }
 }
@@ -57,10 +79,9 @@ class MiModulo extends Module {
   }
 
 // This method will be exposed to the React app
-  doSomething(parameter, imageUrl){
+  doSomething(obra, rutaElemento){
     console.log("Hola");
-    console.log(parameter);
-    x.handleShow(imageUrl);
+    x.handleShow(obra, rutaElemento);
   }
 }
 

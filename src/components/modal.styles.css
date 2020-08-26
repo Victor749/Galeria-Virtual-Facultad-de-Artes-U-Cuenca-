@@ -1,4 +1,58 @@
 
-.modalUniversidad{
-    background: black;
+
+.information{
+    /* margin-left: 20px; */
+}
+
+.tituloFicha{
+    font-size: 30px;
+    margin-top: 30px;
+    font-weight: 900;
+}
+
+.data{
+    font-size: 20px;
+    margin-bottom: 5px;
+    margin-left: 50px;
+    font-weight: 900;
+}
+
+.descripcion{
+    font-size: 20px;
+    margin-left: 50px;
+    margin-top: 0;
+    font-weight: 100;
+}
+
+.tituloDescripcion{
+    font-size: 30px;
+    margin-top: 0;
+    font-weight: 900;
+}
+
+.data-entry{
+    font-size: 21px;
+    font-weight: 100;
+}
+
+.moveButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: transparent;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    background: rgba(255,255,255,0.3) ;
+}
+
+.moveButton:hover{
+    background: rgba(255,255,255,0.5) ;
+}
+
+.moveButton:focus{
+    background: rgba(255,255,255,0.5) ;
 }
