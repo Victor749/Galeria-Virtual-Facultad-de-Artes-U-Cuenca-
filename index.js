@@ -131,6 +131,7 @@ class TourAppTemplate extends React.Component {
           let rotationY = tooltip.rotationY + rotation;
           rotationY = (rotationY + 360) % 360; 
           let rotationX = tooltip.rotationX;
+          let rotationZ = tooltip.rotationZ;
           const showOnLeft = !useDynamicSurface && rotationY > 180 && rotationY < 210;
           // Iterate through items related to this location, creating either
           // info buttons, which show tooltip on hover, or nav buttons, which
@@ -144,7 +145,8 @@ class TourAppTemplate extends React.Component {
                 useDynamicSurface={useDynamicSurface}
                 mainSurfaceWidth={mainSurfaceWidth}
                 rotationY={rotationY}
-                rotationX={rotationX}>
+                rotationX={rotationX}
+                rotationZ={rotationZ}>
                 <TourInfoButton
                   onEnterSound={asset(soundEffects.navButton.onEnter.uri)}
                   showOnLeft={showOnLeft}
@@ -165,7 +167,8 @@ class TourAppTemplate extends React.Component {
               useDynamicSurface={useDynamicSurface}
               mainSurfaceWidth={mainSurfaceWidth}
               rotationY={rotationY}
-              rotationX={rotationX}>
+              rotationX={rotationX}
+              rotationZ={rotationZ}>
               <TourNavButton
                 isLoading={isLoading}
                 onClickSound={asset(soundEffects.navButton.onClick.uri)}

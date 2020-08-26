@@ -28,7 +28,7 @@ class ModalControl extends React.Component{
   handleChange = () => {
       console.log(this);
       console.log("Soy Pablo SOlano");
-      this.setState({show2: false});
+      this.setState({show2: (!this.state.show2)});
   }
 
   handleShow = (obra, rutaElemento) => {

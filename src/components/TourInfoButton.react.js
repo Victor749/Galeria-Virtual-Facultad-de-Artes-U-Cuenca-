@@ -17,7 +17,7 @@ class TourInfoButton extends React.Component {
     fadeOut: 500,
     height: 40,
     onInput: null,
-    width: 40,
+    width: 30,
     showOnLeft: false,
   };
 
