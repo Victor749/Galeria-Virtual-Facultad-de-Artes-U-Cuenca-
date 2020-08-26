@@ -1,26 +1,27 @@
 
-import {Button, Modal, Container, Row, Col} from 'react-bootstrap';
+import { Button, Modal, Container, Row, Col } from 'react-bootstrap';
 import React, { useState } from 'react';
-import Carousel from 'react-bootstrap/Carousel'
-// import './ modal.styles.css';
+import Carousel from 'react-bootstrap/Carousel';
+import Lightbox from 'react-image-lightbox';
 
+export class ModalMio extends React.Component {
 
-export class ModalMio extends React.Component{
-
-
-    constructor(props){
-        super(props);
+    constructor() {
+        super();
         this.state = {
             active: 0,
+            photoIndex: 0,
+            isOpen: false,
+            hidden: 'visible',
             numberSlides: 1
         }
     }
 
-    hola = (e, a) =>{
+    hola = (e, a) => {
         console.log("Heyy there");
         console.log(e);
         console.log(a);
-        this.setState({active: e});
+        this.setState({ active: e });
     }
 
     move = (step) =>{
@@ -46,8 +47,9 @@ export class ModalMio extends React.Component{
         console.log(rutaElemento);
         console.log(process.env.DEBUG);
 
+        const { photoIndex, isOpen } = this.state;
 
-        return(
+        return (
             <div>
                 {/* <Button variant="primary" onClick={console.log("heyyy")}>
                     Launch demo modal
@@ -55,7 +57,7 @@ export class ModalMio extends React.Component{
                 
                         {/* <Container>
                         </Container> */}
-                    <Modal show={show2}  size='lg' onHide={handleChange}  aria-labelledby="contained-modal-title-vcenter"  >
+                    <Modal show={show2}  size='lg' style={{visibility: this.state.hidden}} onHide={handleChange}  aria-labelledby="contained-modal-title-vcenter"  >
                         <Carousel interval={null} controls={false} activeIndex={this.state.active} onSelect={this.hola} nextIcon={<img src="../static_assets/chevron-circle-right-solid.svg" style={styles.colorCircles} />}
                             prevIcon={<img src="../static_assets/chevron-circle-left-solid.svg" style={styles.colorCircles} />}>
                             <Carousel.Item>
@@ -108,6 +110,9 @@ export class ModalMio extends React.Component{
                                                     Universidadjajaj de Cuenca
                                                 </div>
                                             </div>
+                                            <div>
+                                                <button type="button" onClick={() => this.setState({ isOpen: true, hidden: 'hidden' })}>Ver Obra</button>
+                                            </div>
                                         </div>
                                         
                                     
@@ -153,16 +158,46 @@ export class ModalMio extends React.Component{
                         <button className="moveButton" style={styles.prevbutton} onClick={() => {console.log('hola'); this.move(-1);}}><img src="http://localhost:3000/static_assets/chevron-circle-left-solid.svg" style={styles.colorCircles} /></button>
                         <button className="moveButton" style={styles.nextbutton} onClick={() => {console.log('hola'); this.move(1);}}><img src="http://localhost:3000/static_assets/chevron-circle-right-solid.svg" style={styles.colorCircles} /></button>
                     </Modal>
+
+                {isOpen && (
+                    <Lightbox
+                        mainSrc={images[photoIndex]}
+                        nextSrc={images[(photoIndex + 1) % images.length]}
+                        prevSrc={images[(photoIndex + images.length - 1) % images.length]}
+                        onCloseRequest={() => this.setState({ isOpen: false, hidden: 'visible' })}
+                        clickOutsideToClose={false}
+                        onMovePrevRequest={() =>
+                            this.setState({
+                                photoIndex: (photoIndex + images.length - 1) % images.length,
+                            })
+                        }
+                        onMoveNextRequest={() =>
+                            this.setState({
+                                photoIndex: (photoIndex + 1) % images.length,
+                            })
+                        }
+                    />
+                )}
+
+
             </div>
-            
+
         );
-    
+
     }
-  }
+}
 
+const link = 'http://localhost:3000/static_assets/';
 
+const images = [
+    link + 'Escultura 1.jpg',
+    link + 'Escultura 2.jpg',
+    link + 'Escultura 3.jpg',
+    link + 'Escultura 4.jpg',
+    link + 'Escultura 5.jpg',
+];
 
-const styles = 
+const styles =
 {
     modalUniversidad : 
         { height: '7vh', background: 'black', color: 'white'},
