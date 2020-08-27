@@ -17,6 +17,11 @@ export class ModalMio extends React.Component {
         }
     }
 
+    cerrarModal = (metodo) => {
+        this.setState( {active: 0, photoIndex: 0} );
+        metodo();
+    }
+
     hola = (e, a) => {
         console.log("Heyy there");
         console.log(e);
@@ -41,12 +46,18 @@ export class ModalMio extends React.Component {
     render() {
         // handleModal = console.log("heyyy");
         // console.log(Button);
-        const { show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion } = this.props;
+        const { show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, tecnica } = this.props;
+        
+        let images = [];
 
-        const images = [
-            rutaElemento
-        ];
-
+        if (rutaElemento !== null) {
+            images = rutaElemento.split(";");
+        } else {
+            images = [
+                rutaElemento
+            ];
+        }
+    
         // console.log("JAJA");
         console.log(show2);
         console.log(rutaElemento);
@@ -62,7 +73,7 @@ export class ModalMio extends React.Component {
 
                 {/* <Container>
                         </Container> */}
-                <Modal show={show2} size='lg' /*style={{ visibility: this.state.hidden }}*/ onHide={handleChange} aria-labelledby="contained-modal-title-vcenter"  >
+                <Modal show={show2} size='lg' /*style={{ visibility: this.state.hidden }}*/ onHide={()=>{this.cerrarModal(handleChange)}} aria-labelledby="contained-modal-title-vcenter"  >
                     <Carousel interval={null} controls={false} activeIndex={this.state.active} onSelect={this.hola} nextIcon={<img src="../static_assets/chevron-circle-right-solid.svg" style={styles.colorCircles} />}
                         prevIcon={<img src="../static_assets/chevron-circle-left-solid.svg" style={styles.colorCircles} />}>
                         <Carousel.Item>
@@ -77,7 +88,7 @@ export class ModalMio extends React.Component {
                                                 
                                             </div> */}
                                 <div className="d-flex row justify-content-center p-12 bd-highlight mb-3 col-example" style={{ height: '60%' }}>
-                                    <div className="col-6 col-sm-7 m-0 p-0 border-right">
+                                    <div className="col-6 col-sm-7 m-0 p-0">
                                         <p className="tituloFicha">Ficha Museográfica</p>
                                         <p className="data">Autor: <label className="data-entry">{autor}</label></p>
 
@@ -89,13 +100,15 @@ export class ModalMio extends React.Component {
 
                                         <p className="data">Tutor: <label className="data-entry">{tutor}</label></p>
 
+                                        <p className="data">Técnica: <label className="data-entry">{tecnica}</label></p>
+
                                         {/* <p>Técnica: </p> */}
                                         <p className="data">Dimensiones: <label className="data-entry">{dimensiones}</label></p>
 
                                         <p className="data">Fecha Producción: <label className="data-entry">{fechaProducccion}</label></p>
                                     </div>
                                     <div className="row justify-self-end justify-content-center col-12 col-sm-4 pl-3 " style={{ height: '350px' }}>
-                                        <input type="image" className="" src={`${rutaElemento}`} style={{ height: '100%' }} onClick={() => {this.setState({ isOpen: true }); handleChange()}} />
+                                        <input type="image" className="" src={`${images[0]}`} style={{ height: '100%' }} onClick={() => {this.setState({ isOpen: true }); this.cerrarModal(handleChange)}} />
                                     </div>
                                 </div>
                                 <div className="p-12 bd-highlight col-example d-flex justify-content-end align-items-center" style={styles.modalUniversidad}>
@@ -143,7 +156,7 @@ export class ModalMio extends React.Component {
                                         <p>Fecha Producción: <label>{fechaProducccion}</label></p>
                                     </div>
                                     <div className="row justify-self-end justify-content-center col-12 col-sm-3 pl-3 border-left" style={{ height: '350px' }}>
-                                        <img className="" src={`${rutaElemento}`} style={{ height: '100%' }} />
+                                        <img className="" src={`${images[0]}`} style={{ height: '100%' }} />
                                     </div>
                                 </div>
                                 <div className="p-12 bd-highlight col-example d-flex justify-content-end align-items-center" style={styles.modalUniversidad}>
@@ -166,8 +179,8 @@ export class ModalMio extends React.Component {
                         mainSrc={images[photoIndex]}
                         nextSrc={images[(photoIndex + 1) % images.length]}
                         prevSrc={images[(photoIndex + images.length - 1) % images.length]}
-                        onCloseRequest={() => {this.setState({ isOpen: false }); handleChange()}}
-                        //clickOutsideToClose={false}
+                        onCloseRequest={() => {this.setState({ isOpen: false }); this.cerrarModal(handleChange)}}
+                        clickOutsideToClose={false}
                         onMovePrevRequest={() =>
                             this.setState({
                                 photoIndex: (photoIndex + images.length - 1) % images.length,

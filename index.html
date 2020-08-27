@@ -11,7 +11,7 @@
     <!-- Attachment point for your app -->
     <div id="modal"></div>
     <div id="container"></div>
-    <script src="https://connect.facebook.net/en_US/fbinstant.6.2.js"></script>
+    <!-- <script src="https://connect.facebook.net/en_US/fbinstant.6.2.js"></script> -->
     <script src="./client.bundle?platform=vr"></script>
     <script>
       // Initialize the React 360 application
@@ -19,7 +19,7 @@
         'index.bundle?platform=vr&dev=true',
         document.getElementById('container'),
         {
-          bridgeFile: 'NonBlobBridge.js',
+          //bridgeFile: 'NonBlobBridge.js',
           assetRoot: 'http://localhost:3000/static_assets/',
           useDynamicSurface: true,
         }

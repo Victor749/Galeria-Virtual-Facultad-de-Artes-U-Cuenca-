@@ -30,6 +30,7 @@ class TourNavButton extends React.Component {
     scaleFactor: 1.5,
     textLabel: 'go',
     showOnLeft: false,
+    rotZ: 0,
   };
 
   constructor(props) {
@@ -109,6 +110,7 @@ class TourNavButton extends React.Component {
       source,
       showOnLeft,
       textLabel,
+      rotZ
     } = this.props;
     const outerWidth = size * scaleFactor;
 
@@ -117,7 +119,7 @@ class TourNavButton extends React.Component {
         style={styles.container}
         ignoreLongClick={true}
         onClick={this._onSelected}
-        //onEnter={this._onEnter}
+        onEnter={this._onEnter}
         onExit={this._onExit}
         onClickSound={onClickSound}
         onEnterSound={onEnterSound}
@@ -150,7 +152,7 @@ class TourNavButton extends React.Component {
                 ]}
               >
                <Image
-                  style={{height: size * 0.6, width: size * 1.4}}
+                  style={{height: size * 0.6, width: size * 1.4, transform: [{rotateZ: `${-rotZ}deg`}]}}
                   source={source}
                />
               </Animated.View>

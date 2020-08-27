@@ -11,7 +11,7 @@ class ModalControl extends React.Component{
   constructor() {
     super();
     this.state = {
-      show2: true,
+      show2: false,
       imageSource: null,
       autor :  null,
       titulo :  null,
@@ -21,7 +21,8 @@ class ModalControl extends React.Component{
       dimensiones :  null,
       fechaProducccion : null,
       rutaElemento: null,
-      descripcion: null
+      descripcion: null,
+      tecnica: null
     }
   }
 
@@ -43,9 +44,10 @@ class ModalControl extends React.Component{
       ciclo : obra.ciclo,
       tutor : obra.tutor,
       dimensiones : obra.dimensiones,
-      fechaProducccion : obra.fechaProducccion,
+      fechaProducccion : obra.fechaProduccion,
       rutaElemento : rutaElemento,
-      descripcion: obra.descripcion
+      descripcion: obra.descripcion,
+      tecnica: obra.tecnica
     }); 
 }
 

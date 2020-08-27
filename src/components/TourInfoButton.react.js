@@ -85,7 +85,14 @@ class TourInfoButton extends React.Component {
 
     if(this.state.obra != null){
       const {nombreElemento} = this.state.obra;
-      rutaElemento = asset(nombreElemento).uri;
+      // Se obtienen todos los nombres separados por ;
+      let nombresElementos = nombreElemento.split(";");
+      for (let i = 0; i < nombresElementos.length; i++) {
+        rutaElemento += asset(nombresElementos[i]).uri;
+        if (i !== nombresElementos.length - 1) {
+          rutaElemento += ";";
+        }
+      }
     }
     
     // console.log(rutaElemento);

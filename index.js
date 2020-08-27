@@ -168,7 +168,7 @@ class TourAppTemplate extends React.Component {
               mainSurfaceWidth={mainSurfaceWidth}
               rotationY={rotationY}
               rotationX={rotationX}
-              rotationZ={rotationZ}>
+              rotationZ={0}>
               <TourNavButton
                 isLoading={isLoading}
                 onClickSound={asset(soundEffects.navButton.onClick.uri)}
@@ -184,6 +184,7 @@ class TourAppTemplate extends React.Component {
                 showOnLeft={showOnLeft}
                 source={asset(data.nav_icon)}
                 textLabel={tooltip.text}
+                rotZ={rotationZ}
               />
             </Hotspot>
           );
