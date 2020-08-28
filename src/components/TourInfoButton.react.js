@@ -18,28 +18,53 @@ class TourInfoButton extends React.Component {
     height: 40,
     onInput: null,
     width: 40,
-    showOnLeft: false,
+    showOnLeft: false
   };
 
   constructor(props) {
     super(props);
+    this.contador = 0;
     this.state = {
       hasFocus: false,
       opacityAnim: new Animated.Value(0),
       obraId: this.props.obraId,
       obra: null
     };
+  }
+
+  componentDidMount(){
     this.setObra();
+    console.log("OBRAAAAA:");
+    console.log(this.state.obraId);
   }
 
   setObra = () => {
-    fetch(`http://localhost:3000/obras/api/json/${this.state.obraId}`)
+    var myHeaders = new Headers();
+    myHeaders.append('pragma', 'no-cache');
+    myHeaders.append('cache-control', 'no-cache');
+
+    var myInit = {
+      method: 'GET',
+      headers: myHeaders,
+    };
+
+
+    fetch(`http://localhost:3000/obras/api/json/${this.state.obraId}`, myInit)
       .then(response => response.json())
       .then(responseData => {
         this.setState({ obra: responseData});
+        this.contador = responseData.contador;
       })
       .catch(e => {console.log(e)})
       .done();
+  }
+
+  appearAndCount = (rutaElemento, metodo) => {
+    fetch(`http://localhost:3000/obras/${this.state.obraId}?_method=PUT`,
+    {method: 'POST'})
+    .then(response => response.json())
+    .then(responseData => {this.contador = responseData.contador})
+    .done(() => { metodo(this.state.obra, rutaElemento, this.contador) });
   }
 
 
@@ -60,6 +85,9 @@ class TourInfoButton extends React.Component {
   };
 
   render() {
+
+    
+
     const {
       height, 
       width,
@@ -76,10 +104,13 @@ class TourInfoButton extends React.Component {
       parentHeight,
     } = this.props;
 
-    console.log("Source: ");
-    console.log(source);
-    console.log(this.state.obraId);
-    console.log(this.state.obra);
+    // console.log("Source: ");
+    // console.log(source);
+    // console.log(this.state.obraId);
+    // console.log(this.state.obra);
+    // console.log(width);
+    // console.log(height);
+    // console.log(height);
 
     let rutaElemento = '';
 
@@ -88,12 +119,15 @@ class TourInfoButton extends React.Component {
       rutaElemento = asset(nombreElemento).uri;
     }
     
+    // await this.aumentarContadorVista();
     // console.log(rutaElemento);
+
+
 
     return (
       <VrButton
         ignoreLongClick={true}
-        onClick={e => {metodo(this.state.obra, rutaElemento)}}
+        onClick={e => {this.appearAndCount(rutaElemento, metodo)}}
         onExit={this._fadeOut}
         onClickSound={onClickSound}
         onEnterSound={onEnterSound}
@@ -128,7 +162,7 @@ class TourInfoButton extends React.Component {
             ]}
             
             onEnter={this.state.hasFocus ? this._fadeIn : undefined}>
-             {/* <TourTooltip parentWidth={parentWidth} parentHeight={parentHeight} tooltip={tooltip} visible={this.state.hasFocus} /> */}
+             <TourTooltip parentWidth={parentWidth} parentHeight={parentHeight} tooltip={tooltip} visible={this.state.hasFocus} />
           </Animated.View>
 
         </Image>

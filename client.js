@@ -6,6 +6,10 @@ import RCTWorkInProgressSurface from './RCTWorkInProgressSurface'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {ModalMio} from './src/components/modalMio.component';
+// import {NativeModules} from 'react-360';
+// import {google} from 'googleapis';
+// import {GoogleLogin} from 'react-google-login';
+// import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 
 class ModalControl extends React.Component{
   constructor() {
@@ -21,7 +25,10 @@ class ModalControl extends React.Component{
       dimensiones :  null,
       fechaProducccion : null,
       rutaElemento: null,
-      descripcion: null
+      descripcion: null,
+      facebook: null, 
+      instagram: null,
+      visitas: null
     }
   }
 
@@ -31,9 +38,10 @@ class ModalControl extends React.Component{
       this.setState({show2: false});
   }
 
-  handleShow = (obra, rutaElemento) => {
+  handleShow = (obra, rutaElemento, contador) => {
     console.log(this);
     console.log("Soy Pablo SOlano 22222222");
+    console.log(contador);
     this.setState(
       {
       show2: true,
@@ -45,7 +53,11 @@ class ModalControl extends React.Component{
       dimensiones : obra.dimensiones,
       fechaProducccion : obra.fechaProducccion,
       rutaElemento : rutaElemento,
-      descripcion: obra.descripcion
+      descripcion: obra.descripcion,
+      facebook: obra.facebook,
+      instagram: obra.instagram,
+      visitas: contador
+
     }); 
 }
 
@@ -62,6 +74,7 @@ class MiModulo extends Module {
     super('MiModulo'); // Makes this module available at NativeModules.MyModule
     modal = document.getElementById('modal');
     console.log("\n\nHeyyyyyy que maaaas");
+  
     // this.state = {
     //   show: false
     // }
@@ -79,9 +92,9 @@ class MiModulo extends Module {
   }
 
 // This method will be exposed to the React app
-  doSomething(obra, rutaElemento){
+  doSomething(obra, rutaElemento, contador){
     console.log("Hola");
-    x.handleShow(obra, rutaElemento);
+    x.handleShow(obra, rutaElemento, contador);
   }
 }
 

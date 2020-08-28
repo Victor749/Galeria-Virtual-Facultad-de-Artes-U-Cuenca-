@@ -14,7 +14,7 @@ import TourInfoButton from 'TourInfoButton.react';
 import TourLoadingSpinner from 'TourLoadingSpinner.react';
 import TourHotspot from 'TourHotspot.react';
 import TourCylinderHotspot from 'TourCylinderHotspot.react';
-import { ReactInstance } from 'react-360-web';
+
 
 const Hotspot = (props) => {
   const {useDynamicSurface, mainSurfaceWidth, ...otherProps} = props;
@@ -136,11 +136,14 @@ class TourAppTemplate extends React.Component {
           // info buttons, which show tooltip on hover, or nav buttons, which
           // change the current location in the tour.
           if (tooltip.type) {
+            console.log("Id obra index: ");
+            // console.log(tooltip.idObra);
+            // console.log(index);
             return (
               // Rotate the hotspot surface to the right hotspot position
               // We centered the view so the hotspot icon is on the right position
               <Hotspot
-                key={index}
+                key={tooltip.idObra}
                 useDynamicSurface={useDynamicSurface}
                 mainSurfaceWidth={mainSurfaceWidth}
                 rotationY={rotationY}

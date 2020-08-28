@@ -3,6 +3,7 @@ import { Button, Modal, Container, Row, Col } from 'react-bootstrap';
 import React, { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import Lightbox from 'react-image-lightbox';
+// import { ButtonComentario } from './ButtonComentario.component';
 
 export class ModalMio extends React.Component {
 
@@ -41,10 +42,12 @@ export class ModalMio extends React.Component {
     render(){       
         // handleModal = console.log("heyyy");
         // console.log(Button);
-        const {show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion} = this.props;
-        // console.log("JAJA");
-        console.log(show2);
+        const {show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, facebook, instagram, visitas} = this.props;
+        console.log("JAJA");
+        console.log(visitas);
         console.log(rutaElemento);
+        console.log(facebook);
+        console.log(instagram);
         console.log(process.env.DEBUG);
 
         const { photoIndex, isOpen } = this.state;
@@ -94,7 +97,7 @@ export class ModalMio extends React.Component {
                                                 </div>
                                             </div>
                                             <div className="p-12 bd-highlight col-example d-flex justify-content-end align-items-center" style={styles.modalUniversidad}>
-                                                <label className="m-0">Universidadjajajja de Cuenca</label>
+                                                <label className="m-0">Universidad de Cuenca</label>
                                             </div>
                                             <div className="row justify-content-center p-12 bd-highlight col-example" >
                                                 <div className="col-11 p-3">
@@ -102,12 +105,21 @@ export class ModalMio extends React.Component {
                                                     <p className="descripcion">{descripcion}</p>
                                                 </div>
                                             </div>
-                                            <div className="row justify-content-between p-12 bd-highlight col-example d-flex justify-content-end align-items-center" style={styles.modalUniversidad}>
-                                                <div className="col-4">
-                                                    <a href="https://www.google.com" target="_blank">hola</a>
+                                            <div className="row justify-content-between align-items-center p-12 bd-highlight col-example d-flex justify-content-end align-items-center" style={styles.modalUniversidad}>
+                                                <div className="row justify-content-center align-items-center col-4">
+                                                    <a className="redSocial" href={`${facebook}`} target="_blank">
+                                                        <img className="facebook" src="http://localhost:3000/static_assets/facebook.png"  />
+                                                    </a>
+                                                    <a className="redSocial" href={`${instagram}`} target="_blank">
+                                                        <img className="instagram" src="http://localhost:3000/static_assets/instagram.png"  />
+                                                    </a>
+                                                    <svg className="seen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                        <path d="M12.015 7c4.751 0 8.063 3.012 9.504 4.636-1.401 1.837-4.713 5.364-9.504 5.364-4.42 0-7.93-3.536-9.478-5.407 1.493-1.647 4.817-4.593 9.478-4.593zm0-2c-7.569 0-12.015 6.551-12.015 6.551s4.835 7.449 12.015 7.449c7.733 0 11.985-7.449 11.985-7.449s-4.291-6.551-11.985-6.551zm-.015 5c1.103 0 2 .897 2 2s-.897 2-2 2-2-.897-2-2 .897-2 2-2zm0-2c-2.209 0-4 1.792-4 4 0 2.209 1.791 4 4 4s4-1.791 4-4c0-2.208-1.791-4-4-4z"/>
+                                                    </svg>
+                                                    <span>{visitas}</span>
                                                 </div>
                                                 <div className="col-4">
-                                                    Universidadjajaj de Cuenca
+                                                    Universidad de Cuenca
                                                 </div>
                                             </div>
                                             <div>
@@ -123,33 +135,16 @@ export class ModalMio extends React.Component {
                             </Carousel.Item>
                             <Carousel.Item>
                                     <div className="d-flex flex-column justify-content-between bd-highlight example-parent" >
-                                    <div className="d-flex row justify-content-center p-12 bd-highlight col-example" style={{height: '60%'}}>
-                                                <div className="col-6 col-sm-7">
-                                                    <p>Autor: <label>{autor}</label></p>
-                                                                
-                                                    <p>Título: <label>{titulo}</label></p>
-                                                    
-                                                    <p>Asignatura: <label>{asignatura}</label></p>
-                                                    
-                                                    <p>Ciclo: <label>{ciclo}</label></p>
-                                                    
-                                                    <p>Tutor: <label>{tutor}</label></p>
-                                                    
-                                                    {/* <p>Técnica: </p> */}
-                                                    <p>Dimensiones: <label>{dimensiones}</label></p>
-                                                
-                                                    <p>Fecha Producción: <label>{fechaProducccion}</label></p>
-                                                </div>
-                                                <div className="row justify-self-end justify-content-center col-12 col-sm-3 pl-3 border-left" style={{height: '350px'}}>
-                                                    <img className="" src={`${rutaElemento}`}  style={{height: '100%'}}/>
-                                                </div>
+                                        <div className="comentarios" /*style={{height: '60vh'}} */ >
+                                            sa;lkfksa
                                         </div>
-                                        <div className="p-12 bd-highlight col-example d-flex justify-content-end align-items-center" style={styles.modalUniversidad}>
-                                            <label className="m-0">Universidadjajajja de Cuenca</label>
+                                        <div className="row justify-content-center hacer-comentario">
+                                            <textarea className="col-12 col-sm-8 comentario">
+
+                                            </textarea>
+                                            {/* <ButtonComentario /> */}
                                         </div>
-                                        <div className="p-12 bd-highlight col-example" style={{ height: '30vh'}}>Flex sadsaitem</div>
-                                        <div className="p-12 bd-highlight col-example d-flex justify-content-end align-items-center" style={styles.modalUniversidad}>
-                                            <label className="m-0">Universidadjajaj de Cuenca</label>
+                                        <div className="" style={styles.modalUniversidad}>
                                         </div>
                                     </div>
                             </Carousel.Item>
