@@ -6,19 +6,20 @@ import Lightbox from 'react-image-lightbox';
 
 export class ModalMio extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             active: 0,
             photoIndex: 0,
             isOpen: false,
+            defaultNumberSlides: 1
             //hidden: 'visible',
-            numberSlides: 1
-        }
+        };
+        this.numberSlides = this.state.defaultNumberSlides;
     }
 
     cerrarModal = (metodo) => {
-        this.setState( {active: 0, photoIndex: 0} );
+        this.setState({ active: 0, photoIndex: 0 });
         metodo();
     }
 
@@ -31,10 +32,10 @@ export class ModalMio extends React.Component {
 
     move = (step) => {
         let position;
-        if (step + this.state.active > this.state.numberSlides) {
+        if (step + this.state.active > this.numberSlides) {
             position = 0;
         } else if (step + this.state.active < 0) {
-            position = this.state.numberSlides;
+            position = this.numberSlides;
         } else {
             position = this.state.active + step;
         }
@@ -43,27 +44,62 @@ export class ModalMio extends React.Component {
         this.setState({ active: position });
     }
 
+    placeYoutube = (linkVideoYoutube) => {
+        // El link debe tener la forma https://www.youtube.com/watch?v=o8NPllzkFhE
+        let videoYoutube = "";
+        if (linkVideoYoutube !== null) {
+            videoYoutube = "https://www.youtube-nocookie.com/embed/" + linkVideoYoutube.split("=")[1];
+            return (<Carousel.Item>
+                <div className="embed-responsive embed-responsive-16by9"> <iframe className="embed-responsive-item"
+                    src={videoYoutube}>
+                </iframe></div>
+            </Carousel.Item>);
+        } else {
+            return false;
+        }
+    }
+
+    haveImages = (rutaElemento) => {
+        if (rutaElemento !== null) {
+            return rutaElemento.split(";");
+        } else {
+            return null;
+        }
+    }
+
+    placeImages = (images, handleChange) => {
+        if (images !== null) {
+            return (<div className="row justify-self-end justify-content-center col-12 col-sm-4 pl-3 " style={{ height: '350px' }}>
+                <input type="image" className="" src={`${images[0]}`} style={{ height: '100%' }} onClick={() => { this.setState({ isOpen: true }); this.cerrarModal(handleChange) }} />
+            </div>);
+        } else {
+            return false;
+        }
+    }
+
+    /*componentDidMount () {
+        console.log("PRUEBA SLIDES: ");
+        if (this.props.linkVideoYoutube !== null) {
+            this.setState(() => {numberSlides: this.state.numberSlides + 1}, 
+            () => {console.log("PRUEBA SLIDES: "); console.log(this.state.numberSlides)});
+        }
+    }*/
+
     render() {
         // handleModal = console.log("heyyy");
         // console.log(Button);
-        const { show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, tecnica } = this.props;
-        
-        let images = [];
+        const { show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, tecnica, linkVideoYoutube, suma } = this.props;
 
-        if (rutaElemento !== null) {
-            images = rutaElemento.split(";");
-        } else {
-            images = [
-                rutaElemento
-            ];
-        }
-    
+        this.numberSlides = this.state.defaultNumberSlides + suma;
+
         // console.log("JAJA");
         console.log(show2);
         console.log(rutaElemento);
         console.log(process.env.DEBUG);
 
         const { photoIndex, isOpen } = this.state;
+
+        let images = this.haveImages(rutaElemento);
 
         return (
             <div>
@@ -73,7 +109,7 @@ export class ModalMio extends React.Component {
 
                 {/* <Container>
                         </Container> */}
-                <Modal show={show2} size='lg' /*style={{ visibility: this.state.hidden }}*/ onHide={()=>{this.cerrarModal(handleChange)}} aria-labelledby="contained-modal-title-vcenter"  >
+                <Modal show={show2} size='lg' /*style={{ visibility: this.state.hidden }}*/ onHide={() => { this.cerrarModal(handleChange) }} aria-labelledby="contained-modal-title-vcenter"  >
                     <Carousel interval={null} controls={false} activeIndex={this.state.active} onSelect={this.hola} nextIcon={<img src="../static_assets/chevron-circle-right-solid.svg" style={styles.colorCircles} />}
                         prevIcon={<img src="../static_assets/chevron-circle-left-solid.svg" style={styles.colorCircles} />}>
                         <Carousel.Item>
@@ -107,9 +143,7 @@ export class ModalMio extends React.Component {
 
                                         <p className="data">Fecha Producción: <label className="data-entry">{fechaProducccion}</label></p>
                                     </div>
-                                    <div className="row justify-self-end justify-content-center col-12 col-sm-4 pl-3 " style={{ height: '350px' }}>
-                                        <input type="image" className="" src={`${images[0]}`} style={{ height: '100%' }} onClick={() => {this.setState({ isOpen: true }); this.cerrarModal(handleChange)}} />
-                                    </div>
+                                    {this.placeImages(images, handleChange)}
                                 </div>
                                 <div className="p-12 bd-highlight col-example d-flex justify-content-end align-items-center" style={styles.modalUniversidad}>
                                     <label className="m-0"></label>
@@ -136,39 +170,10 @@ export class ModalMio extends React.Component {
                                     </Modal.Footer> */}
 
                         </Carousel.Item>
+                        {this.placeYoutube(linkVideoYoutube)}
                         <Carousel.Item>
-                            <div className="d-flex flex-column justify-content-between bd-highlight example-parent" >
-                                <div className="d-flex row justify-content-center p-12 bd-highlight col-example" style={{ height: '60%' }}>
-                                    <div className="col-6 col-sm-7">
-                                        <p>Autor: <label>{autor}</label></p>
-
-                                        <p>Título: <label>{titulo}</label></p>
-
-                                        <p>Asignatura: <label>{asignatura}</label></p>
-
-                                        <p>Ciclo: <label>{ciclo}</label></p>
-
-                                        <p>Tutor: <label>{tutor}</label></p>
-
-                                        {/* <p>Técnica: </p> */}
-                                        <p>Dimensiones: <label>{dimensiones}</label></p>
-
-                                        <p>Fecha Producción: <label>{fechaProducccion}</label></p>
-                                    </div>
-                                    <div className="row justify-self-end justify-content-center col-12 col-sm-3 pl-3 border-left" style={{ height: '350px' }}>
-                                        <img className="" src={`${images[0]}`} style={{ height: '100%' }} />
-                                    </div>
-                                </div>
-                                <div className="p-12 bd-highlight col-example d-flex justify-content-end align-items-center" style={styles.modalUniversidad}>
-                                    <label className="m-0"></label>
-                                </div>
-                                <div className="p-12 bd-highlight col-example" style={{ height: '30vh' }}>Flex sadsaitem</div>
-                                <div className="p-12 bd-highlight col-example d-flex justify-content-end align-items-center" style={styles.modalUniversidad}>
-                                    <label className="m-0"></label>
-                                </div>
-                            </div>
+                            <p>Comentarios</p>
                         </Carousel.Item>
-
                     </Carousel>
                     <button className="moveButton" style={styles.prevbutton} onClick={() => { console.log('hola'); this.move(-1); }}><img src="http://localhost:3000/static_assets/chevron-circle-left-solid.svg" style={styles.colorCircles} /></button>
                     <button className="moveButton" style={styles.nextbutton} onClick={() => { console.log('hola'); this.move(1); }}><img src="http://localhost:3000/static_assets/chevron-circle-right-solid.svg" style={styles.colorCircles} /></button>
@@ -179,7 +184,7 @@ export class ModalMio extends React.Component {
                         mainSrc={images[photoIndex]}
                         nextSrc={images[(photoIndex + 1) % images.length]}
                         prevSrc={images[(photoIndex + images.length - 1) % images.length]}
-                        onCloseRequest={() => {this.setState({ isOpen: false }); this.cerrarModal(handleChange)}}
+                        onCloseRequest={() => { this.setState({ isOpen: false }); this.cerrarModal(handleChange) }}
                         clickOutsideToClose={false}
                         onMovePrevRequest={() =>
                             this.setState({

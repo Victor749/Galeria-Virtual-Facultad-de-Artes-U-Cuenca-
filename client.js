@@ -1,66 +1,70 @@
 // This file contains the boilerplate to execute your React app.
 // If you want to modify your application's content, start in "index.js"
 
-import {ReactInstance, Surface, Module} from 'react-360-web';
+import { ReactInstance, Surface, Module } from 'react-360-web';
 import RCTWorkInProgressSurface from './RCTWorkInProgressSurface'
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {ModalMio} from './src/components/modalMio.component';
+import { ModalMio } from './src/components/modalMio.component';
 
-class ModalControl extends React.Component{
+class ModalControl extends React.Component {
   constructor() {
     super();
     this.state = {
       show2: false,
       imageSource: null,
-      autor :  null,
-      titulo :  null,
-      asignatura :  null,
-      ciclo :  null,
-      tutor :  null,
-      dimensiones :  null,
-      fechaProducccion : null,
+      autor: null,
+      titulo: null,
+      asignatura: null,
+      ciclo: null,
+      tutor: null,
+      dimensiones: null,
+      fechaProducccion: null,
       rutaElemento: null,
       descripcion: null,
-      tecnica: null
+      tecnica: null,
+      linkVideoYoutube: null,
+      suma: null
     }
   }
 
   handleChange = () => {
-      console.log(this);
-      console.log("Soy Pablo SOlano");
-      this.setState({show2: (!this.state.show2)});
+    console.log(this);
+    console.log("Soy Pablo SOlano");
+    this.setState({ show2: (!this.state.show2) });
   }
 
-  handleShow = (obra, rutaElemento) => {
+  handleShow = (obra, rutaElemento, suma) => {
     console.log(this);
     console.log("Soy Pablo SOlano 22222222");
     this.setState(
       {
-      show2: true,
-      autor: obra.autor,
-      titulo : obra.titulo,
-      asignatura : obra.asignatura,
-      ciclo : obra.ciclo,
-      tutor : obra.tutor,
-      dimensiones : obra.dimensiones,
-      fechaProducccion : obra.fechaProduccion,
-      rutaElemento : rutaElemento,
-      descripcion: obra.descripcion,
-      tecnica: obra.tecnica
-    }); 
-}
+        show2: true,
+        autor: obra.autor,
+        titulo: obra.titulo,
+        asignatura: obra.asignatura,
+        ciclo: obra.ciclo,
+        tutor: obra.tutor,
+        dimensiones: obra.dimensiones,
+        fechaProducccion: obra.fechaProduccion,
+        rutaElemento: rutaElemento,
+        descripcion: obra.descripcion,
+        tecnica: obra.tecnica,
+        linkVideoYoutube: obra.linkVideoYoutube,
+        suma: suma
+      });
+  }
 
-  render(){
-    const {...estado} = this.state;
-    return(
+  render() {
+    const { ...estado } = this.state;
+    return (
       <ModalMio handleChange={this.handleChange} {...estado} />
     );
   }
 }
 
 class MiModulo extends Module {
-  constructor(){
+  constructor() {
     super('MiModulo'); // Makes this module available at NativeModules.MyModule
     modal = document.getElementById('modal');
     console.log("\n\nHeyyyyyy que maaaas");
@@ -77,13 +81,17 @@ class MiModulo extends Module {
     );
 
     document.x = x;
-    
+
   }
 
-// This method will be exposed to the React app
-  doSomething(obra, rutaElemento){
+  // This method will be exposed to the React app
+  doSomething(obra, rutaElemento) {
     console.log("Hola");
-    x.handleShow(obra, rutaElemento);
+    let suma = 0;
+    if (obra.linkVideoYoutube !== null) {
+      suma += 1;
+    }
+    x.handleShow(obra, rutaElemento, suma);
   }
 }
 
@@ -143,16 +151,16 @@ function init(bundle, parent, options = {}) {
   // Render your app content to the default cylinder surface
   r360.renderToSurface(
     // console.log(handleModal);
-    r360.createRoot('TourAppTemplate', { 
+    r360.createRoot('TourAppTemplate', {
       /* initial props */
       useDynamicSurface: useDynamicSurface,
       mainSurfaceWidth: mainSurfaceWidth,
       mainSurfaceHeight: mainSurfaceHeight,
-      
+
     })
     ,
     mainSurface, //r360.getDefaultSurface()
   );
 }
 
-window.React360 = {init};
+window.React360 = { init };
