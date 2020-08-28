@@ -30,6 +30,7 @@ class TourNavButton extends React.Component {
     scaleFactor: 1.5,
     textLabel: 'go',
     showOnLeft: false,
+    rotZ: 0,
   };
 
   constructor(props) {
@@ -88,7 +89,7 @@ class TourNavButton extends React.Component {
   _onEnter = () => {
     if (!this.props.isLoading) {
       this.setState({hasFocus: true});
-      this._startGazeToClickTimeout();
+      //this._startGazeToClickTimeout();
     }
   };
 
@@ -109,6 +110,7 @@ class TourNavButton extends React.Component {
       source,
       showOnLeft,
       textLabel,
+      rotZ
     } = this.props;
     const outerWidth = size * scaleFactor;
 
@@ -128,7 +130,7 @@ class TourNavButton extends React.Component {
           style={[
             styles.outer,
             {
-              borderColor: this.state.hasFocus ? 'white' : TRANSPARENT_COLOR,
+              borderColor: /*this.state.hasFocus ? 'tr' :*/ TRANSPARENT_COLOR,
               borderRadius: outerWidth / 2,
               height: outerWidth,
               width: outerWidth,
@@ -143,14 +145,14 @@ class TourNavButton extends React.Component {
                 style={[
                   styles.inner,
                   {
-                    borderColor: this.state.hasFocus ? FILL_COLOR : TRANSPARENT_COLOR,
+                    borderColor: /*this.state.hasFocus ? FILL_COLOR :*/ TRANSPARENT_COLOR,
                     borderRadius: outerWidth / 2,
                     borderWidth: this.state.borderWidthAnim,
                   },
                 ]}
               >
                <Image
-                  style={{height: size, width: size}}
+                  style={{height: size * 0.6, width: size * 1.4, transform: [{rotateZ: `${-rotZ}deg`}]}}
                   source={source}
                />
               </Animated.View>

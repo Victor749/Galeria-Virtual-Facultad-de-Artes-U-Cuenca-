@@ -73,6 +73,7 @@ function play(estado, ambient){
       AudioModule.stopEnvironmental();
     }
 }
+import { ReactInstance } from 'react-360-web';
 
 const Hotspot = (props) => {
   const {useDynamicSurface, mainSurfaceWidth, ...otherProps} = props;
@@ -83,8 +84,9 @@ const Hotspot = (props) => {
   }
 };
 
-
-const ENV_TRANSITION_TIME = 1000;
+const MiModulo = NativeModules.MiModulo;
+const AudioModule = NativeModules.AudioModule;
+const ENV_TRANSITION_TIME = 500;
 
 
 class TourAppTemplate extends React.Component {
@@ -107,6 +109,8 @@ class TourAppTemplate extends React.Component {
   
 
   componentDidMount() {
+    console.log('1');
+    console.log(this.state);
     fetch('http://localhost:3000/museo/api/json')
       .then(response => response.json())
       .then(responseData => {
@@ -117,6 +121,7 @@ class TourAppTemplate extends React.Component {
         //document.body.appendChild(script);
         BrowserInfo.setLocationId(responseData.firstPhotoId);
       })
+      .catch(e => {console.log(e)})
       .done();
       this.unsubscribe = browserBridge.subscribe(this.onBrowserEvent);
       /*const doc = new jsPDF();
@@ -155,6 +160,7 @@ class TourAppTemplate extends React.Component {
 
   init(tourConfig) {
     // Initialize the tour based on data file.
+    console.log('2');
     this.setState({
       data: tourConfig,
       locationId: null,
@@ -173,7 +179,10 @@ class TourAppTemplate extends React.Component {
       return null;
     }
 
-    const {useDynamicSurface, mainSurfaceWidth, mainSurfaceHeight} = this.props;
+    console.log('3');
+    console.log(this.state);
+
+    const {useDynamicSurface, mainSurfaceWidth, mainSurfaceHeight, handleModal} = this.props;
     const {locationId, nextLocationId, data} = this.state;
     const photoData = (locationId && data.photos[locationId]) || null;
     const tooltips = (photoData && photoData.tooltips) || null;
@@ -211,9 +220,7 @@ class TourAppTemplate extends React.Component {
 
     
     return (
-      
-    
-    <View style={{
+    <View  style={{
       width: mainSurfaceWidth,
       height: mainSurfaceHeight,
       justifyContent: 'center',
@@ -225,6 +232,7 @@ class TourAppTemplate extends React.Component {
           let rotationY = tooltip.rotationY + rotation;
           rotationY = (rotationY + 360) % 360; 
           let rotationX = tooltip.rotationX;
+          let rotationZ = tooltip.rotationZ;
           const showOnLeft = !useDynamicSurface && rotationY > 180 && rotationY < 210;
           // Iterate through items related to this location, creating either
           // info buttons, which show tooltip on hover, or nav buttons, which
@@ -238,12 +246,15 @@ class TourAppTemplate extends React.Component {
                 useDynamicSurface={useDynamicSurface}
                 mainSurfaceWidth={mainSurfaceWidth}
                 rotationY={rotationY}
-                rotationX={rotationX}>
+                rotationX={rotationX}
+                rotationZ={rotationZ}>
                 <TourInfoButton
                   onEnterSound={asset(soundEffects.navButton.onEnter.uri)}
                   showOnLeft={showOnLeft}
                   source={asset(data.info_icon)}
                   tooltip={tooltip}
+                  metodo={MiModulo.doSomething}
+                  obraId = {tooltip.idObra}
                 />
               </Hotspot>
               
@@ -257,7 +268,8 @@ class TourAppTemplate extends React.Component {
               useDynamicSurface={useDynamicSurface}
               mainSurfaceWidth={mainSurfaceWidth}
               rotationY={rotationY}
-              rotationX={rotationX}>
+              rotationX={rotationX}
+              rotationZ={0}>
               <TourNavButton
                 isLoading={isLoading}
                 onClickSound={asset(soundEffects.navButton.onClick.uri)}
@@ -270,6 +282,7 @@ class TourAppTemplate extends React.Component {
                 showOnLeft={showOnLeft}
                 source={asset(data.nav_icon)}
                 textLabel={tooltip.text}
+                rotZ={rotationZ}
               />
             </Hotspot>
           );

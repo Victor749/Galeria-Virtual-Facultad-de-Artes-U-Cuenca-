@@ -4,7 +4,7 @@
 'use strict';
 
 import React from 'react';
-import {Animated, Image, View, VrButton} from 'react-360';
+import {Animated, Image, View, VrButton, StyleSheet, Text, asset} from 'react-360';
 import TourTooltip from 'TourTooltip.react';
 
 /**
@@ -15,19 +15,33 @@ class TourInfoButton extends React.Component {
   static defaultProps = {
     fadeIn: 500,
     fadeOut: 500,
-    height: 60,
+    height: 40,
     onInput: null,
-    width: 60,
+    width: 30,
     showOnLeft: false,
   };
 
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       hasFocus: false,
       opacityAnim: new Animated.Value(0),
+      obraId: this.props.obraId,
+      obra: null
     };
+    this.setObra();
   }
+
+  setObra = () => {
+    fetch(`http://localhost:3000/obras/api/json/${this.state.obraId}`)
+      .then(response => response.json())
+      .then(responseData => {
+        this.setState({ obra: responseData});
+      })
+      .catch(e => {console.log(e)})
+      .done();
+  }
+
 
   _fadeIn = () => {
     Animated.timing(this.state.opacityAnim, {
@@ -51,31 +65,60 @@ class TourInfoButton extends React.Component {
       width,
       onInput,
       onClickSound,
+      metodo,
       onEnterSound,
       onExitSound,
       onLongClickSound,
       source,
       showOnLeft,
       tooltip,
+      parentWidth,
+      parentHeight,
     } = this.props;
+
+    console.log("Source: ");
+    console.log(source);
+    console.log(this.state.obraId);
+    console.log(this.state.obra);
+
+    let rutaElemento = '';
+
+    if(this.state.obra != null){
+      const {nombreElemento} = this.state.obra;
+      // Se obtienen todos los nombres separados por ;
+      let nombresElementos = nombreElemento.split(";");
+      for (let i = 0; i < nombresElementos.length; i++) {
+        rutaElemento += asset(nombresElementos[i]).uri;
+        if (i !== nombresElementos.length - 1) {
+          rutaElemento += ";";
+        }
+      }
+    }
+    
+    // console.log(rutaElemento);
+
     return (
       <VrButton
         ignoreLongClick={true}
-        onInput={onInput}
+        onClick={e => {metodo(this.state.obra, rutaElemento)}}
         onExit={this._fadeOut}
         onClickSound={onClickSound}
         onEnterSound={onEnterSound}
         onExitSound={onExitSound}
-        onLongClickSound={onLongClickSound}>
+        onLongClickSound={onLongClickSound}
+        // onClick={this._fadeIn}
+        >  
+        
         <Image
           style={{
-            height: height,
-            width: width,
+            height: width,
+            width: height,
             flexDirection: 'row',
             alignItems: 'center',
           }}
-          onEnter={this._fadeIn}
+          
           source={source}>
+
           <Animated.View
             // Use animation on opacity to fade in/out the tooltip
             // When opacity is 0, the tooltip is invisible, and 
@@ -88,11 +131,13 @@ class TourInfoButton extends React.Component {
                 opacity: this.state.opacityAnim,
                 position: 'absolute',
               },
-              showOnLeft ? {right: 80} : {left: 80},
+              showOnLeft ? {right: -parentWidth/2} : {left: -parentWidth/2},
             ]}
+            
             onEnter={this.state.hasFocus ? this._fadeIn : undefined}>
-            <TourTooltip tooltip={tooltip} visible={this.state.hasFocus} />
+             {/* <TourTooltip parentWidth={parentWidth} parentHeight={parentHeight} tooltip={tooltip} visible={this.state.hasFocus} /> */}
           </Animated.View>
+
         </Image>
       </VrButton>
     );

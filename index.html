@@ -11,11 +11,13 @@
     <script src="./node_modules/jspdf/dist/jspdf.min.js"></script>
     <script src="./src/scripts/catalogo.js"></script>
     <script src="./src/scripts/menu.js"></script>
-    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./src/components/modal.styles.css"/>
+    <link rel="stylesheet" href="./src/components/viewer.style.css"/>
   </head>
   <body>
     <!-- Attachment point for your app -->
-    
+    <div id="modal"></div>
     <div id="container" style="background-color: black;">
       <input type="text" id="changeSala" hidden/>
       <button id="btn_sala" hidden>SalaN</button>
@@ -53,8 +55,8 @@
       
       
     </div>
+    <!-- <script src="https://connect.facebook.net/en_US/fbinstant.6.2.js"></script> -->
     <script src="./client.bundle?platform=vr"></script>
-    <script src="https://connect.facebook.net/en_US/fbinstant.6.2.js"></script>
     <script>
       // Initialize the React 360 application
       React360.init(
