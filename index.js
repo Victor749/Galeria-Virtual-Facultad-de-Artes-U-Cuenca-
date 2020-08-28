@@ -85,8 +85,7 @@ const Hotspot = (props) => {
 };
 
 const MiModulo = NativeModules.MiModulo;
-const AudioModule = NativeModules.AudioModule;
-const ENV_TRANSITION_TIME = 500;
+const ENV_TRANSITION_TIME = 1000;
 
 
 class TourAppTemplate extends React.Component {
