@@ -241,7 +241,7 @@ class TourAppTemplate extends React.Component {
               // Rotate the hotspot surface to the right hotspot position
               // We centered the view so the hotspot icon is on the right position
               <Hotspot
-                key={index}
+                key={tooltip.idObra}
                 useDynamicSurface={useDynamicSurface}
                 mainSurfaceWidth={mainSurfaceWidth}
                 rotationY={rotationY}
