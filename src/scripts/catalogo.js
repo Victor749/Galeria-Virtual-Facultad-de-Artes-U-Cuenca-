@@ -59,9 +59,6 @@ function getPrueba(){
     return imgPrueba;
 }
 
-function imgToBase64(name){
-
-}
 
 function ficha(obra, doc, y, numPages, pageHeight){
     //Hay tres tipos de fichas, la normal es como se indico en la reunion. La opcion 2 es video, solo se ubica el link
@@ -142,8 +139,9 @@ function ficha(obra, doc, y, numPages, pageHeight){
     switch (obra.tipo){
         case 'imagen':
             //transformar imagenes a base4
-            
-            doc.addImage(getPrueba(), 'jpeg', 115, c+10, 40, 60);
+            formato = obra.img64.split(';')[0].split('/')[1];
+            doc.addImage(obra.img64, formato, 115, c+10, 40, 60);
+           // transformImages(doc,  115, c+10, 40, 60, obra.nombreElemento);
             y+=15;
             break;
         case 'video':
@@ -159,7 +157,8 @@ function ficha(obra, doc, y, numPages, pageHeight){
             y+=5;
             break;
         case 'escultura':
-            listaIMG = obra.nombreElemento.split(';');
+            listaIMG = obra.img64.split('_');
+            console.log(listaIMG);
             y+=15;
             if(!validar(y+75,doc,numPages,pageHeight)){
                 y=40;
@@ -168,7 +167,7 @@ function ficha(obra, doc, y, numPages, pageHeight){
             doc.setFontType('bold');
             doc.text(35, y, 'Vistas de la escultura: ');
             y+=10;
-            out = listaIMG.length;
+            out =listaIMG.length;
             for(var i=0;i<listaIMG.length;i++){
                 maxV = out>2? 3: out;
                 lEsc = 70;
@@ -176,14 +175,21 @@ function ficha(obra, doc, y, numPages, pageHeight){
                     y=40;
                     numPages+=1;
                 }
+                console.log('maxV: ', maxV);
                 for (var j=35;j<(50*maxV)+1;j++){
                     //transformar imagenes a base4
-                    doc.addImage(getPrueba(), 'jpeg', j, y, 40, 60);
+                    formato = listaIMG[i].split(';')[0].split('/')[1];
+                    doc.addImage(listaIMG[i], formato, j, y, 40, 60);
+                   // transformImages(doc,  j, y, 40, 60, listaIMG[i]);
                     j+=50;
+                    i+=1;
+                    out-=1;
                 }
                 y+=70;
-                i+=2;
-                out-=(i+1);
+                //i+=2;
+                //out-=(i);
+                i-=1;
+                console.log('i:', i, 'out', out);
             }
             y+=10;
             break;
@@ -212,6 +218,8 @@ function ficha(obra, doc, y, numPages, pageHeight){
     y+=10;
     return [y, numPages];
 }
+
+//firstTimeDone = false;
 
 
 function formPDF(info){
@@ -273,70 +281,42 @@ function formPDF(info){
         formPiePagina(doc,numPages+'');
         
     }
-    doc.save('withPhotoTransform.pdf');
+   // firstTimeDone = true;
+    doc.save('withPhotoTransformNew.pdf');
    
     
     //info = JSON.parse(infoC);
     
 }
 
-function transformImages(indexSala, indexObra, lengthObras, indexElemento, lengthElementos){
-    name = '';
-    if(indexElemento != -1){
-        name = info[indexSala].obras[indexObra].nombreElemento.split(';')[indexElemento];
-    }else{
-        name = info[indexSala].obras[indexObra].nombreElemento;
-    }
-    url = 'http://localhost:3000/static_assets/'+name;
-    var xhr = new XMLHttpRequest();
-    xhr.onload = function() {
-      var reader = new FileReader();
-      reader.onloadend = function() {
-        if(indexElemento != -1){
-            info[indexSala].obras[indexObra].nombreElemento.replace(name, this.result);
-            indexElemento+=1;
-            if((indexElemento != lengthElementos)){
-                transformImages(indexSala, indexObra, lengthObras, indexElemento, lengthElementos);
-            }else{
-                indexObra+=1;
-            }
-        }else{
-            info[indexSala].obras[indexObra].nombreElemento = this.result;
-            indexObra+=1;
-        }
-        if(indexObra != lengthObras){
-            if(info[indexSala].obras[indexObra].nombreElemento.split(';').length>0){
-                indexElemento = 0;
-                lengthElementos = info[0].obras[0].nombreElemento.split(';').length;
-            }else{
-                indexElemento = -1;
-            }
-            transformImages(indexSala, indexObra, lengthObras, indexElemento, lengthElementos);
-        }else{
-            indexSala+=1;
-            if(indexSala == info.lenght){
-                //aramar
-            }else{
-                indexElemento = -1;
-                lengthElementos = 0;
-                if(info[0].obras.length > 0){
-                    indexObra = 0;
-                    if(info[0].obras[0].nombreElemento.split(';').length>0){
-                        indexElemento = 0;
-                        lengthElementos = info[0].obras[0].nombreElemento.split(';').length;
-                    }
-                }
-            }
-        }
-        
+/*
+function transformImages(doc, x, y , height, width, url){
+    var img = new Image();
+    img.crossOrigin = 'Anonymous';
 
-      }
-      reader.readAsDataURL(xhr.response);
+    // The magic begins after the image is successfully loaded
+    img.onload = function () {
+        var canvas = document.createElement('canvas'),
+            ctx = canvas.getContext('2d');
+
+        canvas.height = img.naturalHeight;
+        canvas.width = img.naturalWidth;
+        ctx.drawImage(img, 0, 0);
+
+        // Unfortunately, we cannot keep the original image type, so all images will be converted to PNG
+        // For this reason, we cannot get the original Base64 string
+        var uri = canvas.toDataURL('image/jpeg');
+            //b64 = uri.replace(/^data:image.+;base64,/, '');
+
+       // console.log(uri); //-> "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWP4z8DwHwAFAAH/q842iQAAAABJRU5ErkJggg=="
+       //doc.addImage(uri, 'jpeg', x, y, height, width);
     };
-    xhr.open('GET', url);
-    xhr.responseType = 'blob';
-    xhr.send();
-}
+
+    // If you are loading images from a remote server, be sure to configure “Access-Control-Allow-Origin”
+    // For example, the following image can be loaded from anywhere.
+    var url = 'http://localhost:3000/static_assets/'+url;
+    img.src = url;
+}*/
 
 function transformation(){
     let ajaxRequest = new XMLHttpRequest();
@@ -344,23 +324,284 @@ function transformation(){
     ajaxRequest.onreadystatechange = function() {
         if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
             info = JSON.parse(ajaxRequest.responseText);
-            if(info.length > 0){
-                indexObra = -1;
-                indexElemento = -1;
-                lengthElementos = 0;
-                if(info[0].obras.length > 0){
-                    indexObra = 0;
-                    if(info[0].obras[0].nombreElemento.split(';').length>0){
-                        indexElemento = 0;
-                        lengthElementos = info[0].obras[0].nombreElemento.split(';').length;
-                    }
+            //formPDF(info);
+            indexElemento = -1;
+            lengthElementos = 0;
+            indexObra = -1;
+            lengthObras = 0;
+            indexSala = 0;
+            if(info[indexSala].obras.length > 0){
+                indexObra = 0;
+                lengthObras = info[indexSala].obras.length;
+                if(info[indexSala].obras[indexObra].nombreElemento.split(';').length>1){
+                    indexElemento = 0;
+                    lengthElementos = info[indexSala].obras[indexObra].nombreElemento.split(';').length;
                 }
-                tranformImages(0, indexObra, info[0].obras.length, indexElemento, lengthElementos);
-            }else{
-                formPDF();
+                
             }
+            
+            transformImages(indexSala, indexObra, lengthObras, indexElemento, lengthElementos);
             
         }
     }
     ajaxRequest.send(null);
 }
+
+continuar = true;
+esculturaVista = [];
+indiceSala = -1;
+indiceObra = -1;
+
+function transformImages(indexSala, indexObra, lengthObras, indexElemento, lengthElementos){
+    name = '';
+    // console.log('lELE', lengthElementos, 'indEle', indexElemento);
+    // console.log(indexSala, indexObra, lengthObras, indexElemento, lengthElementos);
+    if(continuar){
+        /*if(indiceSala!=-1){
+            if(esculturaVista.length == info[indiceSala].obras[indiceObra].nombreElemento.split(';').length){
+                esculturaVista = [];
+                indiceSala = -1;
+                indiceObra = -1;
+            }
+        }*/
+        if(lengthObras != 0 ){
+            console.log('indexElemento ', indexElemento);
+            if(indexElemento != -1){
+                name = info[indexSala].obras[indexObra].nombreElemento.split(';')[indexElemento];
+            }else{
+                name = info[indexSala].obras[indexObra].nombreElemento;
+            }
+            console.log('name: ', name);
+
+            if(indexElemento==-1 || (esculturaVista.indexOf(name) ==-1 && indexElemento!=-1)){
+                if(indexElemento>=0){
+                    esculturaVista.push(name);
+                   /* if(indexElemento == 0){
+                        indiceSala = indexSala;
+                        indiceObra = indexObra;
+                    }*/
+                }
+                console.log(esculturaVista);
+                var url = 'http://localhost:3000/static_assets/'+name;
+                var img = new Image();
+                img.crossOrigin = 'Anonymous';
+                img.src = url;
+                console.log('name ', name);
+                img.onload = function () {
+                    var canvas = document.createElement('canvas'),
+                    ctx = canvas.getContext('2d');
+
+                    canvas.height = img.naturalHeight;
+                    canvas.width = img.naturalWidth;
+                    ctx.drawImage(img, 0, 0);
+
+                    var uri = canvas.toDataURL('image/jpeg');
+                    
+                            
+                    if(info[indexSala].obras[indexObra].img64 === undefined){
+                        info[indexSala].obras[indexObra].img64 = uri;
+                    }else{
+                        
+                        info[indexSala].obras[indexObra].img64+='_'+uri;
+                    }
+                    indexElemento+=1;
+                    console.log('outEle ', indexElemento, ' leg ', lengthElementos);
+                    if((indexElemento != lengthElementos)){
+                        transformImages(indexSala, indexObra, lengthObras, indexElemento, lengthElementos);
+                    }else{
+                        indexObra+=1;
+                    // console.log('newIndObr', indexObra);
+                    }
+                        
+                    if(indexObra != lengthObras){
+                       // esculturaVista=[];
+                        if(info[indexSala].obras[indexObra].nombreElemento.split(';').length>1){
+                            indexElemento = 0;
+                            lengthElementos = info[indexSala].obras[indexObra].nombreElemento.split(';').length;
+                        }else{
+                            indexElemento = -1;
+                            lengthElementos = 0;
+                        }
+                        transformImages(indexSala, indexObra, lengthObras, indexElemento, lengthElementos);
+                    }else{
+                        indexSala+=1;
+                        if(indexSala == info.length){
+                            console.log(info);
+                            continuar = false;
+                            formPDF(info);
+                        // indexElemento+=1;
+                        // indexObra+=1;
+                        //    formPDF(info);
+                        }else{
+                            esculturaVista=[];
+                            indexElemento = -1;
+                            lengthElementos = 0;
+                            indexObra = -1;
+                            lengthObras = 0;
+                            if(info[indexSala].obras.length > 0){
+                                indexObra = 0;
+                                lengthObras = info[indexSala].obras.length;
+                                if(info[indexSala].obras[indexObra].nombreElemento.split(';').length>1){
+                                    indexElemento = 0;
+                                    lengthElementos = info[indexSala].obras[indexObra].nombreElemento.split(';').length;
+                                }
+                            //   transformImages(indexSala, indexObra, lengthObras, indexElemento, lengthElementos);
+                            }
+                            transformImages(indexSala, indexObra, lengthObras, indexElemento, lengthElementos);
+                        
+                        }
+                    }
+                
+
+                    
+
+                };
+
+            }else{
+                console.log('here');
+                /*indexElemento+=1;
+                if(indexElemento < lengthElementos){
+                    transformImages(indexSala, indexObra, lengthObras, indexElemento, lengthElementos);
+                }else{
+                    console.log(info[0].obras[3].img64.split('_').length);
+                }*/
+                
+            }
+        }else{
+            indexSala+=1;
+            if(indexSala == info.length){
+                console.log(info, '2parte');
+                continuar = false;
+                formPDF(info);
+            // indexElemento+=1;
+                //indexObra+=1;
+               // formPDF(info);
+            }else{
+                indexElemento = -1;
+                lengthElementos = 0;
+                indexObra = -1;
+                lengthObras = 0;
+                if(info[indexSala].obras.length > 0){
+                    indexObra = 0;
+                    lengthObras = info[indexSala].obras.length;
+                    if(info[indexSala].obras[indexObra].nombreElemento.split(';').length>1){
+                        indexElemento = 0;
+                        lengthElementos = info[indexSala].obras[indexObra].nombreElemento.split(';').length;
+                    }
+                    
+                }
+                
+                transformImages(indexSala, indexObra, lengthObras, indexElemento, lengthElementos);
+            }
+        }
+    }
+    
+}
+
+/*
+var nextObra = true;
+var nextElemento = true;
+
+function transformation(){
+    info='';
+    continuar = true;
+    let ajaxRequest = new XMLHttpRequest();
+    ajaxRequest.open("GET", "http://localhost:3000/museo/api/catalogo", false);
+    ajaxRequest.onreadystatechange = function() {
+        if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
+            info = JSON.parse(ajaxRequest.responseText);
+            if(info.length > 0){
+                for(var i=0;i<info.length;i++){
+                    obras = info[i].obras;
+                    //nextObra = true;
+                    for(var j=0; j<obras.length; j++){
+                        //console.log(j);
+                        if(nextObra){
+                            obra = obras[j];
+                            console.log(obra);
+                            nextObra = false;
+                            if(obra.tipo == 'escultura'){
+                                elementos = obra.nombreElemento.split(';');
+                                nextElemento = true;
+                                for (var z=0; z<elementos.length; z++){
+                                    //console.log(z);
+                                    if(nextElemento){
+
+                                        nextElemento = false;
+                                        var url = 'http://localhost:3000/static_assets/'+elementos[z];
+                                        var img = new Image();
+                                        img.crossOrigin = 'Anonymous';
+                                        img.src = url;
+                                        img.onload = function(){
+                                            var canvas = document.createElement('canvas'),
+                                            ctx = canvas.getContext('2d');
+
+                                            canvas.height = img.naturalHeight;
+                                            canvas.width = img.naturalWidth;
+                                            ctx.drawImage(img, 0, 0);
+
+                                        
+                                            var uri = canvas.toDataURL('image/jpeg');
+                                            if(info[i].obras[j].img64 === undefined){
+                                                info[i].obras[j].img64 = uri;
+                                            }else{
+                                                info[i].obras[j].img64 +='_'+uri;
+                                            }
+                                             nextElemento = true;
+                                        }
+                                    }else{
+                                        z-=1;
+                                    }
+                                }
+                                nextObra = true;
+                            }else if(obra.tipo == 'imagen'){
+                                console.log(obra.nombreElemento);
+                                var url = 'http://localhost:3000/static_assets/'+obra.nombreElemento;
+                                var img = new Image();
+                                img.crossOrigin = 'Anonymous';
+                                img.src = url;
+                                img.onload = function(){
+                                    var canvas = document.createElement('canvas'),
+                                    ctx = canvas.getContext('2d');
+                                    canvas.height = img.naturalHeight;
+                                    canvas.width = img.naturalWidth;
+                                    ctx.drawImage(img, 0, 0);
+                                    var uri = canvas.toDataURL('image/jpeg');
+                                    info[i].obras[j].img64 = uri;
+                                    nextObra = true;
+                                    console.log('nextOb ', nextObra);
+                                }
+                                
+                            }
+                        }else{
+                            j-=1;
+                        }
+                    }
+                }
+                console.log(info);
+            }else{
+                formPDF(info);
+            }
+            
+        }
+    }
+    ajaxRequest.send(null);
+    
+}*/
+
+
+/*
+function getImgFromUrl(logo_url) {
+    var img = document.createElement('img');
+    //img.crossorigin="anonymous";
+    img.src = logo_url;
+    var doc = new jsPDF();
+    doc.fromHTML(img);
+    doc.save('nuevoFormato.pdf');
+} 
+
+
+
+*/
+
+
