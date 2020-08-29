@@ -12,6 +12,7 @@ class ModalControl extends React.Component {
   constructor() {
     super();
     this.state = {
+      idObra: null,
       show2: false,
       imageSource: null,
       autor: null,
@@ -40,6 +41,7 @@ class ModalControl extends React.Component {
     console.log("Soy Pablo SOlano 22222222");
     this.setState(
       {
+        idObra: obra.idObra,
         show2: true,
         autor: obra.autor,
         titulo: obra.titulo,

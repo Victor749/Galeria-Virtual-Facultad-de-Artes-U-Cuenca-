@@ -12,14 +12,20 @@ export class ModalMio extends React.Component {
             active: 0,
             photoIndex: 0,
             isOpen: false,
-            defaultNumberSlides: 1
+            defaultNumberSlides: 1,
+            actual: 0,
+            limit: 2,
             //hidden: 'visible',
         };
         this.numberSlides = this.state.defaultNumberSlides;
+        window.addEventListener( 'setnewActual', e => {
+            actualS = this.state.actual + this.state.limit; 
+            this.setState({ actual: actualS });
+        });
     }
 
     cerrarModal = (metodo) => {
-        this.setState({ active: 0, photoIndex: 0 });
+        this.setState({ active: 0, photoIndex: 0, actual:0, limit:2 });
         metodo();
     }
 
@@ -77,6 +83,59 @@ export class ModalMio extends React.Component {
         }
     }
 
+    cargarComentario = (idObra, listaComentarios, tabla, progreso) => {
+        console.log('idObra ', idObra, listaComentarios, tabla, progreso, this.state.actual, this.state.limit);
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:3000/obras/api/comentarios/'+idObra+'/'+this.state.actual+'/'+this.state.limit+'',
+            success: function (data) {
+                if (data != null || data.length!=0) {
+                    console.log(data);
+                    for (var i = 0; i < data.length; i++) {
+                        listaComentarios.append('<tr><td>' + data[i].contenido + '</td>');
+                    }
+                    //console.log(actualS);
+                    tabla.animate({ scrollTop: tabla.prop("scrollHeight")}, 1000); 
+                }
+            },
+            beforeSend : function () {
+                progreso.show();
+                //
+            },
+            complete : function () {
+                window.dispatchEvent(new Event('setnewActual'));
+                setTimeout(function(){progreso.hide();}, 1000);
+                
+            },
+            error: function () {
+                alert("Error while retrieving data!");
+            }
+        });
+    }
+
+    placeComentarios = (idObra) => {
+        return (<div id="container" ><div className="row align-items-center justify-content-center p-1" style={{background: 'black'}}><h6 style={{color: 'white'}}>COMENTARIOS</h6></div>
+        <div className="row align-items-center justify-content-center mb-1" >
+            <table className="table table-hover table-responsive " style={{width: '100%', height: '400px'}}
+            id='tabla'>
+                <thead>
+                  
+                </thead>
+                <tbody id="listaComentarios">
+                  
+                </tbody>
+            </table> 
+        </div>
+        <div className="row align-items-center justify-content-center" id="progress" style={{display:'none'}}>
+        <p>Cargando...</p></div>
+        <div className="row align-items-center justify-content-center mb-5 p-1" style={{background: 'black'}}><button className="btn btn-secondary" id="btnComentario" onClick={() => {this.cargarComentario(`${idObra}`, $('#listaComentarios'), $('#tabla'), $('#progress')  )}}>Cargar mas</button></div>
+    
+
+    
+    </div>
+    );
+    }
+
     /*componentDidMount () {
         console.log("PRUEBA SLIDES: ");
         if (this.props.linkVideoYoutube !== null) {
@@ -87,15 +146,15 @@ export class ModalMio extends React.Component {
 
     render() {
         // handleModal = console.log("heyyy");
-        // console.log(Button);
-        const { show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, tecnica, linkVideoYoutube, suma } = this.props;
+        console.log(this.props);
+        const { idObra, show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, tecnica, linkVideoYoutube, suma } = this.props;
 
         this.numberSlides = this.state.defaultNumberSlides + suma;
 
         // console.log("JAJA");
         console.log(show2);
         console.log(rutaElemento);
-        console.log(process.env.DEBUG);
+        console.log('successful ', idObra);
 
         const { photoIndex, isOpen } = this.state;
 
@@ -172,7 +231,7 @@ export class ModalMio extends React.Component {
                         </Carousel.Item>
                         {this.placeYoutube(linkVideoYoutube)}
                         <Carousel.Item>
-                            <p>Comentarios</p>
+                            {this.placeComentarios(idObra)}
                         </Carousel.Item>
                     </Carousel>
                     <button className="moveButton" style={styles.prevbutton} onClick={() => { console.log('hola'); this.move(-1); }}><img src="http://localhost:3000/static_assets/chevron-circle-left-solid.svg" style={styles.colorCircles} /></button>
