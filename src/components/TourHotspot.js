@@ -25,7 +25,7 @@ class TourHotspot extends React.Component {
      <WorkInProgressSurface
         surfaceWidth={width}
         surfaceHeight={height}
-        style={{transform: [{rotateY: `${rotationY}deg`}, {rotateX: `${rotationX}deg`}, {rotateZ: `${rotationZ}deg`}, {translate: [0, 0, -TOUR_HOTSPOT_DISTANCE]}]}}>
+        style={{transform: [{rotateY: `${rotationY}deg`}, {rotateX: `${rotationX}deg`}, {rotateZ: `${-rotationZ}deg`}, {translate: [0, 0, -TOUR_HOTSPOT_DISTANCE]}]}}>
         <View style={[styles.hotspot, {width: width, height: height}]}>
           {children}
         </View>

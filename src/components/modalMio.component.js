@@ -3,6 +3,7 @@ import { Button, Modal, Container, Row, Col } from 'react-bootstrap';
 import React, { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import Lightbox from 'react-image-lightbox';
+import { OBJModel, MTLModel } from 'react-3d-viewer';
 
 export class ModalMio extends React.Component {
 
@@ -51,7 +52,7 @@ export class ModalMio extends React.Component {
             videoYoutube = "https://www.youtube-nocookie.com/embed/" + linkVideoYoutube.split("=")[1];
             return (<Carousel.Item>
                 <div className="embed-responsive embed-responsive-16by9"> <iframe className="embed-responsive-item"
-                    src={videoYoutube}>
+                    src={videoYoutube} allowFullScreen>
                 </iframe></div>
             </Carousel.Item>);
         } else {
@@ -172,6 +173,17 @@ export class ModalMio extends React.Component {
                         </Carousel.Item>
                         {this.placeYoutube(linkVideoYoutube)}
                         <Carousel.Item>
+                            <div>
+                                <OBJModel
+                                    src="http://localhost:3000/static_assets/bb8.obj"
+                                    height={500}
+                                    width={500}
+                                    position={{ x: 0, y: 0, z: 0 }}
+                                    rotation={{ x: 0, y: 0, z: 0 }}
+                                />
+                            </div>
+                        </Carousel.Item>
+                        <Carousel.Item>
                             <p>Comentarios</p>
                         </Carousel.Item>
                     </Carousel>
@@ -185,7 +197,7 @@ export class ModalMio extends React.Component {
                         nextSrc={images[(photoIndex + 1) % images.length]}
                         prevSrc={images[(photoIndex + images.length - 1) % images.length]}
                         onCloseRequest={() => { this.setState({ isOpen: false }); this.cerrarModal(handleChange) }}
-                        clickOutsideToClose={false}
+                        //clickOutsideToClose={false}
                         onMovePrevRequest={() =>
                             this.setState({
                                 photoIndex: (photoIndex + images.length - 1) % images.length,
