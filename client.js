@@ -15,7 +15,7 @@ class ModalControl extends React.Component {
   constructor() {
     super();
     this.state = {
-      show2: false,
+      show2: true,
       imageSource: null,
       autor: null,
       titulo: null,
@@ -141,6 +141,7 @@ function init(bundle, parent, options = {}) {
     fullScreen: true,
     nativeModules: [
       new MiModulo(),
+      ctx => new BrowserInfoModule(ctx),
     ],
     customViews: [
       {
@@ -148,9 +149,6 @@ function init(bundle, parent, options = {}) {
         name: 'RCTWorkInProgressSurface',
         view: RCTWorkInProgressSurface,
       },
-    ],
-    nativeModules: [
-      ctx => new BrowserInfoModule(ctx),
     ],
     ...options,
   });

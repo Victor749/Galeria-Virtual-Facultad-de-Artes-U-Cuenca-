@@ -14,6 +14,7 @@ import TourInfoButton from 'TourInfoButton.react';
 import TourLoadingSpinner from 'TourLoadingSpinner.react';
 import TourHotspot from 'TourHotspot.react';
 import TourCylinderHotspot from 'TourCylinderHotspot.react';
+import { ReactInstance } from 'react-360-web';
 //const { jsPDF } = require("jspdf");
 //import cookie from 'react-cookie';
 //import Cookies from 'universal-cookie';
@@ -73,7 +74,6 @@ function play(estado, ambient){
       AudioModule.stopEnvironmental();
     }
 }
-import { ReactInstance } from 'react-360-web';
 
 const Hotspot = (props) => {
   const {useDynamicSurface, mainSurfaceWidth, ...otherProps} = props;

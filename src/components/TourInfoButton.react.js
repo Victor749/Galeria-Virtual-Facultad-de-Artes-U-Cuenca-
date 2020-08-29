@@ -114,8 +114,8 @@ class TourInfoButton extends React.Component {
         
         <Image
           style={{
-            height: width,
-            width: height,
+            height: 40,
+            width: 40,
             flexDirection: 'row',
             alignItems: 'center',
           }}
