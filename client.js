@@ -6,6 +6,7 @@ import RCTWorkInProgressSurface from './RCTWorkInProgressSurface'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ModalMio } from './src/components/modalMio.component';
+import BrowserInfoModule from './src/modules/BrowserInfoModule';
 
 class ModalControl extends React.Component {
   constructor() {
@@ -135,6 +136,7 @@ function init(bundle, parent, options = {}) {
     fullScreen: true,
     nativeModules: [
       new MiModulo(),
+      ctx => new BrowserInfoModule(ctx),
     ],
     customViews: [
       {

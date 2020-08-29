@@ -15,6 +15,51 @@ import TourLoadingSpinner from 'TourLoadingSpinner.react';
 import TourHotspot from 'TourHotspot.react';
 import TourCylinderHotspot from 'TourCylinderHotspot.react';
 import { ReactInstance } from 'react-360-web';
+import BatchedBridge from 'react-native/Libraries/BatchedBridge/BatchedBridge';
+import lodash from 'lodash';
+
+
+const BrowserInfo = NativeModules.BrowserInfo;
+const MiModulo = NativeModules.MiModulo;
+const AudioModule = NativeModules.AudioModule;
+const ENV_TRANSITION_TIME = 500;
+
+class BrowserBridge {
+  constructor() {
+      this._subscribers = {};
+  }
+
+  subscribe(handler) {
+      const key = String(Math.random());
+      this._subscribers[key] = handler;
+      return () => {
+          delete this._subscribers[key];
+      };
+  }
+
+  notifyEvent(accion, dato1) {
+      lodash.forEach(this._subscribers, handler => {
+          handler(accion, dato1);
+      });
+  }
+}
+
+const browserBridge = new BrowserBridge();
+BatchedBridge.registerCallableModule(BrowserBridge.name, browserBridge);
+
+
+function play(estado, ambient){
+  console.log(estado, ambient);
+  if (estado == 'activo' && ambient) {
+      AudioModule.playEnvironmental({
+        source: asset(ambient.uri),
+        volume: ambient.volume,
+      });
+    } else {
+      AudioModule.stopEnvironmental();
+    }
+}
+
 
 const Hotspot = (props) => {
   const {useDynamicSurface, mainSurfaceWidth, ...otherProps} = props;
@@ -25,10 +70,6 @@ const Hotspot = (props) => {
   }
 };
 
-const MiModulo = NativeModules.MiModulo;
-const AudioModule = NativeModules.AudioModule;
-const ENV_TRANSITION_TIME = 500;
-
 class TourAppTemplate extends React.Component {
   
   constructor(props) {
@@ -38,7 +79,9 @@ class TourAppTemplate extends React.Component {
       locationId: null,
       nextLocationId: null,
       rotation: null,
+      estado: null,
     };
+    this.onBrowserEvent = this.onBrowserEvent.bind(this);
   }
 
   componentDidMount() {
@@ -48,9 +91,11 @@ class TourAppTemplate extends React.Component {
       .then(response => response.json())
       .then(responseData => {
         this.init(responseData);
+        BrowserInfo.setLocationId(responseData.firstPhotoId);
       })
       .catch(e => {console.log(e)})
       .done();
+      this.unsubscribe = browserBridge.subscribe(this.onBrowserEvent);
   }
 
   init(tourConfig) {
@@ -62,9 +107,38 @@ class TourAppTemplate extends React.Component {
       nextLocationId: tourConfig.firstPhotoId,
       rotation: tourConfig.firstPhotoRotation +
         (tourConfig.photos[tourConfig.firstPhotoId].rotationOffset || 0),
+      estado: 'inactivo',
     });
   }
 
+  onBrowserEvent(info, dato1) {
+    // Do action on event here
+   // console.log(idSala, 'boom ya ');
+  accion = info.split(';')[0];
+   switch (accion) {
+    case 'cambioSala':
+      this.setState({
+        nextLocationId: dato1,
+      });
+      this.render();
+      break;
+    case 'cambioAudio':
+      this.setState({estado: info.split(';')[1]});
+      play(this.state.estado, dato1);
+      break;
+    default:
+      //Declaraciones ejecutadas cuando ninguno de los valores coincide con el valor de la expresión
+      break;
+    }
+    
+  }
+
+  componentWillUnmount() {
+      if (this.unsubscribe) {
+          this.unsubscribe();
+          delete this.unsubscribe;
+      }
+  }
   
 
   render() {
@@ -84,18 +158,9 @@ class TourAppTemplate extends React.Component {
     const isLoading = nextLocationId !== locationId;
     const soundEffects = data.soundEffects;
     const ambient = data.soundEffects.ambient;
-
-  
-
-    if (ambient) {
-      // play an environmental audio
-      AudioModule.playEnvironmental({
-        source: asset(ambient.uri),
-        volume: ambient.volume,
-      });
-    } else {
-      AudioModule.stopEnvironmental();
-    }
+    const estado = this.state.estado;
+    play(estado, ambient);
+    BrowserInfo.setAmbient(ambient);
 
     if (nextLocationId !== locationId && this._loadingTimeout == null) {
       const nextPhotoData = (nextLocationId && data.photos[nextLocationId]) || null;
@@ -112,6 +177,7 @@ class TourAppTemplate extends React.Component {
         });
       this._loadingTimeout = setTimeout(() => {
         this._loadingTimeout = null;
+        BrowserInfo.setLocationId(nextLocationId);
         this.setState({
           // Now that ths new photo is loaded, update the locationId.
           locationId: nextLocationId,
