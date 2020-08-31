@@ -12,8 +12,9 @@ class ModalControl extends React.Component {
   constructor() {
     super();
     this.state = {
-      idObra: null,
-      show2: false,
+      identifier: sessionStorage.getItem('identifier'),
+      show2: true,
+      obraId: null,
       imageSource: null,
       autor: null,
       titulo: null,
@@ -24,10 +25,51 @@ class ModalControl extends React.Component {
       fechaProducccion: null,
       rutaElemento: null,
       descripcion: null,
+      facebook: null, 
+      instagram: null,
+      visitas: null,
       tecnica: null,
       linkVideoYoutube: null,
       suma: null
     }
+
+    window.addEventListener("beforeunload", function(event) {
+      sessionStorage.setItem('hello', 'hsssola');
+    });
+
+  }
+
+  handleUser = (identificador) => {
+    // console.log('handleUser');
+
+    let http = new XMLHttpRequest();
+    http.open('GET', `http://localhost:3000/usuarios/${identificador}/check`, true);
+
+    http.onreadystatechange = () => {//Call a function when the state changes.
+        if(http.readyState == 4 && http.status == 200) {
+            console.log("\n\nHa hechoo la solicituuuuud: ");
+            if(http.responseText == 'true'){
+                console.log("\nTRUEEEEEEEEEEEEEEE: ");
+                sessionStorage.setItem('identifier', identificador);
+                this.setState({identifier: identificador} );
+            }else{
+                console.log("\nFALSEEEEEEEEEEEEEEEEE: ");
+                console.log("Soy Pablo SOlano");
+                this.logoutUser();
+            }
+        }
+    }
+    http.send();
+    console.log("Soy Pablo SOlano");
+  }
+
+  logoutUser = () => {
+    sessionStorage.clear();
+    this.setState({identifier: null } );
+  }
+
+  componentDidMount(){
+    console.log("HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   }
 
   handleChange = () => {
@@ -36,12 +78,13 @@ class ModalControl extends React.Component {
     this.setState({ show2: (!this.state.show2) });
   }
 
-  handleShow = (obra, rutaElemento, suma) => {
+
+  handleShow = (obra, rutaElemento, contador, suma) => {
     console.log(this);
     console.log("Soy Pablo SOlano 22222222");
+    console.log(contador);
     this.setState(
       {
-        idObra: obra.idObra,
         show2: true,
         autor: obra.autor,
         titulo: obra.titulo,
@@ -53,16 +96,20 @@ class ModalControl extends React.Component {
         rutaElemento: rutaElemento,
         descripcion: obra.descripcion,
         tecnica: obra.tecnica,
+        facebook: obra.facebook,
+        instagram: obra.instagram,
+        visitas: contador,
+        obraId: obra.idObra,
         linkVideoYoutube: obra.linkVideoYoutube,
         suma: suma
-      });
+    }); 
   }
 
-  render() {
-    const { ...estado } = this.state;
-    return (
-      <ModalMio handleChange={this.handleChange} {...estado} />
-    );
+  render(){
+    const {...estado} = this.state;
+    return(
+      <ModalMio handleChange={this.handleChange} {...estado} document={document} window={window} handleUser={this.handleUser} logoutUser={this.logoutUser}/>
+      );
   }
 }
 
@@ -71,6 +118,7 @@ class MiModulo extends Module {
     super('MiModulo'); // Makes this module available at NativeModules.MyModule
     modal = document.getElementById('modal');
     console.log("\n\nHeyyyyyy que maaaas");
+  
     // this.state = {
     //   show: false
     // }
@@ -88,14 +136,17 @@ class MiModulo extends Module {
   }
 
   // This method will be exposed to the React app
-  doSomething(obra, rutaElemento) {
+  doSomething(obra, rutaElemento, contador) {
     console.log("Hola");
     let suma = 0;
     if (obra.linkVideoYoutube !== null) {
       suma += 1;
     }
-    x.handleShow(obra, rutaElemento, suma);
+    x.handleShow(obra, rutaElemento, contador, suma);
   }
+
+  
+  
 }
 
 

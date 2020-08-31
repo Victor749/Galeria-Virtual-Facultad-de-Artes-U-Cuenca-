@@ -3,6 +3,8 @@ import { Button, Modal, Container, Row, Col } from 'react-bootstrap';
 import React, { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import Lightbox from 'react-image-lightbox';
+import { ButtonComentario } from './ButtonComentario.component';
+import { OBJModel, MTLModel } from 'react-3d-viewer';
 
 export class ModalMio extends React.Component {
 
@@ -12,7 +14,8 @@ export class ModalMio extends React.Component {
             active: 0,
             photoIndex: 0,
             isOpen: false,
-            defaultNumberSlides: 1,
+            comment: '',
+            defaultNumberSlides: 2,
             actual: 0,
             limit: 2,
             //hidden: 'visible',
@@ -22,11 +25,17 @@ export class ModalMio extends React.Component {
             actualS = this.state.actual + this.state.limit; 
             this.setState({ actual: actualS });
         });
-    }
+    };
+        
 
     cerrarModal = (metodo) => {
         this.setState({ active: 0, photoIndex: 0, actual:0, limit:2 });
         metodo();
+    }
+
+    textAreaChange = (e) => {
+        console.log(e.target.value);
+        this.setState({comment: e.target.value});
     }
 
     hola = (e, a) => {
@@ -57,7 +66,7 @@ export class ModalMio extends React.Component {
             videoYoutube = "https://www.youtube-nocookie.com/embed/" + linkVideoYoutube.split("=")[1];
             return (<Carousel.Item>
                 <div className="embed-responsive embed-responsive-16by9"> <iframe className="embed-responsive-item"
-                    src={videoYoutube}>
+                    src={videoYoutube} allowFullScreen>
                 </iframe></div>
             </Carousel.Item>);
         } else {
@@ -87,7 +96,7 @@ export class ModalMio extends React.Component {
         console.log('idObra ', idObra, listaComentarios, tabla, progreso, this.state.actual, this.state.limit);
         $.ajax({
             type: 'GET',
-            url: 'http://localhost:3000/obras/api/comentarios/'+idObra+'/'+this.state.actual+'/'+this.state.limit+'',
+            url: 'http://localhost:3000/comentarios/getComentario/'+idObra+'/'+this.state.actual+'/'+this.state.limit+'',
             success: function (data) {
                 if (data != null || data.length!=0) {
                     console.log(data);
@@ -147,14 +156,21 @@ export class ModalMio extends React.Component {
     render() {
         // handleModal = console.log("heyyy");
         console.log(this.props);
-        const { idObra, show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, tecnica, linkVideoYoutube, suma } = this.props;
+        const { document, window ,show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion,  facebook, instagram, visitas, identifier, handleUser, obraId, logoutUser, tecnica, linkVideoYoutube, suma } = this.props;
 
         this.numberSlides = this.state.defaultNumberSlides + suma;
 
-        // console.log("JAJA");
+        console.log("JAJA");
+        console.log(identifier);
+        console.log(document);
+        console.log(visitas);
         console.log(show2);
         console.log(rutaElemento);
-        console.log('successful ', idObra);
+        console.log('successful ', obraId);
+        console.log(facebook);
+        console.log(instagram);
+        console.log(process.env.DEBUG);
+
 
         const { photoIndex, isOpen } = this.state;
 
@@ -179,27 +195,22 @@ export class ModalMio extends React.Component {
                                     </Modal.Header> */}
 
                             <div className="d-flex flex-column justify-content-between bd-highlight example-parent"  >
-                                {/* <div>
-                                                
-                                            </div> */}
                                 <div className="d-flex row justify-content-center p-12 bd-highlight mb-3 col-example" style={{ height: '60%' }}>
-                                    <div className="col-6 col-sm-7 m-0 p-0">
+                                    <div className="col-6 col-sm-7 m-0 p-0 border-right">
                                         <p className="tituloFicha">Ficha Museográfica</p>
                                         <p className="data">Autor: <label className="data-entry">{autor}</label></p>
-
+                                                    
                                         <p className="data">Título: <label className="data-entry">{titulo}</label></p>
-
+                                        
                                         <p className="data">Asignatura: <label className="data-entry">{asignatura}</label></p>
-
+                                        
                                         <p className="data">Ciclo: <label className="data-entry">{ciclo}</label></p>
-
+                                        
                                         <p className="data">Tutor: <label className="data-entry">{tutor}</label></p>
-
                                         <p className="data">Técnica: <label className="data-entry">{tecnica}</label></p>
-
                                         {/* <p>Técnica: </p> */}
                                         <p className="data">Dimensiones: <label className="data-entry">{dimensiones}</label></p>
-
+                                    
                                         <p className="data">Fecha Producción: <label className="data-entry">{fechaProducccion}</label></p>
                                     </div>
                                     {this.placeImages(images, handleChange)}
@@ -213,12 +224,21 @@ export class ModalMio extends React.Component {
                                         <p className="descripcion">{descripcion}</p>
                                     </div>
                                 </div>
-                                <div className="row justify-content-between p-12 bd-highlight col-example d-flex justify-content-end align-items-center" style={styles.modalUniversidad}>
-                                    <div className="col-4">
-                                        <a href="https://www.google.com" target="_blank">hola</a>
+                                <div className="row justify-content-between align-items-center p-12 bd-highlight col-example d-flex justify-content-end align-items-center" style={styles.modalUniversidad}>
+                                    <div className="row justify-content-center align-items-center col-4">
+                                        <a className="redSocial" href={`${facebook}`} target="_blank">
+                                            <img className="facebook" src="http://localhost:3000/static_assets/facebook.png"  />
+                                        </a>
+                                        <a className="redSocial" href={`${instagram}`} target="_blank">
+                                            <img className="instagram" src="http://localhost:3000/static_assets/instagram.png"  />
+                                        </a>
+                                        <svg className="seen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                            <path d="M12.015 7c4.751 0 8.063 3.012 9.504 4.636-1.401 1.837-4.713 5.364-9.504 5.364-4.42 0-7.93-3.536-9.478-5.407 1.493-1.647 4.817-4.593 9.478-4.593zm0-2c-7.569 0-12.015 6.551-12.015 6.551s4.835 7.449 12.015 7.449c7.733 0 11.985-7.449 11.985-7.449s-4.291-6.551-11.985-6.551zm-.015 5c1.103 0 2 .897 2 2s-.897 2-2 2-2-.897-2-2 .897-2 2-2zm0-2c-2.209 0-4 1.792-4 4 0 2.209 1.791 4 4 4s4-1.791 4-4c0-2.208-1.791-4-4-4z"/>
+                                        </svg>
+                                        <span>{visitas}</span>
                                     </div>
                                     <div className="col-4">
-
+                                        Universidad de Cuenca
                                     </div>
                                 </div>
                             </div>
@@ -227,24 +247,56 @@ export class ModalMio extends React.Component {
                             {/* <Modal.Footer>
                                         <Button onClick={handleChange}>Close</Button>
                                     </Modal.Footer> */}
-
                         </Carousel.Item>
                         {this.placeYoutube(linkVideoYoutube)}
                         <Carousel.Item>
-                            {this.placeComentarios(idObra)}
+                            <div>
+                                <OBJModel
+                                    src="http://localhost:3000/static_assets/bb8.obj"
+                                    height={500}
+                                    width={500}
+                                    position={{ x: 0, y: 0, z: 0 }}
+                                    rotation={{ x: 0, y: 0, z: 0 }}
+                                />
+                            </div>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <div className="d-flex flex-column justify-content-between bd-highlight example-parent" >
+                                <div className="comentarios" /*style={{height: '60vh'}} */ >
+                                    {this.placeComentarios(obraId)}
+                                </div>
+                                <div className="row justify-content-center hacer-comentario">
+                                    <textarea onChange={this.textAreaChange} className="col-12 col-sm-7 comentario">
+
+                                    </textarea>
+                                    <ButtonComentario document={document} window={window} identifier={identifier} handleUser={handleUser} comment={this.state.comment} obraId={obraId} logoutUser={logoutUser}/>
+                                    {/* <div>
+                                        <div id="gSignInWrapper">
+                                            <span class="label">Sign in with:</span>
+                                            <div id="customBtn" class="customGPlusSignIn">
+                                            <span class="icon"></span>
+                                            <span class="buttonText">Google</span>
+                                            </div>
+                                        </div>
+                                        <div id="name"></div>
+                                    </div> */}
+
+                                </div>
+                                <div className="" style={styles.modalUniversidad}>
+                                </div>
+                            </div>
                         </Carousel.Item>
                     </Carousel>
                     <button className="moveButton" style={styles.prevbutton} onClick={() => { console.log('hola'); this.move(-1); }}><img src="http://localhost:3000/static_assets/chevron-circle-left-solid.svg" style={styles.colorCircles} /></button>
                     <button className="moveButton" style={styles.nextbutton} onClick={() => { console.log('hola'); this.move(1); }}><img src="http://localhost:3000/static_assets/chevron-circle-right-solid.svg" style={styles.colorCircles} /></button>
                 </Modal>
-
                 {isOpen && (
                     <Lightbox
                         mainSrc={images[photoIndex]}
                         nextSrc={images[(photoIndex + 1) % images.length]}
                         prevSrc={images[(photoIndex + images.length - 1) % images.length]}
                         onCloseRequest={() => { this.setState({ isOpen: false }); this.cerrarModal(handleChange) }}
-                        clickOutsideToClose={false}
+                        //clickOutsideToClose={false}
                         onMovePrevRequest={() =>
                             this.setState({
                                 photoIndex: (photoIndex + images.length - 1) % images.length,

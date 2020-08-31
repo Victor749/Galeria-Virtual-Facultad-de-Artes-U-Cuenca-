@@ -152,7 +152,7 @@ class TourNavButton extends React.Component {
                 ]}
               >
                <Image
-                  style={{height: size * 0.6, width: size * 1.4, transform: [{rotateZ: `${-rotZ}deg`}]}}
+                  style={{height: size * 0.6, width: size * 1.4, transform: [{rotateZ: `${rotZ}deg`}]}}
                   source={source}
                />
               </Animated.View>

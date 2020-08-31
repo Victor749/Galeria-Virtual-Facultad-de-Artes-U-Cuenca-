@@ -203,6 +203,9 @@ class TourAppTemplate extends React.Component {
           // info buttons, which show tooltip on hover, or nav buttons, which
           // change the current location in the tour.
           if (tooltip.type) {
+            console.log("Id obra index: ");
+            // console.log(tooltip.idObra);
+            // console.log(index);
             return (
               // Rotate the hotspot surface to the right hotspot position
               // We centered the view so the hotspot icon is on the right position
