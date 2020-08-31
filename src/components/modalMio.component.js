@@ -15,7 +15,7 @@ export class ModalMio extends React.Component {
             photoIndex: 0,
             isOpen: false,
             comment: '',
-            defaultNumberSlides: 1
+            defaultNumberSlides: 2
         }
         this.numberSlides = this.state.defaultNumberSlides;
     };
