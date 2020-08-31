@@ -13,10 +13,12 @@ $(document).ready(function () {
 });
 
 function getSalas() {
+  console.log('callingSalas');
   $('#sala').hide();
   $('#temaC').hide();
   $('#expositores').hide();
-  $('#curadores').hide();
+  $('#curadores').hide(); // cleanSalas();
+
   var ajaxRequest = new XMLHttpRequest();
   ajaxRequest.open("GET", link + "salas", false);
 
@@ -40,6 +42,14 @@ function getSalas() {
   //cookies = cookie.getCookies();
   //cookies.set('actual', actual, { path: '/' });
   //console.log(cookies.get('actual'));
+}
+
+function cleanSalas() {
+  element = document.getElementById('sala');
+
+  while (element.hasChildNodes()) {
+    element.removeChild(element.firstChild);
+  }
 }
 
 function goSala(id) {

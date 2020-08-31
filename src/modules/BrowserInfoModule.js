@@ -87,7 +87,7 @@ export default class BrowserInfoModule extends Module {
         }else{
             id=id_coming;
         }
-        console.log(id);
+        console.log('id_coming', id);
         clean('curadores');
         clean('expositores');
         clean('temaC');
@@ -99,6 +99,7 @@ export default class BrowserInfoModule extends Module {
         ajaxRequest.onreadystatechange = function() {
             if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
                 info = JSON.parse(ajaxRequest.responseText);
+                console.log('data to show', info);
                 if(!(typeof info.temaCuratorial === 'undefined')){
                     temaC = info.temaCuratorial;
                     cod = '<h6><a class="dropdown-item" href="#">'+temaC+'</a></h6>';

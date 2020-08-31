@@ -122,10 +122,13 @@ export class ModalMio extends React.Component {
         });
     }
 
+    
+
     placeComentarios = (idObra) => {
+        
         return (<div id="container" ><div className="row align-items-center justify-content-center p-1" style={{background: 'black'}}><h6 style={{color: 'white'}}>COMENTARIOS</h6></div>
         <div className="row align-items-center justify-content-center mb-1" >
-            <table className="table table-hover table-responsive " style={{width: '100%', height: '400px'}}
+            <table className="table table-hover table-responsive " style={{width: '100%', height: '350px'}}
             id='tabla'>
                 <thead>
                   
@@ -137,7 +140,7 @@ export class ModalMio extends React.Component {
         </div>
         <div className="row align-items-center justify-content-center" id="progress" style={{display:'none'}}>
         <p>Cargando...</p></div>
-        <div className="row align-items-center justify-content-center mb-5 p-1" style={{background: 'black'}}><button className="btn btn-secondary" id="btnComentario" onClick={() => {this.cargarComentario(`${idObra}`, $('#listaComentarios'), $('#tabla'), $('#progress')  )}}>Cargar mas</button></div>
+        <div className="row align-items-center justify-content-center mb-1 p-1" style={{background: 'black'}}><button className="btn btn-secondary" id="btnComentario" onClick={() => {this.cargarComentario(`${idObra}`, $('#listaComentarios'), $('#tabla'), $('#progress')  )}}>Cargar mas comentarios...</button></div>
     
 
     
@@ -249,6 +252,7 @@ export class ModalMio extends React.Component {
                                     </Modal.Footer> */}
                         </Carousel.Item>
                         {this.placeYoutube(linkVideoYoutube)}
+                        
                         <Carousel.Item>
                             <div>
                                 <OBJModel
