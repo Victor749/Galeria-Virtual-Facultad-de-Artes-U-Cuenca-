@@ -3,7 +3,7 @@ import { Button, Modal, Container, Row, Col } from 'react-bootstrap';
 import React, { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import Lightbox from 'react-image-lightbox';
-// import { ButtonComentario } from './ButtonComentario.component';
+import { ButtonComentario } from './ButtonComentario.component';
 
 export class ModalMio extends React.Component {
 
@@ -14,8 +14,14 @@ export class ModalMio extends React.Component {
             photoIndex: 0,
             isOpen: false,
             hidden: 'visible',
-            numberSlides: 1
+            numberSlides: 1,
+            comment: ''
         }
+    }
+
+    textAreaChange = (e) => {
+        console.log(e.target.value);
+        this.setState({comment: e.target.value});
     }
 
     hola = (e, a) => {
@@ -42,13 +48,16 @@ export class ModalMio extends React.Component {
     render(){       
         // handleModal = console.log("heyyy");
         // console.log(Button);
-        const {show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, facebook, instagram, visitas} = this.props;
+        const {document, window ,show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, facebook, instagram, visitas, identifier, handleUser, obraId, logoutUser} = this.props;
         console.log("JAJA");
+        console.log(identifier);
+        console.log(document);
         console.log(visitas);
         console.log(rutaElemento);
         console.log(facebook);
         console.log(instagram);
         console.log(process.env.DEBUG);
+
 
         const { photoIndex, isOpen } = this.state;
 
@@ -136,13 +145,24 @@ export class ModalMio extends React.Component {
                             <Carousel.Item>
                                     <div className="d-flex flex-column justify-content-between bd-highlight example-parent" >
                                         <div className="comentarios" /*style={{height: '60vh'}} */ >
-                                            sa;lkfksa
+                                            HOLAsadas
                                         </div>
                                         <div className="row justify-content-center hacer-comentario">
-                                            <textarea className="col-12 col-sm-8 comentario">
+                                            <textarea onChange={this.textAreaChange} className="col-12 col-sm-7 comentario">
 
                                             </textarea>
-                                            {/* <ButtonComentario /> */}
+                                            <ButtonComentario document={document} window={window} identifier={identifier} handleUser={handleUser} comment={this.state.comment} obraId={obraId} logoutUser={logoutUser}/>
+                                            {/* <div>
+                                                <div id="gSignInWrapper">
+                                                    <span class="label">Sign in with:</span>
+                                                    <div id="customBtn" class="customGPlusSignIn">
+                                                    <span class="icon"></span>
+                                                    <span class="buttonText">Google</span>
+                                                    </div>
+                                                </div>
+                                                <div id="name"></div>
+                                            </div> */}
+
                                         </div>
                                         <div className="" style={styles.modalUniversidad}>
                                         </div>

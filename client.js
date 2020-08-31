@@ -15,7 +15,9 @@ class ModalControl extends React.Component{
   constructor() {
     super();
     this.state = {
+      identifier: sessionStorage.getItem('identifier'),
       show2: true,
+      obraId: null,
       imageSource: null,
       autor :  null,
       titulo :  null,
@@ -30,12 +32,51 @@ class ModalControl extends React.Component{
       instagram: null,
       visitas: null
     }
+
+    window.addEventListener("beforeunload", function(event) {
+      sessionStorage.setItem('hello', 'hsssola');
+    });
+
   }
 
   handleChange = () => {
       console.log(this);
-      console.log("Soy Pablo SOlano");
       this.setState({show2: false});
+  }
+
+  handleUser = (identificador) => {
+    // console.log('handleUser');
+
+    let http = new XMLHttpRequest();
+    http.open('GET', `http://localhost:3000/usuarios/${identificador}/check`, true);
+
+    http.onreadystatechange = () => {//Call a function when the state changes.
+        if(http.readyState == 4 && http.status == 200) {
+            console.log("\n\nHa hechoo la solicituuuuud: ");
+            if(http.responseText == 'true'){
+                console.log("\nTRUEEEEEEEEEEEEEEE: ");
+                sessionStorage.setItem('identifier', identificador);
+                this.setState({identifier: identificador} );
+            }else{
+                console.log("\nFALSEEEEEEEEEEEEEEEEE: ");
+                console.log("Soy Pablo SOlano");
+                this.logoutUser();
+            }
+        }
+    }
+    http.send();
+    console.log("Soy Pablo SOlano");
+  }
+
+  logoutUser = () => {
+    sessionStorage.clear();
+    this.setState({identifier: null } );
+  }
+
+  
+
+  componentDidMount(){
+    console.log("HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   }
 
   handleShow = (obra, rutaElemento, contador) => {
@@ -56,15 +97,15 @@ class ModalControl extends React.Component{
       descripcion: obra.descripcion,
       facebook: obra.facebook,
       instagram: obra.instagram,
-      visitas: contador
-
+      visitas: contador,
+      obraId: obra.idObra
     }); 
 }
 
   render(){
     const {...estado} = this.state;
     return(
-      <ModalMio handleChange={this.handleChange} {...estado} />
+      <ModalMio handleChange={this.handleChange} {...estado} document={document} window={window} handleUser={this.handleUser} logoutUser={this.logoutUser}/>
     );
   }
 }
@@ -94,8 +135,12 @@ class MiModulo extends Module {
 // This method will be exposed to the React app
   doSomething(obra, rutaElemento, contador){
     console.log("Hola");
+    // console.log(obra);
     x.handleShow(obra, rutaElemento, contador);
   }
+
+  
+  
 }
 
 
