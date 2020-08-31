@@ -22,9 +22,13 @@
     "three": "^0.87.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-jest": "^19.0.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "babel-preset-react-native": "^1.9.1",
+    "babel-preset-stage-0": "^6.24.1",
     "jest": "^19.0.2",
     "react-devtools": "^2.5.2",
     "react-test-renderer": "16.0.0",
