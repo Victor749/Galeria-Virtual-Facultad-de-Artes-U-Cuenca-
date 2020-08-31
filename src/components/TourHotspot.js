@@ -7,7 +7,7 @@ import React from 'react';
 import {asset, Text, Image, View, StyleSheet} from 'react-360';
 import WorkInProgressSurface from '../customViews/WorkInProgressSurface';
 
-const TOUR_HOTSPOT_DISTANCE = 4;
+const TOUR_HOTSPOT_DISTANCE = 5;
 
 /**
  * A simple container to wrap it's children and place it in the 
@@ -20,12 +20,12 @@ class TourHotspot extends React.Component {
   };
 
   render() {
-    const {width, height, children, rotationY, rotationX} = this.props;
+    const {width, height, children, rotationY, rotationX, rotationZ} = this.props;
     return (
      <WorkInProgressSurface
         surfaceWidth={width}
         surfaceHeight={height}
-        style={{transform: [{rotateY: `${rotationY}deg`}, {rotateX: `${rotationX}deg`}, {translate: [0, 0, -TOUR_HOTSPOT_DISTANCE]}]}}>
+        style={{transform: [{rotateY: `${rotationY}deg`}, {rotateX: `${rotationX}deg`}, {rotateZ: `${-rotationZ}deg`}, {translate: [0, 0, -TOUR_HOTSPOT_DISTANCE]}]}}>
         <View style={[styles.hotspot, {width: width, height: height}]}>
           {children}
         </View>

@@ -17,8 +17,8 @@ class TourInfoButton extends React.Component {
     fadeOut: 500,
     height: 40,
     onInput: null,
-    width: 40,
-    showOnLeft: false
+    width: 30,
+    showOnLeft: false,
   };
 
   constructor(props) {
@@ -112,11 +112,21 @@ class TourInfoButton extends React.Component {
     // console.log(height);
     // console.log(height);
 
-    let rutaElemento = '';
+    let rutaElemento = null;
 
     if(this.state.obra != null){
-      const {nombreElemento} = this.state.obra;
-      rutaElemento = asset(nombreElemento).uri;
+      const {imagenes} = this.state.obra;
+      // Se obtienen todos los nombres separados por ;
+      if (imagenes !== null) {
+        let nombresElementos = imagenes.split(";");
+        rutaElemento = '';
+        for (let i = 0; i < nombresElementos.length; i++) {
+          rutaElemento += asset(nombresElementos[i]).uri;
+          if (i !== nombresElementos.length - 1) {
+            rutaElemento += ";";
+          }
+        }
+      }
     }
     
     // await this.aumentarContadorVista();
