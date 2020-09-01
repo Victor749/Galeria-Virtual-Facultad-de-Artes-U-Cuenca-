@@ -15,11 +15,11 @@ export class ModalMio extends React.Component {
             photoIndex: 0,
             isOpen: false,
             comment: '',
-            defaultNumberSlides: 2
+            defaultNumberSlides: 1
         }
         this.numberSlides = this.state.defaultNumberSlides;
     };
-        
+
 
     cerrarModal = (metodo) => {
         this.setState({ active: 0, photoIndex: 0 });
@@ -28,7 +28,7 @@ export class ModalMio extends React.Component {
 
     textAreaChange = (e) => {
         console.log(e.target.value);
-        this.setState({comment: e.target.value});
+        this.setState({ comment: e.target.value });
     }
 
     hola = (e, a) => {
@@ -53,8 +53,6 @@ export class ModalMio extends React.Component {
     }
 
     placeYoutube = (linkVideoYoutube) => {
-        // El link debe tener la forma https://www.youtube.com/watch?v=o8NPllzkFhE
-        let videoYoutube = "";
         if (linkVideoYoutube !== null) {
             videoYoutube = "https://www.youtube-nocookie.com/embed/" + linkVideoYoutube.split("=")[1];
             return (<Carousel.Item>
@@ -62,6 +60,41 @@ export class ModalMio extends React.Component {
                     src={videoYoutube} allowFullScreen>
                 </iframe></div>
             </Carousel.Item>);
+        } else {
+            return false;
+        }
+    }
+
+    place3DModel = (obj, mtl) => {
+        let host = "http://localhost:3000"
+        if (obj !== null) {
+            if (mtl !== null) {
+                return (<Carousel.Item>
+                    <div>
+                        <MTLModel
+                            src={obj}
+                            mtl={mtl}
+                            texPath={`${host}/static_assets/`}
+                            height={500}
+                            width={500}
+                            position={{ x: 0, y: 0, z: 0 }}
+                            rotation={{ x: 0, y: 0, z: 0 }}
+                        />
+                    </div>
+                </Carousel.Item>);
+            } else {
+                return (<Carousel.Item>
+                    <div>
+                        <OBJModel
+                            src={obj}
+                            height={500}
+                            width={500}
+                            position={{ x: 0, y: 0, z: 0 }}
+                            rotation={{ x: 0, y: 0, z: 0 }}
+                        />
+                    </div>
+                </Carousel.Item>);
+            }
         } else {
             return false;
         }
@@ -84,11 +117,11 @@ export class ModalMio extends React.Component {
             return false;
         }
     }
-    
+
     render() {
         // handleModal = console.log("heyyy");
         // console.log(Button);
-        const { document, window ,show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion,  facebook, instagram, visitas, identifier, handleUser, obraId, logoutUser, tecnica, linkVideoYoutube, suma } = this.props;
+        const { document, window, show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, facebook, instagram, visitas, identifier, handleUser, obraId, logoutUser, tecnica, linkVideoYoutube, suma, obj_file, mtl_file } = this.props;
 
         this.numberSlides = this.state.defaultNumberSlides + suma;
 
@@ -127,21 +160,21 @@ export class ModalMio extends React.Component {
 
                             <div className="d-flex flex-column justify-content-between bd-highlight example-parent"  >
                                 <div className="d-flex row justify-content-center p-12 bd-highlight mb-3 col-example" style={{ height: '60%' }}>
-                                    <div className="col-6 col-sm-7 m-0 p-0 border-right">
+                                    <div className="col-6 col-sm-7 m-0 p-0">
                                         <p className="tituloFicha">Ficha Museográfica</p>
                                         <p className="data">Autor: <label className="data-entry">{autor}</label></p>
-                                                    
+
                                         <p className="data">Título: <label className="data-entry">{titulo}</label></p>
-                                        
+
                                         <p className="data">Asignatura: <label className="data-entry">{asignatura}</label></p>
-                                        
+
                                         <p className="data">Ciclo: <label className="data-entry">{ciclo}</label></p>
-                                        
+
                                         <p className="data">Tutor: <label className="data-entry">{tutor}</label></p>
                                         <p className="data">Técnica: <label className="data-entry">{tecnica}</label></p>
                                         {/* <p>Técnica: </p> */}
                                         <p className="data">Dimensiones: <label className="data-entry">{dimensiones}</label></p>
-                                    
+
                                         <p className="data">Fecha Producción: <label className="data-entry">{fechaProducccion}</label></p>
                                     </div>
                                     {this.placeImages(images, handleChange)}
@@ -158,13 +191,13 @@ export class ModalMio extends React.Component {
                                 <div className="row justify-content-between align-items-center p-12 bd-highlight col-example d-flex justify-content-end align-items-center" style={styles.modalUniversidad}>
                                     <div className="row justify-content-center align-items-center col-4">
                                         <a className="redSocial" href={`${facebook}`} target="_blank">
-                                            <img className="facebook" src="http://localhost:3000/static_assets/facebook.png"  />
+                                            <img className="facebook" src="http://localhost:3000/static_assets/facebook.png" />
                                         </a>
                                         <a className="redSocial" href={`${instagram}`} target="_blank">
-                                            <img className="instagram" src="http://localhost:3000/static_assets/instagram.png"  />
+                                            <img className="instagram" src="http://localhost:3000/static_assets/instagram.png" />
                                         </a>
                                         <svg className="seen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                            <path d="M12.015 7c4.751 0 8.063 3.012 9.504 4.636-1.401 1.837-4.713 5.364-9.504 5.364-4.42 0-7.93-3.536-9.478-5.407 1.493-1.647 4.817-4.593 9.478-4.593zm0-2c-7.569 0-12.015 6.551-12.015 6.551s4.835 7.449 12.015 7.449c7.733 0 11.985-7.449 11.985-7.449s-4.291-6.551-11.985-6.551zm-.015 5c1.103 0 2 .897 2 2s-.897 2-2 2-2-.897-2-2 .897-2 2-2zm0-2c-2.209 0-4 1.792-4 4 0 2.209 1.791 4 4 4s4-1.791 4-4c0-2.208-1.791-4-4-4z"/>
+                                            <path d="M12.015 7c4.751 0 8.063 3.012 9.504 4.636-1.401 1.837-4.713 5.364-9.504 5.364-4.42 0-7.93-3.536-9.478-5.407 1.493-1.647 4.817-4.593 9.478-4.593zm0-2c-7.569 0-12.015 6.551-12.015 6.551s4.835 7.449 12.015 7.449c7.733 0 11.985-7.449 11.985-7.449s-4.291-6.551-11.985-6.551zm-.015 5c1.103 0 2 .897 2 2s-.897 2-2 2-2-.897-2-2 .897-2 2-2zm0-2c-2.209 0-4 1.792-4 4 0 2.209 1.791 4 4 4s4-1.791 4-4c0-2.208-1.791-4-4-4z" />
                                         </svg>
                                         <span>{visitas}</span>
                                     </div>
@@ -179,18 +212,8 @@ export class ModalMio extends React.Component {
                                         <Button onClick={handleChange}>Close</Button>
                                     </Modal.Footer> */}
                         </Carousel.Item>
+                        {this.place3DModel(obj_file, mtl_file)}
                         {this.placeYoutube(linkVideoYoutube)}
-                        <Carousel.Item>
-                            <div>
-                                <OBJModel
-                                    src="http://localhost:3000/static_assets/bb8.obj"
-                                    height={500}
-                                    width={500}
-                                    position={{ x: 0, y: 0, z: 0 }}
-                                    rotation={{ x: 0, y: 0, z: 0 }}
-                                />
-                            </div>
-                        </Carousel.Item>
                         <Carousel.Item>
                             <div className="d-flex flex-column justify-content-between bd-highlight example-parent" >
                                 <div className="comentarios" /*style={{height: '60vh'}} */ >
@@ -202,6 +225,7 @@ export class ModalMio extends React.Component {
                                     </textarea>
                                     <ButtonComentario document={document} window={window} identifier={identifier} handleUser={handleUser} comment={this.state.comment} obraId={obraId}/>
                                     <button onClick={logoutUser} >Sign Out</button>
+
                                     {/* <div>
                                         <div id="gSignInWrapper">
                                             <span class="label">Sign in with:</span>
