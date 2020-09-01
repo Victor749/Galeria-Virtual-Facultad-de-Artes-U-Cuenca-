@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import Lightbox from 'react-image-lightbox';
 import { ButtonComentario } from './ButtonComentario.component';
-import { OBJModel, MTLModel } from 'react-3d-viewer';
+
+const host = "http://localhost:3000";
 
 export class ModalMio extends React.Component {
 
@@ -65,36 +66,14 @@ export class ModalMio extends React.Component {
         }
     }
 
-    place3DModel = (obj, mtl) => {
-        let host = "http://localhost:3000"
+    place3DModel = (obj) => {
+        let link = "/visor3D/";
         if (obj !== null) {
-            if (mtl !== null) {
-                return (<Carousel.Item>
-                    <div>
-                        <MTLModel
-                            src={obj}
-                            mtl={mtl}
-                            texPath={`${host}/static_assets/`}
-                            height={500}
-                            width={500}
-                            position={{ x: 0, y: 0, z: 0 }}
-                            rotation={{ x: 0, y: 0, z: 0 }}
-                        />
-                    </div>
-                </Carousel.Item>);
-            } else {
-                return (<Carousel.Item>
-                    <div>
-                        <OBJModel
-                            src={obj}
-                            height={500}
-                            width={500}
-                            position={{ x: 0, y: 0, z: 0 }}
-                            rotation={{ x: 0, y: 0, z: 0 }}
-                        />
-                    </div>
-                </Carousel.Item>);
-            }
+            return (<div className="row justify-content-center align-items-center col-4">
+                <a href={host + link + obj} target="_blank">
+                    Ver Modelo 3D
+                </a>
+            </div>);
         } else {
             return false;
         }
@@ -121,7 +100,7 @@ export class ModalMio extends React.Component {
     render() {
         // handleModal = console.log("heyyy");
         // console.log(Button);
-        const { document, window, show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, facebook, instagram, visitas, identifier, handleUser, obraId, logoutUser, tecnica, linkVideoYoutube, suma, obj_file, mtl_file } = this.props;
+        const { document, window, show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, facebook, instagram, visitas, identifier, handleUser, obraId, logoutUser, tecnica, linkVideoYoutube, suma, obj_file } = this.props;
 
         this.numberSlides = this.state.defaultNumberSlides + suma;
 
@@ -179,8 +158,8 @@ export class ModalMio extends React.Component {
                                     </div>
                                     {this.placeImages(images, handleChange)}
                                 </div>
-                                <div className="p-12 bd-highlight col-example d-flex justify-content-end align-items-center" style={styles.modalUniversidad}>
-                                    <label className="m-0"></label>
+                                <div className="row justify-content-between align-items-center p-12 bd-highlight col-example d-flex justify-content-end align-items-center" style={styles.modalUniversidad}>
+                                    {this.place3DModel(obj_file)}
                                 </div>
                                 <div className="row justify-content-center p-12 bd-highlight col-example" >
                                     <div className="col-11 p-3">
@@ -212,7 +191,6 @@ export class ModalMio extends React.Component {
                                         <Button onClick={handleChange}>Close</Button>
                                     </Modal.Footer> */}
                         </Carousel.Item>
-                        {this.place3DModel(obj_file, mtl_file)}
                         {this.placeYoutube(linkVideoYoutube)}
                         <Carousel.Item>
                             <div className="d-flex flex-column justify-content-between bd-highlight example-parent" >

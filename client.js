@@ -30,7 +30,6 @@ class ModalControl extends React.Component {
       tecnica: null,
       linkVideoYoutube: null,
       obj_file: null,
-      mtl_file: null,
       suma: null
     }
 
@@ -80,7 +79,7 @@ class ModalControl extends React.Component {
   }
 
 
-  handleShow = (obra, rutaElemento, contador, suma, obj_file, mtl_file) => {
+  handleShow = (obra, rutaElemento, contador, suma) => {
     console.log(this);
     console.log("Soy Pablo SOlano 22222222");
     console.log(contador);
@@ -102,8 +101,7 @@ class ModalControl extends React.Component {
         visitas: contador,
         obraId: obra.idObra,
         linkVideoYoutube: obra.linkVideoYoutube,
-        obj_file: obj_file,
-        mtl_file: mtl_file,
+        obj_file: obra.obj,
         suma: suma
     }); 
   }
@@ -139,16 +137,13 @@ class MiModulo extends Module {
   }
 
   // This method will be exposed to the React app
-  doSomething(obra, rutaElemento, contador, obj_file, mtl_file) {
+  doSomething(obra, rutaElemento, contador) {
     console.log("Hola");
     let suma = 0;
     if (obra.linkVideoYoutube !== null) {
       suma += 1;
     }
-    if (obra.obj !== null) {
-      suma += 1;
-    }
-    x.handleShow(obra, rutaElemento, contador, suma, obj_file, mtl_file);
+    x.handleShow(obra, rutaElemento, contador, suma);
   }
 
   
