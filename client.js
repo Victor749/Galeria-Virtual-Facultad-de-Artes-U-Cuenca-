@@ -11,7 +11,7 @@ class ModalControl extends React.Component {
   constructor() {
     super();
     this.state = {
-      identifier: sessionStorage.getItem('identifier'),
+      identifier: sessionStorage.getItem('identifier') == 'null' ? null : sessionStorage.getItem('identifier'),
       show2: true,
       obraId: null,
       imageSource: null,
@@ -32,9 +32,13 @@ class ModalControl extends React.Component {
       suma: null
     }
 
-    window.addEventListener("beforeunload", function(event) {
-      sessionStorage.setItem('hello', 'hsssola');
+    window.addEventListener("beforeunload", (event) => {
+      console.log("ENTRO AL RECARGAR PAGINA");
+      sessionStorage.setItem('identifier', this.state.identifier);
+      // sessionStorage.setItem('identifier', 'dsada');
+      event.returnValue = '';
     });
+
 
   }
 
@@ -49,27 +53,54 @@ class ModalControl extends React.Component {
             console.log("\n\nHa hechoo la solicituuuuud: ");
             if(http.responseText == 'true'){
                 console.log("\nTRUEEEEEEEEEEEEEEE: ");
-                sessionStorage.setItem('identifier', identificador);
                 this.setState({identifier: identificador} );
             }else{
                 console.log("\nFALSEEEEEEEEEEEEEEEEE: ");
-                console.log("Soy Pablo SOlano");
                 this.logoutUser();
             }
         }
     }
     http.send();
+    
     console.log("Soy Pablo SOlano");
   }
 
   logoutUser = () => {
-    sessionStorage.clear();
+    console.log("ENTRO AL RECARGAR PAGINA222");
     this.setState({identifier: null } );
   }
 
   componentDidMount(){
-    console.log("HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-  }
+
+    let identifier = this.state.identifier;
+
+    
+    if(identifier !== 'null'){
+      let http = new XMLHttpRequest();
+      http.open('GET', `http://localhost:3000/usuarios/${identifier}/check`, true);
+
+      console.log("HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+      http.onreadystatechange = () => {//Call a function when the state changes.
+        if(http.readyState == 4 && http.status == 200) {
+            console.log("\n\nHa hechoo la solicituuuuud2: ");
+            if(http.responseText == 'true'){
+                console.log("\nTRUEEEEEEEEEEEEEEE: ");
+                // this.setState({identifier: identifier} );
+            }else{
+                console.log("\nFALSEEEEEEEEEEEEEEEEE2: ");
+                this.logoutUser();
+            }
+        }
+      }
+      
+      http.send();
+    }else{
+      console.log('\n\nENTROOOOOOO AL ELSE: ');
+      console.log(identifier);
+      
+    }   
+    sessionStorage.clear();
+}
 
   handleChange = () => {
     console.log(this);

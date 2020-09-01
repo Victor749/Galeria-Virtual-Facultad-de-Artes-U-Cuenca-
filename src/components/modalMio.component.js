@@ -200,7 +200,8 @@ export class ModalMio extends React.Component {
                                     <textarea onChange={this.textAreaChange} className="col-12 col-sm-7 comentario">
 
                                     </textarea>
-                                    <ButtonComentario document={document} window={window} identifier={identifier} handleUser={handleUser} comment={this.state.comment} obraId={obraId} logoutUser={logoutUser}/>
+                                    <ButtonComentario document={document} window={window} identifier={identifier} handleUser={handleUser} comment={this.state.comment} obraId={obraId}/>
+                                    <button onClick={logoutUser} >Sign Out</button>
                                     {/* <div>
                                         <div id="gSignInWrapper">
                                             <span class="label">Sign in with:</span>
