@@ -217,8 +217,10 @@ class TourAppTemplate extends React.Component {
                 rotationX={rotationX}
                 rotationZ={rotationZ}>
                 <TourInfoButton
+                  // Atribbution URI: https://www.freesound.org/people/ianstargem/sounds/278205/
                   onEnterSound={asset(soundEffects.navButton.onEnter.uri)}
                   showOnLeft={showOnLeft}
+                  // Atribbution URI: https://freesvg.org/img/emblem-information.png
                   source={asset(data.info_icon)}
                   tooltip={tooltip}
                   metodo={MiModulo.doSomething}
@@ -240,7 +242,9 @@ class TourAppTemplate extends React.Component {
               rotationZ={0}>
               <TourNavButton
                 isLoading={isLoading}
+                // Atribbution URI: https://www.freesound.org/people/fins/sounds/146721/
                 onClickSound={asset(soundEffects.navButton.onClick.uri)}
+                // Atribbution URI: https://www.freesound.org/people/ianstargem/sounds/278205/
                 onEnterSound={asset(soundEffects.navButton.onEnter.uri)}
                 onInput={() => {
                   // Update nextLocationId, not locationId, so tooltips match
@@ -251,6 +255,7 @@ class TourAppTemplate extends React.Component {
                   });
                 }}
                 showOnLeft={showOnLeft}
+                // Atribbution URI: https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Chevron-up.svg/640px-Chevron-up.svg.png
                 source={asset(data.nav_icon)}
                 textLabel={tooltip.text}
                 rotZ={rotationZ}
