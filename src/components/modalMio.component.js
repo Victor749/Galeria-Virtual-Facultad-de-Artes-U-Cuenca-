@@ -70,8 +70,8 @@ export class ModalMio extends React.Component {
         let link = "/visor3D/";
         if (obj !== null) {
             return (<div className="row justify-content-center align-items-center col-4">
-                <a href={host + link + obj} target="_blank">
-                    Ver Modelo 3D
+                <a className="redSocial" href={host + link + obj} target="_blank">
+                    <img className="instagram" src={`${host}/images/3Dicon.png`} />
                 </a>
             </div>);
         } else {
@@ -98,7 +98,7 @@ export class ModalMio extends React.Component {
     }
 
     deleteSentComment = () => {
-        this.setState({comment: ''});
+        this.setState({ comment: '' });
     }
 
     render() {
@@ -200,7 +200,7 @@ export class ModalMio extends React.Component {
                         <Carousel.Item>
                             <div className="d-flex flex-column justify-content-between bd-highlight example-parent" >
                                 <div className="row justify-content-end align-items-center" style={styles.modalUniversidad}>
-                                    <ButtonComentario identifier={identifier} signOutUser={signOutUser} handleUser={handleUser} comment={this.state.comment} obraId={obraId}  topButton/>
+                                    <ButtonComentario identifier={identifier} signOutUser={signOutUser} handleUser={handleUser} comment={this.state.comment} obraId={obraId} topButton />
                                 </div>
                                 <div className="comentarios" /*style={{height: '60vh'}} */ >
                                     HOLAsadas
@@ -209,8 +209,8 @@ export class ModalMio extends React.Component {
                                     <textarea onChange={this.textAreaChange} className="col-12 col-sm-7 comentario" value={`${this.state.comment}`}>
 
                                     </textarea>
-                                    <ButtonComentario identifier={identifier} handleUser={handleUser} comment={this.state.comment} obraId={obraId} deleteSentComment={this.deleteSentComment}/>
-                                    
+                                    <ButtonComentario identifier={identifier} handleUser={handleUser} comment={this.state.comment} obraId={obraId} deleteSentComment={this.deleteSentComment} />
+
 
                                     {/* <div>
                                         <div id="gSignInWrapper">
