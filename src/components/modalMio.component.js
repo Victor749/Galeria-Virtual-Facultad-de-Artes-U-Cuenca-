@@ -49,14 +49,14 @@ export class ModalMio extends React.Component {
     }
 
     textAreaChange = (e) => {
-        console.log(e.target.value);
+        // console.log(e.target.value);
         this.setState({ comment: e.target.value });
     }
 
     hola = (e, a) => {
-        console.log("Heyy there");
-        console.log(e);
-        console.log(a);
+        // console.log("Heyy there");
+        // console.log(e);
+        // console.log(a);
         this.setState({ active: e });
     }
 
@@ -69,8 +69,8 @@ export class ModalMio extends React.Component {
         } else {
             position = this.state.active + step;
         }
-        console.log("yyyy");
-        console.log(position);
+        // console.log("yyyy");
+        // console.log(position);
         this.setState({ active: position });
     }
 
@@ -202,23 +202,27 @@ export class ModalMio extends React.Component {
         
     }*/
 
+    deleteSentComment = () => {
+        this.setState({comment: ''});
+    }
+
     render() {
         // handleModal = console.log("heyyy");
         // console.log(Button);
-        const { document, window, show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, facebook, instagram, visitas, identifier, handleUser, obraId, logoutUser, tecnica, linkVideoYoutube, suma, obj_file } = this.props;
+        const { document, window, show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, facebook, instagram, visitas, identifier, handleUser, obraId, signOutUser, tecnica, linkVideoYoutube, suma, obj_file } = this.props;
 
         this.numberSlides = this.state.defaultNumberSlides + suma;
 
-        console.log("JAJA");
-        console.log(identifier);
-        console.log(document);
-        console.log(visitas);
-        console.log(show2);
-        console.log(rutaElemento);
-        console.log('successful ', obraId);
-        console.log(facebook);
-        console.log(instagram);
-        console.log(process.env.DEBUG);
+        // console.log("JAJA");
+        // console.log(obraId);
+        // console.log(identifier);
+        // console.log(document);
+        // console.log(visitas);
+        // console.log(show2);
+        // console.log(rutaElemento);
+        // console.log(facebook);
+        // console.log(instagram);
+        // console.log(process.env.DEBUG);
 
         
 
@@ -302,15 +306,18 @@ export class ModalMio extends React.Component {
                         
                         <Carousel.Item>
                             <div className="d-flex flex-column justify-content-between bd-highlight example-parent" >
+                                <div className="row justify-content-end align-items-center" style={styles.modalUniversidad}>
+                                    <ButtonComentario identifier={identifier} signOutUser={signOutUser} handleUser={handleUser} comment={this.state.comment} obraId={obraId}  topButton/>
+                                </div>
                                 <div className="comentarios" /*style={{height: '60vh'}} */ >
                                     {this.placeComentarios(obraId)}
                                 </div>
                                 <div className="row justify-content-center hacer-comentario">
-                                    <textarea onChange={this.textAreaChange} className="col-12 col-sm-7 comentario">
+                                    <textarea onChange={this.textAreaChange} className="col-12 col-sm-7 comentario" value={`${this.state.comment}`}>
 
                                     </textarea>
-                                    <ButtonComentario document={document} window={window} identifier={identifier} handleUser={handleUser} comment={this.state.comment} obraId={obraId}/>
-                                    <button onClick={logoutUser} >Sign Out</button>
+                                    <ButtonComentario identifier={identifier} handleUser={handleUser} comment={this.state.comment} obraId={obraId} deleteSentComment={this.deleteSentComment}/>
+                                    
 
                                     {/* <div>
                                         <div id="gSignInWrapper">

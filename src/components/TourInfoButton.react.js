@@ -34,8 +34,8 @@ class TourInfoButton extends React.Component {
 
   componentDidMount(){
     this.setObra();
-    console.log("OBRAAAAA:");
-    console.log(this.state.obraId);
+    // console.log("OBRAAAAA:");
+    // console.log(this.state.obraId);
   }
 
   setObra = () => {

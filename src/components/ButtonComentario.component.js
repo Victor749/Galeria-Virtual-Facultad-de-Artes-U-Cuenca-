@@ -20,45 +20,53 @@ export class ButtonComentario extends React.Component{
 
     sendComment = () => {
 
-        let {comment, identifier, obraId} = this.props;
-        console.log(comment);
+        let {comment, identifier, obraId, deleteSentComment} = this.props;
+        // console.log(comment);
 
-        params = `indentifier=${identifier}&idObra=${obraId}&contenido=${comment}`;
+        if(identifier && comment.length){
+            params = `identifier=${identifier}&idObra=${obraId}&contenido=${comment}`;
 
-        request = this.makePostRequest('http://localhost:3000/comentarios/new');
+            request = this.makePostRequest('http://localhost:3000/comentarios/new');
 
-        request.onreadystatechange = function() {//Call a function when the state changes.
-            if(request.readyState == 4 && request.status == 200) {
-                alert(request.responseText);
+            request.onreadystatechange = function() {//Call a function when the state changes.
+                if(request.readyState == 4 && request.status == 200) {
+                    deleteSentComment();
+                }else{
+                    alert(request.responseText);
+                }
             }
+            request.send(params);
         }
-        request.send(params);
+        
     }
     
     attachSignin(element){
 
         const { handleUser } = this.props;
+        
+        // console.log(element);
+        if(element != null){
+            
+            auth2.attachClickHandler(element, {}, (googleUser) => {                
+                    // console.log(googleUser.getBasicProfile());
+                    // console.log(googleUser);
+                    let usuario=googleUser.getBasicProfile();
+                    // console.log(usuario.aU);
+                    params = `idUsuario=${usuario.aU}&nombreUsuario=${usuario.GV}&apellidoUsuario=${usuario.HT}&linkFoto=${usuario.jK}&email=${usuario.bu}`;
 
-        console.log("UUUUU: ");
-        console.log(element.id);
-        auth2.attachClickHandler(element, {}, (googleUser) => {                
-                console.log(googleUser.getBasicProfile());
-                console.log(googleUser);
-                let usuario=googleUser.getBasicProfile();
-                params = `identifier=${usuario.aU}&nombreUsuario=${usuario.GV}&apellidoUsuario=${usuario.HT}&linkFoto=${usuario.jK}&email=${usuario.bu}`;
+                    request = this.makePostRequest('http://localhost:3000/usuarios/new');
 
-                request = this.makePostRequest('http://localhost:3000/usuarios/new');
-
-                request.onreadystatechange = function() {//Call a function when the state changes.
-                    if(request.readyState == 4 && request.status == 200) {
-                        alert(request.responseText);
-                        handleUser(request.responseText);
+                    request.onreadystatechange = function() {//Call a function when the state changes.
+                        if(request.readyState == 4 && request.status == 200) {
+                            // alert(request.responseText);
+                            handleUser(request.responseText);
+                        }
                     }
-                }
-                request.send(params);              
-            }, function(error) {
-              alert(JSON.stringify(error, undefined, 2));
-        });
+                    request.send(params);              
+                }, function(error) {
+                alert(JSON.stringify(error, undefined, 2));
+            });
+        }
     }
 
     addFunctionality = () => {
@@ -70,42 +78,60 @@ export class ButtonComentario extends React.Component{
               // Request scopes in addition to 'profile' and 'email'
               //scope: 'additional_scope'
             });
-            this.attachSignin(document.getElementById('customBtn'));
-            console.log("VERSOOOOS");
+            this.attachSignin(document.getElementById('customBtnSignIn'));
+            this.attachSignin(document.getElementById('customBtnToSend'));
+            // console.log("VERSOOOOS");
         });
     }
 
 
     componentDidMount(){
         // const { document, window } = this.props;
-        console.log("\n\nUUUUUUUUUUUU222222222222: \n\n");
+        // console.log("\n\nUUUUUUUUUUUU222222222222: \n\n");
         
         this.addFunctionality();
         
     }  
     
     componentDidUpdate() {
-        console.log("\n\nUUUUUUUUUUUU33333333333: \n\n");
+        // console.log("\n\nUUUUUUUUUUUU33333333333: \n\n");
         this.addFunctionality();
-        console.log("\n\nUUUUUUUUUUUU33333333333: \n\n");
+        // console.log("\n\nUUUUUUUUUUUU33333333333: \n\n");
     }
 
 
     render(){
         // console.log(MiModulo);
         // user2 = JSON.parse(user);
-        console.log("HEYYYYYYY");
-        console.log(this.valid);
+        // console.log("HEYYYYYYY");
+        // console.log(this.valid);
 
-        let { identifier } = this.props;
-        console.log(identifier);
+        let { identifier, topButton, signOutUser, comment} = this.props;
+        // console.log(identifier);
 
-        if(! identifier ){
+        if(! identifier && topButton){
+            return(
+                <div>
+                    <div id="gSignInWrapper" className="pr-4">
+                        <div id="customBtnSignIn" className="customGPlusSignIn ">
+                            <img className="googleIcon" src="http://localhost:3000/static_assets/google.png"></img>
+                            <span className="buttonText">Sign In</span>
+                        </div>
+                    </div>
+                </div>
+            );
+        }else if(topButton){
+            return(
+                <div>
+                    <button className="signOut pr-4" onClick={signOutUser} >Sign Out</button>
+                </div>
+            );
+        }else if(! identifier ){
             return(
                 <div>
                     <div id="gSignInWrapper">
-                        <div id="customBtn" className="customGPlusSignIn">
-                            <span className="icon"></span>
+                        <div id="customBtnToSend" className="customGPlusSignIn ">
+                            <img className="googleIcon " src="http://localhost:3000/static_assets/google.png"></img>
                             <span className="buttonText">Sign In to Send</span>
                         </div>
                     </div>
@@ -114,8 +140,8 @@ export class ButtonComentario extends React.Component{
         }else{
             return(
                 <div>
-                    <button onClick={() => {this.sendComment()}} className="enviar">
-                        <img className="userFoto" /*</button>src={`${user2.jK}`}*/ ></img>
+                    <button onClick={() => {this.sendComment()}} className={`${comment.length ? 'enviar' : 'empty'}`}>
+                        {/* <img src='http://localhost:3000/static_assets/send.png' className="enviarImg"></img> */}
                         {`Send`}
                     </button>
                     

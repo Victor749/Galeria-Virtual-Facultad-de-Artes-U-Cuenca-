@@ -35,7 +35,7 @@ class ModalControl extends React.Component {
     }
 
     window.addEventListener("beforeunload", (event) => {
-      console.log("ENTRO AL RECARGAR PAGINA");
+      // console.log("ENTRO AL RECARGAR PAGINA");
       sessionStorage.setItem('identifier', this.state.identifier);
       // sessionStorage.setItem('identifier', 'dsada');
       event.returnValue = '';
@@ -52,23 +52,23 @@ class ModalControl extends React.Component {
 
     http.onreadystatechange = () => {//Call a function when the state changes.
         if(http.readyState == 4 && http.status == 200) {
-            console.log("\n\nHa hechoo la solicituuuuud: ");
+            // console.log("\n\nHa hechoo la solicituuuuud: ");
             if(http.responseText == 'true'){
-                console.log("\nTRUEEEEEEEEEEEEEEE: ");
+                // console.log("\nTRUEEEEEEEEEEEEEEE: ");
                 this.setState({identifier: identificador} );
             }else{
-                console.log("\nFALSEEEEEEEEEEEEEEEEE: ");
-                this.logoutUser();
+                // console.log("\nFALSEEEEEEEEEEEEEEEEE: ");
+                this.signOutUser();
             }
         }
     }
     http.send();
     
-    console.log("Soy Pablo SOlano");
+    // console.log("Soy Pablo SOlano");
   }
 
-  logoutUser = () => {
-    console.log("ENTRO AL RECARGAR PAGINA222");
+  signOutUser = () => {
+    // console.log("ENTRO AL RECARGAR PAGINA222");
     this.setState({identifier: null } );
   }
 
@@ -81,40 +81,40 @@ class ModalControl extends React.Component {
       let http = new XMLHttpRequest();
       http.open('GET', `http://localhost:3000/usuarios/${identifier}/check`, true);
 
-      console.log("HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+      // console.log("HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
       http.onreadystatechange = () => {//Call a function when the state changes.
         if(http.readyState == 4 && http.status == 200) {
-            console.log("\n\nHa hechoo la solicituuuuud2: ");
+            // console.log("\n\nHa hechoo la solicituuuuud2: ");
             if(http.responseText == 'true'){
-                console.log("\nTRUEEEEEEEEEEEEEEE: ");
+                // console.log("\nTRUEEEEEEEEEEEEEEE: ");
                 // this.setState({identifier: identifier} );
             }else{
-                console.log("\nFALSEEEEEEEEEEEEEEEEE2: ");
-                this.logoutUser();
+                // console.log("\nFALSEEEEEEEEEEEEEEEEE2: ");
+                this.signOutUser();
             }
         }
       }
       
       http.send();
     }else{
-      console.log('\n\nENTROOOOOOO AL ELSE: ');
-      console.log(identifier);
+      // console.log('\n\nENTROOOOOOO AL ELSE: ');
+      // console.log(identifier);
       
     }   
     sessionStorage.clear();
 }
 
   handleChange = () => {
-    console.log(this);
-    console.log("Soy Pablo SOlano");
+    // console.log(this);
+    // console.log("Soy Pablo SOlano");
     this.setState({ show2: (!this.state.show2) });
   }
 
 
-  handleShow = (obra, rutaElemento, contador, suma) => {
-    console.log(this);
-    console.log("Soy Pablo SOlano 22222222");
-    console.log(contador);
+  handleShow = (obra, rutaElemento, contador, suma, obj_file, mtl_file) => {
+    // console.log(this);
+    // console.log("Soy Pablo SOlano 22222222");
+    // console.log(contador);
     this.setState(
       {
         show2: true,
@@ -141,7 +141,7 @@ class ModalControl extends React.Component {
   render(){
     const {...estado} = this.state;
     return(
-      <ModalMio handleChange={this.handleChange} {...estado} document={document} window={window} handleUser={this.handleUser} logoutUser={this.logoutUser}/>
+      <ModalMio handleChange={this.handleChange} {...estado} document={document} window={window} handleUser={this.handleUser} signOutUser={this.signOutUser}/>
       );
   }
 }
@@ -150,7 +150,7 @@ class MiModulo extends Module {
   constructor() {
     super('MiModulo'); // Makes this module available at NativeModules.MyModule
     modal = document.getElementById('modal');
-    console.log("\n\nHeyyyyyy que maaaas");
+    // console.log("\n\nHeyyyyyy que maaaas");
   
     // this.state = {
     //   show: false
@@ -169,8 +169,8 @@ class MiModulo extends Module {
   }
 
   // This method will be exposed to the React app
-  doSomething(obra, rutaElemento, contador) {
-    console.log("Hola");
+  doSomething(obra, rutaElemento, contador, obj_file, mtl_file) {
+    // console.log("Hola");
     let suma = 0;
     if (obra.linkVideoYoutube !== null) {
       suma += 1;
