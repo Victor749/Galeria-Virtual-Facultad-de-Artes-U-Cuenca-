@@ -27,7 +27,7 @@ function editar(idComentario, boton){
         '<p>Ha ocurrido un error. </p><strong>Intentalo mas tarde.</strong>' +
         '</div>'+
         '<div class="row align-items-center justify-content-center mb-5">'+ 
-        '<button class="mr-3" onclick="guardarEdicion(\''+idComentario+'\')">Guardar</button><button onclick="cleanEdicionAntigua()">Cancelar</button></div></div>'
+        '<button class="btn btn-success mr-3" onclick="guardarEdicion(\''+idComentario+'\')">Guardar</button><button class="btn btn-danger" onclick="cleanEdicionAntigua()">Cancelar</button></div></div>'
         ;
     codigo += '<div class="modal-footer">' +
         '<button type="button" onclick="cleanEdicionAntigua()" class="btn btn-secondary" >Cerrar</button>' +
