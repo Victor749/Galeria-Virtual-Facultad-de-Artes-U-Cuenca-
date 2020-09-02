@@ -104,7 +104,7 @@ export class ModalMio extends React.Component {
     render() {
         // handleModal = console.log("heyyy");
         // console.log(Button);
-        const { document, window, show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, facebook, instagram, visitas, identifier, handleUser, obraId, logoutUser, tecnica, linkVideoYoutube, suma, obj_file } = this.props;
+        const { document, window, show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, facebook, instagram, visitas, identifier, handleUser, obraId, signOutUser, tecnica, linkVideoYoutube, suma, obj_file } = this.props;
 
         this.numberSlides = this.state.defaultNumberSlides + suma;
 
@@ -200,7 +200,7 @@ export class ModalMio extends React.Component {
                         <Carousel.Item>
                             <div className="d-flex flex-column justify-content-between bd-highlight example-parent" >
                                 <div className="row justify-content-end align-items-center" style={styles.modalUniversidad}>
-                                    <ButtonComentario identifier={identifier} logoutUser={logoutUser} handleUser={handleUser} comment={this.state.comment} obraId={obraId}  topButton/>
+                                    <ButtonComentario identifier={identifier} signOutUser={signOutUser} handleUser={handleUser} comment={this.state.comment} obraId={obraId}  topButton/>
                                 </div>
                                 <div className="comentarios" /*style={{height: '60vh'}} */ >
                                     HOLAsadas

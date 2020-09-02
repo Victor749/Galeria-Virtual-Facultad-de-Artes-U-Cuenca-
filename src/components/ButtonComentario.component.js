@@ -106,7 +106,7 @@ export class ButtonComentario extends React.Component{
         // console.log("HEYYYYYYY");
         // console.log(this.valid);
 
-        let { identifier, topButton, logoutUser, comment} = this.props;
+        let { identifier, topButton, signOutUser, comment} = this.props;
         // console.log(identifier);
 
         if(! identifier && topButton){
@@ -123,7 +123,7 @@ export class ButtonComentario extends React.Component{
         }else if(topButton){
             return(
                 <div>
-                    <button className="signOut pr-4" onClick={logoutUser} >Sign Out</button>
+                    <button className="signOut pr-4" onClick={signOutUser} >Sign Out</button>
                 </div>
             );
         }else if(! identifier ){
