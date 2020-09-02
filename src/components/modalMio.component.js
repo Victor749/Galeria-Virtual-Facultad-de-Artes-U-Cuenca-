@@ -6,6 +6,8 @@ import Lightbox from 'react-image-lightbox';
 import { ButtonComentario } from './ButtonComentario.component';
 import { OBJModel, MTLModel } from 'react-3d-viewer';
 
+
+
 export class ModalMio extends React.Component {
 
     constructor(props) {
@@ -24,6 +26,18 @@ export class ModalMio extends React.Component {
         window.addEventListener( 'setnewActual', e => {
             actualS = this.state.actual + this.state.limit; 
             this.setState({ actual: actualS });
+        });
+        window.addEventListener( 'deleteComentario', e => {
+            actualS = this.state.actual - 1 ; 
+            this.setState({ actual: actualS });
+        });
+        window.addEventListener( 'activateEdition', e => {
+            console.log('probando', this.state.identifier);
+            console.log($('.'+this.state.identifier));
+            $('.'+this.state.identifier).show();
+        });
+        window.addEventListener( 'desactivateEdition', e => {
+            $('.'+this.state.identifier).hide();
         });
     };
 
@@ -129,12 +143,28 @@ export class ModalMio extends React.Component {
         console.log('idObra ', idObra, listaComentarios, tabla, progreso, this.state.actual, this.state.limit);
         $.ajax({
             type: 'GET',
-            url: 'http://localhost:3000/comentarios/getComentario/'+idObra+'/'+this.state.actual+'/'+this.state.limit+'',
+            url: 'http://localhost:3000/comentarios/getComentario/'+idObra+'/'+this.state.actual+'/'+this.state.limit+'/'+this.state.identifier,
             success: function (data) {
                 if (data != null || data.length!=0) {
                     console.log(data);
                     for (var i = 0; i < data.length; i++) {
-                        listaComentarios.append('<tr><td>' + data[i].contenido + '</td>');
+                        //validar los botones aqui ********************************************************************************
+                        
+                        info = '<tr class="'+data[i].idComentario+'"><td>'+'<div class="row justify-content-center mb-5" >'+
+                        '<div class="col col-sm-1 mr-5"><img src="'+data[i].linkFoto+'" height=60 width=60></div>'+
+                        '<div class="col col-sm-9"><div class="row align-items-left ml-2" ><b style="color:black;">'+data[i].nombreUsuario+'</b></div>'+
+                        '<div class="row align-items-left ml-3 mb-2" ><p class="text-muted">'+data[i].fecha+'</p></div>'+
+                        '<div class="row align-items-left ml-2 text-justify" ><p>'+data[i].contenido+'</p></div>'+
+                        '<div class="'+data[i].identificador+'"><div class="row align-items-right" ><button onclick="editar(\''+data[i].idComentario+'\', $(this))" class="btn btn-info mr-3">Editar</button><button onclick="eliminar('+data[i].idComentario+')" class="btn btn-danger">Eliminar</button></div></div>'+
+                        '</div></div></td></tr>';
+                        listaComentarios.append(info);
+                        console.log(data[i].idUsuario);
+                        if(data[i].idUsuario == 'hide'){
+                            //console.log($('#'+data[i].identificador));
+                            $('.'+data[i].identificador).hide();
+                        }
+                        
+                        
                     }
                     //console.log(actualS);
                     tabla.animate({ scrollTop: tabla.prop("scrollHeight")}, 1000); 
@@ -155,7 +185,12 @@ export class ModalMio extends React.Component {
         });
     }
 
-    
+    cambiandoId = () => {
+        console.log('entre a funcion');
+        this.setState({identifier: 'google'});
+        console.log(this.state.identifier);
+        window.dispatchEvent(new Event('activateEdition'));
+    }
 
     placeComentarios = (idObra) => {
         
@@ -167,16 +202,14 @@ export class ModalMio extends React.Component {
                   
                 </thead>
                 <tbody id="listaComentarios">
-                  
+                 
                 </tbody>
             </table> 
         </div>
+        <div id="forModalEditar"></div>
         <div className="row align-items-center justify-content-center" id="progress" style={{display:'none'}}>
         <p>Cargando...</p></div>
-        <div className="row align-items-center justify-content-center mb-1 p-1" style={{background: 'black'}}><button className="btn btn-secondary" id="btnComentario" onClick={() => {this.cargarComentario(`${idObra}`, $('#listaComentarios'), $('#tabla'), $('#progress')  )}}>Cargar mas comentarios...</button></div>
-    
-
-    
+        <div className="row align-items-center justify-content-center mb-1 p-1" style={{background: 'black'}}><button className="btn btn-secondary" id="btnComentario" onClick={() => {this.cargarComentario(`${idObra}`, $('#listaComentarios'), $('#tabla'), $('#progress')  )}}>Cargar mas comentarios...</button><button className="btn btn-secondary" onClick={() => {this.cambiandoId()}}>Probando id</button></div>
     </div>
     );
     }
@@ -187,6 +220,7 @@ export class ModalMio extends React.Component {
             this.setState(() => {numberSlides: this.state.numberSlides + 1}, 
             () => {console.log("PRUEBA SLIDES: "); console.log(this.state.numberSlides)});
         }
+        
     }*/
 
     render() {
@@ -207,6 +241,7 @@ export class ModalMio extends React.Component {
         console.log(instagram);
         console.log(process.env.DEBUG);
 
+        
 
         const { photoIndex, isOpen } = this.state;
 
