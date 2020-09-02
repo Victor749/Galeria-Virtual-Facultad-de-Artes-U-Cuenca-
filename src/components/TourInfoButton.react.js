@@ -59,12 +59,12 @@ class TourInfoButton extends React.Component {
       .done();
   }
 
-  appearAndCount = (rutaElemento, obj_file, mtl_file, metodo) => {
+  appearAndCount = (rutaElemento, metodo) => {
     fetch(`http://localhost:3000/obras/${this.state.obraId}?_method=PUT`,
     {method: 'POST'})
     .then(response => response.json())
     .then(responseData => {this.contador = responseData.contador})
-    .done(() => { metodo(this.state.obra, rutaElemento, this.contador, obj_file, mtl_file) });
+    .done(() => { metodo(this.state.obra, rutaElemento, this.contador) });
   }
 
 
@@ -113,11 +113,9 @@ class TourInfoButton extends React.Component {
     // console.log(height);
 
     let rutaElemento = null;
-    let obj_file = null;
-    let mtl_file = null;
 
     if(this.state.obra != null){
-      const {imagenes, obj, mtl} = this.state.obra;
+      const {imagenes} = this.state.obra;
       // Se obtienen todos los nombres separados por ;
       if (imagenes !== null) {
         let nombresElementos = imagenes.split(";");
@@ -129,12 +127,6 @@ class TourInfoButton extends React.Component {
           }
         }
       }
-      if (obj !== null) {
-        obj_file = asset(obj).uri;
-      }
-      if (mtl !== null) {
-        mtl_file = asset(mtl).uri;
-      }
     }
     
     // await this.aumentarContadorVista();
@@ -145,7 +137,7 @@ class TourInfoButton extends React.Component {
     return (
       <VrButton
         ignoreLongClick={true}
-        onClick={e => {this.appearAndCount(rutaElemento, obj_file, mtl_file, metodo)}}
+        onClick={e => {this.appearAndCount(rutaElemento, metodo)}}
         onExit={this._fadeOut}
         onClickSound={onClickSound}
         onEnterSound={onEnterSound}

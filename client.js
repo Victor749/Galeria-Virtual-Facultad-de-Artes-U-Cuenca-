@@ -30,7 +30,6 @@ class ModalControl extends React.Component {
       tecnica: null,
       linkVideoYoutube: null,
       obj_file: null,
-      mtl_file: null,
       suma: null
     }
 
@@ -133,8 +132,7 @@ class ModalControl extends React.Component {
         visitas: contador,
         obraId: obra.idObra,
         linkVideoYoutube: obra.linkVideoYoutube,
-        obj_file: obj_file,
-        mtl_file: mtl_file,
+        obj_file: obra.obj,
         suma: suma
     }); 
   }
@@ -176,10 +174,7 @@ class MiModulo extends Module {
     if (obra.linkVideoYoutube !== null) {
       suma += 1;
     }
-    if (obra.obj !== null) {
-      suma += 1;
-    }
-    x.handleShow(obra, rutaElemento, contador, suma, obj_file, mtl_file);
+    x.handleShow(obra, rutaElemento, contador, suma);
   }
 
   
