@@ -12,7 +12,7 @@ class ModalControl extends React.Component {
     super();
     this.state = {
       identifier: sessionStorage.getItem('identifier') == 'null' ? null : sessionStorage.getItem('identifier'),
-      show2: true,
+      show2: false,
       obraId: null,
       imageSource: null,
       autor: null,
