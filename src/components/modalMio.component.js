@@ -104,7 +104,7 @@ export class ModalMio extends React.Component {
     render() {
         // handleModal = console.log("heyyy");
         // console.log(Button);
-        const { document, window, show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, facebook, instagram, visitas, identifier, handleUser, obraId, signOutUser, tecnica, linkVideoYoutube, suma, obj_file } = this.props;
+        const { document, window, show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, facebook, instagram, proyectoWeb, visitas, identifier, handleUser, obraId, signOutUser, tecnica, linkVideoYoutube, suma, obj_file } = this.props;
 
         this.numberSlides = this.state.defaultNumberSlides + suma;
 
@@ -173,12 +173,15 @@ export class ModalMio extends React.Component {
                                     </div>
                                 </div>
                                 <div className="row justify-content-between align-items-center p-12 bd-highlight col-example d-flex justify-content-end align-items-center" style={styles.modalUniversidad}>
-                                    <div className="row justify-content-center align-items-center col-4">
+                                    <div className="row justify-content-center align-items-center col-6">
                                         <a className="redSocial" href={`${facebook}`} target="_blank">
                                             <img className="facebook" src="http://localhost:3000/static_assets/facebook.png" />
                                         </a>
                                         <a className="redSocial" href={`${instagram}`} target="_blank">
                                             <img className="instagram" src="http://localhost:3000/static_assets/instagram.png" />
+                                        </a>
+                                        <a className="redSocial" href={`${proyectoWeb}`} target="_blank">
+                                            <img className="facebook" src="http://localhost:3000/images/web.png" />
                                         </a>
                                         <svg className="seen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                             <path d="M12.015 7c4.751 0 8.063 3.012 9.504 4.636-1.401 1.837-4.713 5.364-9.504 5.364-4.42 0-7.93-3.536-9.478-5.407 1.493-1.647 4.817-4.593 9.478-4.593zm0-2c-7.569 0-12.015 6.551-12.015 6.551s4.835 7.449 12.015 7.449c7.733 0 11.985-7.449 11.985-7.449s-4.291-6.551-11.985-6.551zm-.015 5c1.103 0 2 .897 2 2s-.897 2-2 2-2-.897-2-2 .897-2 2-2zm0-2c-2.209 0-4 1.792-4 4 0 2.209 1.791 4 4 4s4-1.791 4-4c0-2.208-1.791-4-4-4z" />
