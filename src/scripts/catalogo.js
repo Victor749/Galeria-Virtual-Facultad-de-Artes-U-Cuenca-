@@ -232,10 +232,18 @@ function formPDF(info){
     formCabecera(doc);
     pageIndex = 2;
     z=50;
-    doc.setFontSize(20);
-    doc.setFontType('bold');
-    doc.text(15, z, 'INDICE');
-    z+=10;
+    
+    if(info.length == 0){
+        doc.setFontSize(20);
+        doc.setFontType('bold');
+        doc.text(15, z, 'NO HAY OBRAS EXHIBIDAS EN ESTE MUSEO.');
+        z+=10;
+    }else{
+        doc.setFontSize(20);
+        doc.setFontType('bold');
+        doc.text(15, z, 'INDICE');
+        z+=10;
+    }
     for (var i=0; i<info.length;i++){
         salaN = "Sala "+(i+1);
         if(!validar(y+30, doc, numPages, pageHeight)){
@@ -279,7 +287,7 @@ function formPDF(info){
         formPiePagina(doc,numPages+'');
         
     }
-    doc.save('nuevo2MetodoFotos.pdf');
+    doc.save('catalogoMuseo.pdf');
 }
 
 
@@ -310,8 +318,12 @@ function transformation(){
     ajaxRequest.onreadystatechange = function() {
         if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
             info = JSON.parse(ajaxRequest.responseText);
+            var numSalasObras = 0;
             for (var i = 0; i <info.length; i++){
                 obras = info[i].obras;
+                if(obras.length > 0){
+                    numSalasObras+=1;
+                }
                 for (var j = 0; j<obras.length;j++){
                     obra = obras[j];
                     if (obra.imagenes != 'null'){
@@ -328,6 +340,9 @@ function transformation(){
                         }
                     }
                 }
+            }
+            if(numSalasObras == 0){
+                formPDF(info);
             }
             
         }
