@@ -56,11 +56,14 @@ function guardarEdicion(idComentario){
         data.idComentario = idComentario;
         comentarioTokens = '';
         for(var i=0;i<nuevoC.length;i++){
-            if(nuevoC[i] == '\'' ){
+            /*if(nuevoC[i] == '\'' ){
                 comentarioTokens += '\\'+nuevoC[i];
             }else{
                 comentarioTokens +=nuevoC[i];
-            }
+                
+            }*/
+            comentarioTokens +=nuevoC[i];
+
         }
         data.contenido  = comentarioTokens;
         var f = new Date();
