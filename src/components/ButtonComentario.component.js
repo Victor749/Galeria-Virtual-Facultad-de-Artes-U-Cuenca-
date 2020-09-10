@@ -27,11 +27,12 @@ export class ButtonComentario extends React.Component{
 
         comentarioTokens = '';
         for(var i=0;i<comment.length;i++){
-            if(comment[i] == '\'' ){
+            /*if(comment[i] == '\'' ){
                 comentarioTokens += '\\'+comment[i];
             }else{
                 comentarioTokens +=comment[i];
-            }
+            }*/
+            comentarioTokens +=comment[i];
         }
 
         if(identifier && comment.length){
