@@ -255,7 +255,7 @@ class TourAppTemplate extends React.Component {
                   });
                 }}
                 showOnLeft={showOnLeft}
-                // Atribbution URI: https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Chevron-up.svg/640px-Chevron-up.svg.png
+                // Atribbution URI: https://commons.wikimedia.org/wiki/File:Chevron-up.svg
                 source={asset(data.nav_icon)}
                 textLabel={tooltip.text}
                 rotZ={rotationZ}
