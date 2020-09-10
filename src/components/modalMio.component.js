@@ -116,7 +116,7 @@ export class ModalMio extends React.Component {
         // console.log(show2);
         // console.log(rutaElemento);
         // console.log(facebook);
-        // console.log(instagram);
+        //console.log(instagram);
         // console.log(process.env.DEBUG);
 
 
