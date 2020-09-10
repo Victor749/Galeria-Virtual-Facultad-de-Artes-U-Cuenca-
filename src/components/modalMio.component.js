@@ -123,8 +123,8 @@ export class ModalMio extends React.Component {
                         
                         if($('.'+data[i].idComentario).length == 0){
                             info = '<tr class="'+data[i].idComentario+'"><td>'+'<div class="row justify-content-center mb-5" >'+
-                            '<div class="col col-sm-1 mr-5"><img src="'+data[i].linkFoto+'" height=60 width=60></div>'+
-                            '<div class="col col-sm-9"><div class="row align-items-left ml-2" ><b style="color:black;">'+data[i].nombreUsuario+'</b></div>'+
+                            '<div class="col col-sm-1 mr-5 col-auto"><img src="'+data[i].linkFoto+'" height=60 width=60></div>'+
+                            '<div class="col col-sm-9 col-auto"><div class="row align-items-left ml-2" ><b style="color:black;">'+data[i].nombreUsuario+'</b></div>'+
                             '<div class="row align-items-left ml-3 mb-2" ><p class="text-muted">'+data[i].fecha+'</p></div>'+
                             '<div class="row align-items-left ml-2 text-justify" ><p>'+data[i].contenido+'</p></div>'+
                             '<div class="'+data[i].identificador+'"><div class="row align-items-right" ><button onclick="editar(\''+data[i].idComentario+'\', $(this))" class="btn btn-info mr-3">Editar</button><button onclick="eliminar('+data[i].idComentario+')" class="btn btn-danger">Eliminar</button></div></div>'+
