@@ -60,7 +60,7 @@ class TourInfoButton extends React.Component {
   }
 
   appearAndCount = (rutaElemento, metodo) => {
-    fetch(`http://localhost:3000/obras/${this.state.obraId}?_method=PUT`,
+    fetch(`http://localhost:3000/obras/contador/${this.state.obraId}?_method=PUT`,
     {method: 'POST'})
     .then(response => response.json())
     .then(responseData => {this.contador = responseData.contador})
@@ -85,9 +85,6 @@ class TourInfoButton extends React.Component {
   };
 
   render() {
-
-    
-
     const {
       height, 
       width,
@@ -117,8 +114,9 @@ class TourInfoButton extends React.Component {
     if(this.state.obra != null){
       const {imagenes} = this.state.obra;
       // Se obtienen todos los nombres separados por ;
-      if (imagenes !== null) {
+      if (imagenes !== null && imagenes !== '') {
         let nombresElementos = imagenes.split(";");
+        nombresElementos = nombresElementos.filter(item => item !== '');
         rutaElemento = '';
         for (let i = 0; i < nombresElementos.length; i++) {
           rutaElemento += asset(nombresElementos[i]).uri;

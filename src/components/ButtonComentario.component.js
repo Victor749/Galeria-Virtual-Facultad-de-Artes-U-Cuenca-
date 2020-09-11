@@ -10,7 +10,7 @@ export class ButtonComentario extends React.Component{
 
     makePostRequest = (url) => {
         let http = new XMLHttpRequest();
-        http.open('POST', url, true);
+        http.open('POST', url, false);
 
         http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
@@ -30,8 +30,10 @@ export class ButtonComentario extends React.Component{
 
             request.onreadystatechange = function() {//Call a function when the state changes.
                 if(request.readyState == 4 && request.status == 200) {
-                    deleteSentComment();
+                    // deleteSentComment();
+                    // alert('JAJA');
                 }else{
+                    // alert('JAJA2');
                     alert(request.responseText);
                 }
             }
@@ -64,7 +66,8 @@ export class ButtonComentario extends React.Component{
                     }
                     request.send(params);              
                 }, function(error) {
-                alert(JSON.stringify(error, undefined, 2));
+                    console.log('hey men');
+                    alert(JSON.stringify(error, undefined, 2));
             });
         }
     }
@@ -140,7 +143,7 @@ export class ButtonComentario extends React.Component{
         }else{
             return(
                 <div>
-                    <button onClick={() => {this.sendComment()}} className={`${comment.length ? 'enviar' : 'empty'}`}>
+                    <button onClick={() => this.sendComment()} className={`${comment.length ? 'enviar' : 'empty'}`}>
                         {/* <img src='http://localhost:3000/static_assets/send.png' className="enviarImg"></img> */}
                         {`Send`}
                     </button>

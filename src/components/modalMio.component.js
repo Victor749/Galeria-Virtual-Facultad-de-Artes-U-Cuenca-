@@ -163,8 +163,11 @@ export class ModalMio extends React.Component {
                                     </div>
                                     {this.placeImages(images, handleChange)}
                                 </div>
-                                <div className="row justify-content-between align-items-center p-12 bd-highlight col-example d-flex justify-content-end align-items-center" style={styles.modalUniversidad}>
+                                <div className="d-flex row justify-content-center justify-content-sm-end  p-12 bd-highlight col-example" style={styles.modalUniversidad}>
                                     {this.place3DModel(obj_file)}
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <img className="UPictureModal" src="http://localhost:3000/static_assets/UPictureModal.png" />
+                                    </div>
                                 </div>
                                 <div className="row justify-content-center p-12 bd-highlight col-example" >
                                     <div className="col-11 p-3">
@@ -172,8 +175,8 @@ export class ModalMio extends React.Component {
                                         <p className="descripcion">{descripcion}</p>
                                     </div>
                                 </div>
-                                <div className="row justify-content-between align-items-center p-12 bd-highlight col-example d-flex justify-content-end align-items-center" style={styles.modalUniversidad}>
-                                    <div className="row justify-content-center align-items-center col-4">
+                                <div className="d-flex row justify-content-center justify-content-sm-between  p-12 bd-highlight col-example" style={styles.modalUniversidad}>
+                                    <div className="ml-sm-3 d-flex justify-content-between  align-items-center">
                                         <a className="redSocial" href={`${facebook}`} target="_blank">
                                             <img className="facebook" src="http://localhost:3000/static_assets/facebook.png" />
                                         </a>
@@ -185,8 +188,8 @@ export class ModalMio extends React.Component {
                                         </svg>
                                         <span>{visitas}</span>
                                     </div>
-                                    <div className="col-4">
-                                        Universidad de Cuenca
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <img className="UPictureModal" src="http://localhost:3000/static_assets/UPictureModal.png" />
                                     </div>
                                 </div>
                             </div>
@@ -224,13 +227,17 @@ export class ModalMio extends React.Component {
                                     </div> */}
 
                                 </div>
-                                <div className="" style={styles.modalUniversidad}>
+                                <div className="d-flex row justify-content-center justify-content-sm-end  p-12 bd-highlight col-example" style={styles.modalUniversidad}>
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <img className="UPictureModal" src="http://localhost:3000/static_assets/UPictureModal.png" />
+                                    </div>
                                 </div>
+                                
                             </div>
                         </Carousel.Item>
                     </Carousel>
-                    <button className="moveButton" style={styles.prevbutton} onClick={() => { console.log('hola'); this.move(-1); }}><img src="http://localhost:3000/static_assets/chevron-circle-left-solid.svg" style={styles.colorCircles} /></button>
-                    <button className="moveButton" style={styles.nextbutton} onClick={() => { console.log('hola'); this.move(1); }}><img src="http://localhost:3000/static_assets/chevron-circle-right-solid.svg" style={styles.colorCircles} /></button>
+                    <button className="moveButton" style={styles.prevbutton} onClick={() => {  this.move(-1); }}><img src="http://localhost:3000/static_assets/chevron-circle-left-solid.svg" style={styles.colorCircles} /></button>
+                    <button className="moveButton" style={styles.nextbutton} onClick={() => {  this.move(1); }}><img src="http://localhost:3000/static_assets/chevron-circle-right-solid.svg" style={styles.colorCircles} /></button>
                 </Modal>
                 {isOpen && (
                     <Lightbox
@@ -263,7 +270,7 @@ export class ModalMio extends React.Component {
 const styles =
 {
     modalUniversidad:
-        { height: '7vh', background: 'black', color: 'white' },
+        {background: 'black', color: 'white' },
 
     colorCircles: { width: '30px', height: '30px', color: 'blue' },
     prevbutton: { position: 'absolute', top: '50%', left: '-7%', outline: 'none' },
