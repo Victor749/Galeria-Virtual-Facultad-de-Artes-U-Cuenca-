@@ -28,7 +28,7 @@ export class ButtonComentario extends React.Component{
 
             request = this.makePostRequest('http://localhost:3000/comentarios/new');
 
-            request.onreadystatechange = function() {//Call a function when the state changes.
+            request.onreadystProatechange = function() {//Call a function when the state changes.
                 if(request.readyState == 4 && request.status == 200) {
                     // deleteSentComment();
                     // alert('JAJA');

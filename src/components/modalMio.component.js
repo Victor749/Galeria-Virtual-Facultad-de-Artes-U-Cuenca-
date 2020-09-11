@@ -70,8 +70,8 @@ export class ModalMio extends React.Component {
         let link = "/visor3D/";
         if (obj !== null) {
             return (<div className="row justify-content-center align-items-center col-4">
-                <a href={host + link + obj} target="_blank">
-                    Ver Modelo 3D
+                <a className="redSocial" href={host + link + obj} target="_blank">
+                    <img className="instagram" src={`${host}/images/3Dicon.png`} />
                 </a>
             </div>);
         } else {
@@ -98,13 +98,13 @@ export class ModalMio extends React.Component {
     }
 
     deleteSentComment = () => {
-        this.setState({comment: ''});
+        this.setState({ comment: '' });
     }
 
     render() {
         // handleModal = console.log("heyyy");
         // console.log(Button);
-        const { document, window, show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, facebook, instagram, visitas, identifier, handleUser, obraId, signOutUser, tecnica, linkVideoYoutube, suma, obj_file } = this.props;
+        const { document, window, show2, autor, titulo, asignatura, ciclo, tutor, dimensiones, fechaProducccion, rutaElemento, handleChange, descripcion, facebook, instagram, proyectoWeb, visitas, identifier, handleUser, obraId, signOutUser, tecnica, linkVideoYoutube, suma, obj_file } = this.props;
 
         this.numberSlides = this.state.defaultNumberSlides + suma;
 
@@ -116,7 +116,7 @@ export class ModalMio extends React.Component {
         // console.log(show2);
         // console.log(rutaElemento);
         // console.log(facebook);
-        // console.log(instagram);
+        //console.log(instagram);
         // console.log(process.env.DEBUG);
 
 
@@ -161,11 +161,15 @@ export class ModalMio extends React.Component {
 
                                         <p className="data">Fecha Producción: <label className="data-entry">{fechaProducccion}</label></p>
                                     </div>
+                                    
                                     {this.placeImages(images, handleChange)}
                                 </div>
                                 <div className="d-flex row justify-content-center justify-content-sm-end  p-12 bd-highlight col-example" style={styles.modalUniversidad}>
                                     {this.place3DModel(obj_file)}
                                     <div className="d-flex justify-content-between align-items-center">
+                                        <a className="redSocial" href={`${proyectoWeb}`} target="_blank">
+                                                <img className="proyectoWeb" src="http://localhost:3000/images/web.png" />
+                                        </a>
                                         <img className="UPictureModal" src="http://localhost:3000/static_assets/UPictureModal.png" />
                                     </div>
                                 </div>
@@ -175,8 +179,8 @@ export class ModalMio extends React.Component {
                                         <p className="descripcion">{descripcion}</p>
                                     </div>
                                 </div>
-                                <div className="d-flex row justify-content-center justify-content-sm-between  p-12 bd-highlight col-example" style={styles.modalUniversidad}>
-                                    <div className="ml-sm-3 d-flex justify-content-between  align-items-center">
+                                <div className="d-flex row justify-content-center justify-content-sm-between  p-12 bd-highlight" style={styles.modalUniversidad}>
+                                    <div className="d-flex p-sm-3 justify-content-between  align-items-center">
                                         <a className="redSocial" href={`${facebook}`} target="_blank">
                                             <img className="facebook" src="http://localhost:3000/static_assets/facebook.png" />
                                         </a>
@@ -203,7 +207,7 @@ export class ModalMio extends React.Component {
                         <Carousel.Item>
                             <div className="d-flex flex-column justify-content-between bd-highlight example-parent" >
                                 <div className="row justify-content-end align-items-center" style={styles.modalUniversidad}>
-                                    <ButtonComentario identifier={identifier} signOutUser={signOutUser} handleUser={handleUser} comment={this.state.comment} obraId={obraId}  topButton/>
+                                    <ButtonComentario identifier={identifier} signOutUser={signOutUser} handleUser={handleUser} comment={this.state.comment} obraId={obraId} topButton />
                                 </div>
                                 <div className="comentarios" /*style={{height: '60vh'}} */ >
                                     HOLAsadas
@@ -212,8 +216,8 @@ export class ModalMio extends React.Component {
                                     <textarea onChange={this.textAreaChange} className="col-12 col-sm-7 comentario" value={`${this.state.comment}`}>
 
                                     </textarea>
-                                    <ButtonComentario identifier={identifier} handleUser={handleUser} comment={this.state.comment} obraId={obraId} deleteSentComment={this.deleteSentComment}/>
-                                    
+                                    <ButtonComentario identifier={identifier} handleUser={handleUser} comment={this.state.comment} obraId={obraId} deleteSentComment={this.deleteSentComment} />
+
 
                                     {/* <div>
                                         <div id="gSignInWrapper">
