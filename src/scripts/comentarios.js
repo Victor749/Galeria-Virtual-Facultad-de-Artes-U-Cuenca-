@@ -67,7 +67,7 @@ function guardarEdicion(idComentario){
         }
         data.contenido  = comentarioTokens;
         var f = new Date();
-        data.fecha = f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
+        data.fecha = f.getDate() + "-" + (f.getMonth() +1) + "-" + f.getFullYear();
         var json = JSON.stringify(data);
 
         var xhr = new XMLHttpRequest();

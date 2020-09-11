@@ -64,7 +64,7 @@ export class ButtonComentario extends React.Component{
                             $('#tabla').animate({ scrollTop: $('#tabla').prop("scrollHeight")}, 1000); 
                                 
                         } else {
-                            console.error(comentario);
+                            console.error(data);
                         }
                     }
                     xhr.send(null);

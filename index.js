@@ -45,7 +45,7 @@ class BrowserBridge {
 }
 
 const browserBridge = new BrowserBridge();
-BatchedBridge.registerCallableModule(BrowserBridge.name, browserBridge);
+BatchedBridge.registerCallableModule(/*BrowserBridge.name*/ 'BrowserBridge', browserBridge);
 
 
 function play(estado, ambient){
