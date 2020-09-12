@@ -10,7 +10,7 @@ export class ButtonComentario extends React.Component{
 
     makePostRequest = (url) => {
         let http = new XMLHttpRequest();
-        http.open('POST', url, true);
+        http.open('POST', url, false);
 
         http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
@@ -179,7 +179,7 @@ export class ButtonComentario extends React.Component{
         }else{
             return(
                 <div>
-                    <button onClick={() => {this.sendComment()}} className={`${comment.length ? 'enviar' : 'empty'}`}>
+                    <button onClick={() => this.sendComment()} className={`${comment.length ? 'enviar' : 'empty'}`}>
                         {/* <img src='http://localhost:3000/static_assets/send.png' className="enviarImg"></img> */}
                         {`Send`}
                     </button>
