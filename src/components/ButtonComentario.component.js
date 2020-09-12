@@ -103,7 +103,7 @@ export class ButtonComentario extends React.Component{
                     request.send(params);              
                 }, function(error) {
                // alert(JSON.stringify(error, undefined, 2));
-               alert('Ha ocurrido un error. Intentelo mas tarde.');
+               alert('No se ha iniciado una sesión: Ha cerrado la ventana de Google o necesita habilitar las cookies para este sitio.');
             });
         }
     }
