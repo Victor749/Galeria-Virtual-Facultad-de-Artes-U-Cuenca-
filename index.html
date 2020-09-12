@@ -1,7 +1,15 @@
 <html>
   <head>
     <title>Museo Virtual Facultad de Artes (Universidad de Cuenca)</title>
-    <style>body { margin: 0; }</style>
+    <style>
+    body { 
+      margin: 0; 
+    }
+
+    #modal-bienvenida-content {
+      background-color: rgba(234, 234, 234);
+    }
+    </style>
     <script src="https://apis.google.com/js/api:client.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta name="description" content="Museo Virtual de la Facultad de Artes de la Universidad de Cuenca.">
@@ -70,7 +78,7 @@
           </div>
           <div class="modal-body">
             <div class="text-center">
-              <img src="http://localhost:3000/images/fac-artes.png" style="width: 24%;" alt="Facultad de Artes" />
+              <img src="/images/fac-artes.png" style="width: 24%;" alt="Facultad de Artes" />
               <br />
               <br />
               <h6>Museo Virtual - Facultad de Artes - Universidad de Cuenca</h6>
@@ -79,19 +87,19 @@
             <p>El Museo Virtual cuenta con un menú de navegación y controles integrados.</p>
             <h6>Controles de Museo</h6>
             <ul>
-              <li><img src="http://localhost:3000/static_assets/info_icon.png" style="width: 9%;"
+              <li><img src="/static_assets/info_icon.png" style="width: 9%;"
                   alt="info_icon.png" />&nbsp;&nbsp;Abrir Obra</li>
-              <li><img src="http://localhost:3000/static_assets/nav_icon.png" style="width: 9%;"
+              <li><img src="/static_assets/nav_icon.png" style="width: 9%;"
                   alt="nav_icon.png" />&nbsp;&nbsp;Navegar entre Salas</li>
             </ul>
             <h6>Controles de Obra</h6>
             <ul>
-              <li><img src="http://localhost:3000/static_assets/chevron-circle-left-solid.svg" style="width: 7%;"
+              <li><img src="/static_assets/chevron-circle-left-solid.svg" style="width: 7%;"
                   alt="chevron-circle-left-solid.svg" />&nbsp;
-                <img src="http://localhost:3000/static_assets/chevron-circle-right-solid.svg" style="width: 7%;"
+                <img src="/static_assets/chevron-circle-right-solid.svg" style="width: 7%;"
                   alt="chevron-circle-right-solid.svg" />&nbsp;&nbsp;Desplazar entre Ficha Museográfica / Video /
                 Comentarios</li>
-              <li><img src="http://localhost:3000/images/3DIcon.png" style="width: 9%;" alt="3DIcon.png" />&nbsp;&nbsp;Ver
+              <li><img src="/images/3DIcon.png" style="width: 9%;" alt="3DIcon.png" />&nbsp;&nbsp;Ver
                 Modelo 3D</li>
             </ul>
           </div>
@@ -110,7 +118,7 @@
       document.getElementById('container'),
       {
         //bridgeFile: 'NonBlobBridge.js',
-        assetRoot: 'http://localhost:3000/static_assets/',
+        assetRoot: '/static_assets/',
         useDynamicSurface: true,
       }
     );
