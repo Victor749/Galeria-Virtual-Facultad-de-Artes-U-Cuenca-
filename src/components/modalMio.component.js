@@ -5,7 +5,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import Lightbox from 'react-image-lightbox';
 import { ButtonComentario } from './ButtonComentario.component';
 
-const host = "http://localhost:3000";
+const host = "";
 
 export class ModalMio extends React.Component {
 
@@ -97,6 +97,34 @@ export class ModalMio extends React.Component {
         }
     }
 
+    placeFacebook = (facebook) => {
+        if(facebook !== null && facebook !== ''){
+            return (<a className="redSocial" href={`${facebook}`} target="_blank">
+                     <img className="facebook" src="/static_assets/facebook.png" />
+                    </a>);
+        }
+        return false;
+    }
+
+    placeInstagram = (instagram) => {
+        if(instagram !== null && instagram !== ''){
+            return (<a className="redSocial" href={`${instagram}`} target="_blank">
+                        <img className="instagram" src="/static_assets/instagram.png" />
+                    </a>);
+        }
+        return false;
+    }
+
+    placeProyectoWeb = (proyectoWeb) => {
+        if(proyectoWeb !== null && proyectoWeb !== ''){
+            return (<a className="redSocial" href={`${proyectoWeb}`} target="_blank">
+                        <img className="proyectoWeb" src="/images/web.png" />
+                    </a>);
+        }
+        return false;
+    }
+    
+
     deleteSentComment = () => {
         this.setState({ comment: '' });
     }
@@ -167,10 +195,8 @@ export class ModalMio extends React.Component {
                                 <div className="d-flex row justify-content-center justify-content-sm-end  p-12 bd-highlight col-example" style={styles.modalUniversidad}>
                                     {this.place3DModel(obj_file)}
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <a className="redSocial" href={`${proyectoWeb}`} target="_blank">
-                                                <img className="proyectoWeb" src="http://localhost:3000/images/web.png" />
-                                        </a>
-                                        <img className="UPictureModal" src="http://localhost:3000/static_assets/UPictureModal.png" />
+                                        {this.placeProyectoWeb(proyectoWeb)}
+                                        <img className="UPictureModal" src="/static_assets/UPictureModal.png" />
                                     </div>
                                 </div>
                                 <div className="row justify-content-center p-12 bd-highlight col-example" >
@@ -181,19 +207,15 @@ export class ModalMio extends React.Component {
                                 </div>
                                 <div className="d-flex row justify-content-center justify-content-sm-between  p-12 bd-highlight" style={styles.modalUniversidad}>
                                     <div className="d-flex p-sm-3 justify-content-between  align-items-center">
-                                        <a className="redSocial" href={`${facebook}`} target="_blank">
-                                            <img className="facebook" src="http://localhost:3000/static_assets/facebook.png" />
-                                        </a>
-                                        <a className="redSocial" href={`${instagram}`} target="_blank">
-                                            <img className="instagram" src="http://localhost:3000/static_assets/instagram.png" />
-                                        </a>
+                                        {this.placeFacebook(facebook)}
+                                        {this.placeInstagram(instagram)}
                                         <svg className="seen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                             <path d="M12.015 7c4.751 0 8.063 3.012 9.504 4.636-1.401 1.837-4.713 5.364-9.504 5.364-4.42 0-7.93-3.536-9.478-5.407 1.493-1.647 4.817-4.593 9.478-4.593zm0-2c-7.569 0-12.015 6.551-12.015 6.551s4.835 7.449 12.015 7.449c7.733 0 11.985-7.449 11.985-7.449s-4.291-6.551-11.985-6.551zm-.015 5c1.103 0 2 .897 2 2s-.897 2-2 2-2-.897-2-2 .897-2 2-2zm0-2c-2.209 0-4 1.792-4 4 0 2.209 1.791 4 4 4s4-1.791 4-4c0-2.208-1.791-4-4-4z" />
                                         </svg>
                                         <span>{visitas}</span>
                                     </div>
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <img className="UPictureModal" src="http://localhost:3000/static_assets/UPictureModal.png" />
+                                        <img className="UPictureModal" src="/static_assets/UPictureModal.png" />
                                     </div>
                                 </div>
                             </div>
@@ -233,15 +255,15 @@ export class ModalMio extends React.Component {
                                 </div>
                                 <div className="d-flex row justify-content-center justify-content-sm-end  p-12 bd-highlight col-example" style={styles.modalUniversidad}>
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <img className="UPictureModal" src="http://localhost:3000/static_assets/UPictureModal.png" />
+                                        <img className="UPictureModal" src="/static_assets/UPictureModal.png" />
                                     </div>
                                 </div>
                                 
                             </div>
                         </Carousel.Item>
                     </Carousel>
-                    <button className="moveButton" style={styles.prevbutton} onClick={() => {  this.move(-1); }}><img src="http://localhost:3000/static_assets/chevron-circle-left-solid.svg" style={styles.colorCircles} /></button>
-                    <button className="moveButton" style={styles.nextbutton} onClick={() => {  this.move(1); }}><img src="http://localhost:3000/static_assets/chevron-circle-right-solid.svg" style={styles.colorCircles} /></button>
+                    <button className="moveButton" style={styles.prevbutton} onClick={() => {  this.move(-1); }}><img src="/static_assets/chevron-circle-left-solid.svg" style={styles.colorCircles} /></button>
+                    <button className="moveButton" style={styles.nextbutton} onClick={() => {  this.move(1); }}><img src="/static_assets/chevron-circle-right-solid.svg" style={styles.colorCircles} /></button>
                 </Modal>
                 {isOpen && (
                     <Lightbox

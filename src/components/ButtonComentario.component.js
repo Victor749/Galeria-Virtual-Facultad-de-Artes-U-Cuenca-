@@ -26,9 +26,9 @@ export class ButtonComentario extends React.Component{
         if(identifier && comment.length){
             params = `identifier=${identifier}&idObra=${obraId}&contenido=${comment}`;
 
-            request = this.makePostRequest('http://localhost:3000/comentarios/new');
+            request = this.makePostRequest('/comentarios/new');
 
-            request.onreadystProatechange = function() {//Call a function when the state changes.
+            request.onreadystatechange = function() {//Call a function when the state changes.
                 if(request.readyState == 4 && request.status == 200) {
                     // deleteSentComment();
                     // alert('JAJA');
@@ -56,7 +56,7 @@ export class ButtonComentario extends React.Component{
                     // console.log(usuario.aU);
                     params = `idUsuario=${usuario.aU}&nombreUsuario=${usuario.GV}&apellidoUsuario=${usuario.HT}&linkFoto=${usuario.jK}&email=${usuario.bu}`;
 
-                    request = this.makePostRequest('http://localhost:3000/usuarios/new');
+                    request = this.makePostRequest('/usuarios/new');
 
                     request.onreadystatechange = function() {//Call a function when the state changes.
                         if(request.readyState == 4 && request.status == 200) {
@@ -117,7 +117,7 @@ export class ButtonComentario extends React.Component{
                 <div>
                     <div id="gSignInWrapper" className="pr-4">
                         <div id="customBtnSignIn" className="customGPlusSignIn ">
-                            <img className="googleIcon" src="http://localhost:3000/static_assets/google.png"></img>
+                            <img className="googleIcon" src="/static_assets/google.png"></img>
                             <span className="buttonText">Sign In</span>
                         </div>
                     </div>
@@ -134,7 +134,7 @@ export class ButtonComentario extends React.Component{
                 <div>
                     <div id="gSignInWrapper">
                         <div id="customBtnToSend" className="customGPlusSignIn ">
-                            <img className="googleIcon " src="http://localhost:3000/static_assets/google.png"></img>
+                            <img className="googleIcon " src="/static_assets/google.png"></img>
                             <span className="buttonText">Sign In to Send</span>
                         </div>
                     </div>

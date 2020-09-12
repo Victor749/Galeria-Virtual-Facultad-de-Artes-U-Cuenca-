@@ -49,7 +49,7 @@ class TourInfoButton extends React.Component {
     };
 
 
-    fetch(`http://localhost:3000/obras/api/json/${this.state.obraId}`, myInit)
+    fetch(`/obras/api/json/${this.state.obraId}`, myInit)
       .then(response => response.json())
       .then(responseData => {
         this.setState({ obra: responseData});
@@ -60,7 +60,7 @@ class TourInfoButton extends React.Component {
   }
 
   appearAndCount = (rutaElemento, metodo) => {
-    fetch(`http://localhost:3000/obras/contador/${this.state.obraId}?_method=PUT`,
+    fetch(`/obras/contador/${this.state.obraId}?_method=PUT`,
     {method: 'POST'})
     .then(response => response.json())
     .then(responseData => {this.contador = responseData.contador})
