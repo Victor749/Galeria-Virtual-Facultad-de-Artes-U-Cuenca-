@@ -1,79 +1,116 @@
-<!DOCTYPE html>
-<html lang="es-ec">
-
-<head>
-  <title>Museo Virtual - Facultad de Artes | Universidad de Cuenca</title>
-  <style>
-    body {
-      margin: 0;
+<html>
+  <head>
+    <title>Museo Virtual Facultad de Artes (Universidad de Cuenca)</title>
+    <style>
+    body { 
+      margin: 0; 
     }
 
     #modal-bienvenida-content {
       background-color: rgba(234, 234, 234);
     }
-  </style>
-  <script src="https://apis.google.com/js/api:client.js"></script>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <meta name="description" content="Museo Virtual de la Facultad de Artes de la Universidad de Cuenca.">
-  <meta name="keywords" content="Museo, Virtual, Universidad, Cuenca, Facultad, Artes, UCuenca, MVUC">
-  <link rel="stylesheet" href="http://localhost:3000/stylesheets/bootstrap.min.css">
-  <script src="http://localhost:3000/javascripts/jquery-3.5.1.slim.min.js"></script>
-  <script src="http://localhost:3000/javascripts/popper.min.js"></script>
-  <script src="http://localhost:3000/javascripts/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="./src/components/modal.styles.css" />
-  <link rel="stylesheet" href="./src/components/viewer.styles.css" />
-  <link rel="stylesheet" href="./src/components/button.styles.css" />
-</head>
-
-<body>
-  <!-- Attachment point for your app -->
-  <div id="modal"></div>
-  <div id="container"></div>
-  <!-- <script src="https://connect.facebook.net/en_US/fbinstant.6.2.js"></script> -->
-  <div class="modal" id="modal-bienvenida">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content" id="modal-bienvenida-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Bienvenido(a) al Museo Virtual</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="text-center">
-            <img src="http://localhost:3000/images/fac-artes.png" style="width: 24%;" alt="Facultad de Artes" />
-            <br />
-            <br />
-            <h6>Museo Virtual - Facultad de Artes - Universidad de Cuenca</h6>
+    </style>
+    <script src="https://apis.google.com/js/api:client.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Museo Virtual de la Facultad de Artes de la Universidad de Cuenca.">
+    <meta name="keywords" content="Museo, Virtual, Universidad, Cuenca, Facultad, Artes, UCuenca, MVUC">
+    <link rel="stylesheet" href="./src/styles/modal.styles.css"/>
+    <link rel="stylesheet" href="./src/styles/viewer.styles.css"/>
+    <link rel="stylesheet" href="./src/styles/button.styles.css"/>
+    <link rel="stylesheet" href="./src/styles/bootstrap.min.css"/>
+    <script src="./src/scripts/jquery-3.5.1.js" ></script>
+    <script src="./src/scripts/popper.min.js"></script>
+    <script src="./src/scripts/bootstrap.min.js"></script>
+    <script src="./src/scripts/jspdf/dist/jspdf.min.js"></script>
+    <script src="./src/scripts/catalogo.js"></script>
+    <script src="./src/scripts/menu.js"></script>
+    <script src="./src/scripts/comentarios.js"></script>
+    
+  </head>
+  <body>
+    <!-- Attachment point for your app -->
+    <div id="modal"></div>
+    <div id="container" style="background-color: black;">
+      <input type="text" id="changeSala" hidden/>
+      <button id="btn_sala" hidden>SalaN</button>
+      <ul class="nav nav-pills ">
+        
+        <li class="nav-item dropdown" >
+          <a class="nav-link dropdown-toggle" style="padding-right: 0px;" data-toggle="dropdown" href="#" role="button" ><img src="http://localhost:3000/static_assets/menuB.png" height=25 width=25></a>
+        <div class="dropdown-menu" >
+          <h6><a class="dropdown-item" href="#" onclick="showData('#sala')">Salas</a></h6>
+            <div id="sala" class="pl-3">
+              
+            </div>
+            <h6><a class="dropdown-item" href="#" onclick="showData('#temaC')">Tema Curatorial</a></h6>
+            <div id="temaC" class="pl-3">
+              
+            </div>
+            <h6><a class="dropdown-item" href="#" onclick="showData('#expositores')">Expositores</a></h6>
+            <div id="expositores" class="pl-3">
+              
+            </div>
+            <h6><a class="dropdown-item" href="#" onclick="showData('#curadores')">Curadores</a></h6>
+            <div id="curadores" class="pl-3">
+              
+            </div>
           </div>
-          <hr />
-          <p>El Museo Virtual cuenta con un menú de navegación y controles integrados.</p>
-          <h6>Controles de Museo</h6>
-          <ul>
-            <li><img src="http://localhost:3000/static_assets/info_icon.png" style="width: 9%;"
-                alt="info_icon.png" />&nbsp;&nbsp;Abrir Obra</li>
-            <li><img src="http://localhost:3000/static_assets/nav_icon.png" style="width: 9%;"
-                alt="nav_icon.png" />&nbsp;&nbsp;Navegar entre Salas</li>
-          </ul>
-          <h6>Controles de Obra</h6>
-          <ul>
-            <li><img src="http://localhost:3000/static_assets/chevron-circle-left-solid.svg" style="width: 7%;"
-                alt="chevron-circle-left-solid.svg" />&nbsp;
-              <img src="http://localhost:3000/static_assets/chevron-circle-right-solid.svg" style="width: 7%;"
-                alt="chevron-circle-right-solid.svg" />&nbsp;&nbsp;Desplazar entre Ficha Museográfica / Video /
-              Comentarios</li>
-            <li><img src="http://localhost:3000/images/3DIcon.png" style="width: 9%;" alt="3DIcon.png" />&nbsp;&nbsp;Ver
-              Modelo 3D</li>
-          </ul>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Ir al Museo</button>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" style="padding-left: 0px;" role="button" id="btnSonido" estado="inactivo"><img id="imgSonido" src="http://localhost:3000/static_assets/inactiveA.png" height=25 width=25/></a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" style="padding-left: 0px;color: white;" role="button" id="btnCatalogo" onclick="transformation()"><img src="http://localhost:3000/static_assets/download.png" height=25 width=25 class="mr-2"/>Catalogo</a>
+        </li>
+      </ul>
+      
+      
+      
+    </div>
+    <div class="modal" id="modal-bienvenida">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" id="modal-bienvenida-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Bienvenido(a) al Museo Virtual</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="text-center">
+              <img src="/images/fac-artes.png" style="width: 24%;" alt="Facultad de Artes" />
+              <br />
+              <br />
+              <h6>Museo Virtual - Facultad de Artes - Universidad de Cuenca</h6>
+            </div>
+            <hr />
+            <p>El Museo Virtual cuenta con un menú de navegación y controles integrados.</p>
+            <h6>Controles de Museo</h6>
+            <ul>
+              <li><img src="/static_assets/info_icon.png" style="width: 9%;"
+                  alt="info_icon.png" />&nbsp;&nbsp;Abrir Obra</li>
+              <li><img src="/static_assets/nav_icon.png" style="width: 9%;"
+                  alt="nav_icon.png" />&nbsp;&nbsp;Navegar entre Salas</li>
+            </ul>
+            <h6>Controles de Obra</h6>
+            <ul>
+              <li><img src="/static_assets/chevron-circle-left-solid.svg" style="width: 7%;"
+                  alt="chevron-circle-left-solid.svg" />&nbsp;
+                <img src="/static_assets/chevron-circle-right-solid.svg" style="width: 7%;"
+                  alt="chevron-circle-right-solid.svg" />&nbsp;&nbsp;Desplazar entre Ficha Museográfica / Video /
+                Comentarios</li>
+              <li><img src="/images/3DIcon.png" style="width: 9%;" alt="3DIcon.png" />&nbsp;&nbsp;Ver
+                Modelo 3D</li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Ir al Museo</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <script src="./client.bundle?platform=vr"></script>
+    <!-- <script src="https://connect.facebook.net/en_US/fbinstant.6.2.js"></script> -->
+    <script src="./client.bundle?platform=vr"></script>
   <script>
     // Initialize the React 360 application
     React360.init(
@@ -81,12 +118,13 @@
       document.getElementById('container'),
       {
         //bridgeFile: 'NonBlobBridge.js',
-        assetRoot: 'http://localhost:3000/static_assets/',
+        assetRoot: '/static_assets/',
         useDynamicSurface: true,
       }
     );
     $("#modal-bienvenida").modal();
   </script>
-</body>
-
+  </body>
 </html>
+
+

@@ -18,23 +18,59 @@ export class ButtonComentario extends React.Component{
 
     }
 
+    
+
     sendComment = () => {
 
         let {comment, identifier, obraId, deleteSentComment} = this.props;
         // console.log(comment);
 
-        if(identifier && comment.length){
-            params = `identifier=${identifier}&idObra=${obraId}&contenido=${comment}`;
+        comentarioTokens = '';
+        for(var i=0;i<comment.length;i++){
+            /*if(comment[i] == '\'' ){
+                comentarioTokens += '\\'+comment[i];
+            }else{
+                comentarioTokens +=comment[i];
+            }*/
+            comentarioTokens +=comment[i];
+        }
 
+        if(identifier && comment.length){
+            params = `identifier=${identifier}&idObra=${obraId}&contenido=${comentarioTokens}`;
+           
             request = this.makePostRequest('/comentarios/new');
 
             request.onreadystatechange = function() {//Call a function when the state changes.
-                if(request.readyState == 4 && request.status == 200) {
-                    // deleteSentComment();
-                    // alert('JAJA');
+                if(request.readyState == '4' && request.status == '200') {
+                    //console.log(request.responseText);
+                    //addNewCommentaryVista();
+                    idComentario = JSON.parse(request.responseText).insertId;
+                    deleteSentComment();
+                 //   console.log('well');
+                    var url  = "/comentarios/getNewComentario/"+idComentario;
+                    var xhr  = new XMLHttpRequest()
+                    xhr.open('GET', url, true)
+                    xhr.onload = function () {
+                        var data = JSON.parse(xhr.responseText);
+                        if (xhr.readyState == 4 && xhr.status == "200") {
+                            info = '<tr class="'+data.idComentario+'"><td>'+'<div class="row justify-content-center mb-5" >'+
+                                    '<div class="col col-sm-1 mr-5"><img src="'+data.linkFoto+'" height=60 width=60></div>'+
+                                    '<div class="col col-sm-9"><div class="row align-items-left ml-2" ><b style="color:black;">'+data.nombreUsuario+'</b></div>'+
+                                    '<div class="row align-items-left ml-3 mb-2" ><p class="text-muted">'+data.fecha+'</p></div>'+
+                                    '<div class="row align-items-left ml-2 text-justify" ><p>'+data.contenido+'</p></div>'+
+                                    '<div class="'+data.identificador+'"><div class="row align-items-right" ><button onclick="editar(\''+data.idComentario+'\', $(this))" class="btn btn-info mr-3">Editar</button><button onclick="eliminar('+data.idComentario+')" class="btn btn-danger">Eliminar</button></div></div>'+
+                                    '</div></div></td></tr>';
+                                    $('#listaComentarios').append(info);
+                            $('#tabla').animate({ scrollTop: $('#tabla').prop("scrollHeight")}, 1000); 
+                                
+                        } else {
+                            console.error(data);
+                        }
+                    }
+                    xhr.send(null);
+                    
                 }else{
-                    // alert('JAJA2');
-                    alert(request.responseText);
+                    console.log('error', request.responseText);
                 }
             }
             request.send(params);
@@ -66,8 +102,8 @@ export class ButtonComentario extends React.Component{
                     }
                     request.send(params);              
                 }, function(error) {
-                    console.log('hey men');
-                    alert(JSON.stringify(error, undefined, 2));
+               // alert(JSON.stringify(error, undefined, 2));
+               alert('No se ha iniciado una sesión: Ha cerrado la ventana de Google o necesita habilitar las cookies para este sitio.');
             });
         }
     }

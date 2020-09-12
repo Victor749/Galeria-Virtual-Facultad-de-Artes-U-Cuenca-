@@ -6,6 +6,7 @@ import RCTWorkInProgressSurface from './RCTWorkInProgressSurface'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ModalMio } from './src/components/modalMio.component';
+import BrowserInfoModule from './src/modules/BrowserInfoModule';
 
 class ModalControl extends React.Component {
   constructor() {
@@ -35,13 +36,17 @@ class ModalControl extends React.Component {
     }
 
     window.addEventListener("beforeunload", (event) => {
-      // console.log("ENTRO AL RECARGAR PAGINA");
+      //console.log("ENTRO AL RECARGAR PAGINA");
       sessionStorage.setItem('identifier', this.state.identifier);
       // sessionStorage.setItem('identifier', 'dsada');
       event.returnValue = '';
     });
-
-
+   // console.log('be careful', this.state.identifier);
+    if(this.state.identifier == null){
+      $('.'+this.state.identifier).hide();
+    }else{
+      $('.'+this.state.identifier).show();
+    }
   }
 
   handleUser = (identificador) => {
@@ -54,10 +59,14 @@ class ModalControl extends React.Component {
         if(http.readyState == 4 && http.status == 200) {
             // console.log("\n\nHa hechoo la solicituuuuud: ");
             if(http.responseText == 'true'){
-                // console.log("\nTRUEEEEEEEEEEEEEEE: ");
+               // console.log("\nTRUEEEEEEEEEEEEEEE: ");
                 this.setState({identifier: identificador} );
+                //window.dispatchEvent(new Event('activateEdition'));
+                $('.'+identificador).show();
             }else{
                 // console.log("\nFALSEEEEEEEEEEEEEEEEE: ");
+               // $('.'+identificador).hide();
+               // window.dispatchEvent(new Event('desactivateEdition'));
                 this.signOutUser();
             }
         }
@@ -69,6 +78,7 @@ class ModalControl extends React.Component {
 
   signOutUser = () => {
     // console.log("ENTRO AL RECARGAR PAGINA222");
+    $('.'+this.state.identifier).hide();
     this.setState({identifier: null } );
   }
 
@@ -87,9 +97,12 @@ class ModalControl extends React.Component {
             // console.log("\n\nHa hechoo la solicituuuuud2: ");
             if(http.responseText == 'true'){
                 // console.log("\nTRUEEEEEEEEEEEEEEE: ");
-                // this.setState({identifier: identifier} );
+               
+                this.setState({identifier: identifier} );
+                $('.'+this.state.identifier).show();
             }else{
                 // console.log("\nFALSEEEEEEEEEEEEEEEEE2: ");
+                $('.'+this.state.identifier).hide();
                 this.signOutUser();
             }
         }
@@ -223,6 +236,7 @@ function init(bundle, parent, options = {}) {
     fullScreen: true,
     nativeModules: [
       new MiModulo(),
+      ctx => new BrowserInfoModule(ctx),
     ],
     customViews: [
       {
