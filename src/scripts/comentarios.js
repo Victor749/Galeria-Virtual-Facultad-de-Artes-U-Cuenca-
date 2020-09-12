@@ -50,7 +50,7 @@ function guardarEdicion(idComentario){
     if(nuevoC == ''){
         $('#errorMensaje').show();
     }else{
-        var url = "http://localhost:3000/comentarios/editComentario";
+        var url = "/comentarios/editComentario";
 
         var data = {};
         data.idComentario = idComentario;
@@ -100,7 +100,7 @@ function cleanEdicionAntigua() {
 function eliminar(idComentario){
     $('.'+idComentario).remove();
     console.log(idComentario);
-    var url = "http://localhost:3000/comentarios/deleteComentario/"+idComentario;
+    var url = "/comentarios/deleteComentario/"+idComentario;
     var xhr = new XMLHttpRequest();
     xhr.open("DELETE", url, true);
     xhr.onload = function () {
