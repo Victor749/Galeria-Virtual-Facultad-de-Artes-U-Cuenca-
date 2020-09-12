@@ -292,7 +292,7 @@ function formPDF(info){
 
 
 
-
+/*
 function imgToBase64(){
     var img = new Image();
     img.crossOrigin = 'Anonymous';
@@ -310,7 +310,7 @@ function imgToBase64(){
     };
     var url = 'http://localhost:3000/static_assets/BaseObj.obj';
     img.src = url;
-}
+}*/
 
 function transformation(){
     let ajaxRequest = new XMLHttpRequest();
@@ -383,7 +383,7 @@ function toBase64(name){
             formPDF(info);
         }
     };
-    var url = 'http://localhost:3000/static_assets/'+name;
+    var url = '/static_assets/'+name;
     img.src = url;
 }
 
