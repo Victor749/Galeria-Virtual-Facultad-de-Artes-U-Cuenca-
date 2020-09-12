@@ -25,10 +25,10 @@ $( "#btnSonido" ).click(function() {
     imgS = document.getElementById('imgSonido');
     if(estadoAnt === 'activo'){
         document.getElementById('btnSonido').setAttribute('estado', 'inactivo');
-        imgS.setAttribute('src', 'http://localhost:3000/static_assets/inactiveA.png')
+        imgS.setAttribute('src', '/static_assets/inactiveA.png')
     }else{
         document.getElementById('btnSonido').setAttribute('estado', 'activo');
-        imgS.setAttribute('src', 'http://localhost:3000/static_assets/activeA.png')
+        imgS.setAttribute('src', '/static_assets/activeA.png')
     }
     window.dispatchEvent(new Event('cambioAudio'));
 });
