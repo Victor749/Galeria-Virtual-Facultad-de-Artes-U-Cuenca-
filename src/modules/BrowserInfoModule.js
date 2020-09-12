@@ -8,7 +8,7 @@ import {Module} from 'react-360-web';
  * to the React application.
 */
 
-var link = 'http://localhost:3000/';
+
 var idSalaG;
 var ambient;
 
@@ -95,7 +95,7 @@ export default class BrowserInfoModule extends Module {
         listaC = [];
         temaC = '';
         let ajaxRequest = new XMLHttpRequest();
-        ajaxRequest.open("GET", link+"salas/api/curatorial/"+id, false);
+        ajaxRequest.open("GET", "/salas/api/curatorial/"+id, false);
         ajaxRequest.onreadystatechange = function() {
             if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
                 info = JSON.parse(ajaxRequest.responseText);

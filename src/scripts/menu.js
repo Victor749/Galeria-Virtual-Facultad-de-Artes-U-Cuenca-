@@ -1,6 +1,6 @@
 
 
-var link = 'http://localhost:3000/museo/api/';
+var link = '/museo/api/';
 
 
 
