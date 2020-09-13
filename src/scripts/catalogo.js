@@ -61,6 +61,7 @@ function getPrueba(){
 }
 
 
+
 function ficha(obra, doc, y, numPages, pageHeight){
     //Hay tres tipos de fichas, la normal es como se indico en la reunion. La opcion 2 es video, solo se ubica el link
     //a youtube. Y la tercera opcion es la lista de fotos cuando es escultura. Las fotos se ubican debajo de la ficha.
@@ -138,7 +139,7 @@ function ficha(obra, doc, y, numPages, pageHeight){
     doc.line(174.99, c, 174.99, y);
     console.log(y+15-((lines.length)*3+15));
     console.log(obra.imagenes);
-    if(obra.imagenes != 'null'){
+    if(obra.imagenes != null){
         listaIMG = obra.imagenes.split(';');
         if(listaIMG.length == 1){
             formato = img64[listaIMG[0]].split(';')[0].split('/')[1];
@@ -183,7 +184,7 @@ function ficha(obra, doc, y, numPages, pageHeight){
         }
     }
     console.log(obra.linkVideoYoutube);
-    if(obra.linkVideoYoutube != 'null'){
+    if(obra.linkVideoYoutube != "null"){
         y+=15;
         if(!validar(y+5,doc,numPages,pageHeight)){
             y=40;
@@ -208,11 +209,11 @@ function ficha(obra, doc, y, numPages, pageHeight){
     y+=5;
     doc.text(35, y, 'Página Web: ');
     doc.setFontType('normal');
-    doc.text(53, b, obra.facebook);
+    doc.text(53, b, obra.facebook == "null" ? '' : obra.facebook );
     b+=5;
-    doc.text(53, b, obra.instagram);
+    doc.text(53, b, obra.instagram == "null" ? '' : obra.instagram);
     b+=5;
-    doc.text(57, b, obra.proyectoWeb);
+    doc.text(57, b, obra.proyectoWeb == "null" ? '' :  obra.proyectoWeb);
     y+=10;
     return [y, numPages];
 }
