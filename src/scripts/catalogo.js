@@ -139,7 +139,7 @@ function ficha(obra, doc, y, numPages, pageHeight){
     doc.line(174.99, c, 174.99, y);
     console.log(y+15-((lines.length)*3+15));
     console.log(obra.imagenes);
-    if(obra.imagenes != null){
+    if(obra.imagenes != "null"){
         listaIMG = obra.imagenes.split(';');
         if(listaIMG.length == 1){
             formato = img64[listaIMG[0]].split(';')[0].split('/')[1];
@@ -182,6 +182,8 @@ function ficha(obra, doc, y, numPages, pageHeight){
             }
             y+=10;
         }
+    }else{
+        y+=30;
     }
     console.log(obra.linkVideoYoutube);
     if(obra.linkVideoYoutube != "null"){
