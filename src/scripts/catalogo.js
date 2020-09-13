@@ -181,6 +181,8 @@ function ficha(obra, doc, y, numPages, pageHeight){
             }
             y+=10;
         }
+    }else{
+        y+=30;
     }
     console.log(obra.linkVideoYoutube);
     if(obra.linkVideoYoutube != "null"){
