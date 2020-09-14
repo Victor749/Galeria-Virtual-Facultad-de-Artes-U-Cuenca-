@@ -186,7 +186,7 @@ class MiModulo extends Module {
   doSomething(obra, rutaElemento, contador, obj_file, mtl_file) {
     // console.log("Hola");
     let suma = 0;
-    if (obra.linkVideoYoutube !== null) {
+    if (obra.linkVideoYoutube !== null && obra.linkVideoYoutube.trim() !== '') {
       suma += 1;
     }
     x.handleShow(obra, rutaElemento, contador, suma);
