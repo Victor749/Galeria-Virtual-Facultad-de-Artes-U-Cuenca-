@@ -9,7 +9,7 @@ de la Universidad de Cuenca (Cuenca, Ecuador).
 - Para ejecutar este proyecto es necesario tener instalado NodeJS.
 - Ejecute una línea de comandos desde el directorio raíz de este proyecto e ingrese el comando `npm install` para
 instalar las dependencias necesarias.
-- Luego ejecute `npm run bundle` para generar los archivos .html y .js que puede incluir dentro la aplicacion de Express `PrivateFacArtes`. Hay que asegurarse que dicha app implemente los métodos necesarios y tenga los recursos requeridos.
+- Luego ejecute `npm run bundle` para generar los archivos `.html` y `.js` que puede incluir dentro la aplicacion de Express `PrivateFacArtes`. Los archivos se generan en la carpeta  `build` de este proyecto. Incluir el archivo `index.html` en la carpeta `views` de `PrivateFacArtes` y cambiar su nombre a `appMuseo.ejs`. Incluir `index.bundle.js` y  `client.bundle.js` en la carpeta `public/javascripts` de `PrivateFacArtes` e indicar la ruta necesaria a los mismos en el script de inicialización de React 360 al final de `appMuseo.ejs`. Incluir las hojas de estilo y javascripts que se llaman desde `appMuseo.ejs` (estos recursos están en la carpeta  `src` de este proyecto o en `public` de `PrivateFacArtes`) en la carpeta `public` de `PrivateFacArtes` según corresponda e indicar las rutas a los mismos en `appMuseo.ejs`.
 
 2. Autores
 

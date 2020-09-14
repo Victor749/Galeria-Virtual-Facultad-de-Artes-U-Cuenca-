@@ -138,8 +138,9 @@ function ficha(obra, doc, y, numPages, pageHeight){
     doc.line(174.99, c, 174.99, y);
     console.log(y+15-((lines.length)*3+15));
     console.log(obra.imagenes);
-    if(obra.imagenes != 'null'){
+    if (obra.imagenes != 'null' && obra.imagenes != ' ' && obra.imagenes != ''){
         listaIMG = obra.imagenes.split(';');
+        listaIMG = listaIMG.filter(item => item !== '');
         if(listaIMG.length == 1){
             formato = img64[listaIMG[0]].split(';')[0].split('/')[1];
             doc.addImage(img64[listaIMG[0]], formato, 115, c+10, 40, 60);
@@ -181,9 +182,11 @@ function ficha(obra, doc, y, numPages, pageHeight){
             }
             y+=10;
         }
+    }else{
+        y+=30;
     }
     console.log(obra.linkVideoYoutube);
-    if(obra.linkVideoYoutube != 'null'){
+    if(obra.linkVideoYoutube != "null"){
         y+=15;
         if(!validar(y+5,doc,numPages,pageHeight)){
             y=40;
@@ -208,11 +211,11 @@ function ficha(obra, doc, y, numPages, pageHeight){
     y+=5;
     doc.text(35, y, 'Página Web: ');
     doc.setFontType('normal');
-    doc.text(53, b, obra.facebook);
+    doc.text(53, b, obra.facebook == "null" ? '' : obra.facebook );
     b+=5;
-    doc.text(53, b, obra.instagram);
+    doc.text(53, b, obra.instagram == "null" ? '' : obra.instagram);
     b+=5;
-    doc.text(57, b, obra.proyectoWeb);
+    doc.text(57, b, obra.proyectoWeb == "null" ? '' :  obra.proyectoWeb);
     y+=10;
     return [y, numPages];
 }
@@ -296,30 +299,37 @@ function transformation(){
     ajaxRequest.onreadystatechange = function() {
         if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
             info = JSON.parse(ajaxRequest.responseText);
-            var numSalasObras = 0;
+            //var numSalasObras = 0;
+            var ejecutarPdf = false;
             for (var i = 0; i <info.length; i++){
                 obras = info[i].obras;
-                if(obras.length > 0){
+                /*if(obras.length > 0){
                     numSalasObras+=1;
-                }
+                }*/
                 for (var j = 0; j<obras.length;j++){
                     obra = obras[j];
-                    if (obra.imagenes != 'null'){
+                    obra.imagenes = obra.imagenes.trim();
+                    console.log('soy el trim', obra.imagenes);
+                    if (obra.imagenes != 'null' && obra.imagenes != ' ' && obra.imagenes != ''){
                         img = obra.imagenes.split(';');
+                        img = img.filter(item => item !== '');
+                        console.log(img);
                         longImg = img.length;
                         if(longImg == 1){
                                 cantidadT+=1;
+                                ejecutarPdf = true;
                                 toBase64(img[0]);
                         }else{
                             for (var k=0;k<longImg;k++){
                                 cantidadT+=1;
+                                ejecutarPdf = true;
                                 toBase64(img[k]);
                             }
                         }
                     }
                 }
             }
-            if(numSalasObras == 0){
+            if(!ejecutarPdf){
                 formPDF(info);
             }
             

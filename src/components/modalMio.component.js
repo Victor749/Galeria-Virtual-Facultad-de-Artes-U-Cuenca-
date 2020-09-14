@@ -67,7 +67,7 @@ export class ModalMio extends React.Component {
     }
 
     placeYoutube = (linkVideoYoutube) => {
-        if (linkVideoYoutube !== null) {
+        if (linkVideoYoutube !== null && linkVideoYoutube.trim() !== '') {
             videoYoutube = "https://www.youtube-nocookie.com/embed/" + linkVideoYoutube.split("=")[1];
             return (<Carousel.Item>
                 <div className="embed-responsive embed-responsive-16by9"> <iframe className="embed-responsive-item"
@@ -81,7 +81,7 @@ export class ModalMio extends React.Component {
 
     place3DModel = (obj) => {
         let link = "/visor3D/";
-        if (obj !== null) {
+        if (obj !== null && obj.trim() !== '') {
             return (<div className="row justify-content-center align-items-center col-4">
                 <a className="redSocial" href={host + link + obj} target="_blank">
                     <img className="instagram" src={`${host}/images/3Dicon.png`} />
@@ -111,7 +111,7 @@ export class ModalMio extends React.Component {
     }
 
     placeFacebook = (facebook) => {
-        if(facebook !== null && facebook !== ''){
+        if(facebook !== null && facebook.trim() !== ''){
             return (<a className="redSocial" href={`${facebook}`} target="_blank">
                      <img className="facebook" src="/static_assets/facebook.png" />
                     </a>);
@@ -120,7 +120,7 @@ export class ModalMio extends React.Component {
     }
 
     placeInstagram = (instagram) => {
-        if(instagram !== null && instagram !== ''){
+        if(instagram !== null && instagram.trim() !== ''){
             return (<a className="redSocial" href={`${instagram}`} target="_blank">
                         <img className="instagram" src="/static_assets/instagram.png" />
                     </a>);
@@ -129,7 +129,7 @@ export class ModalMio extends React.Component {
     }
 
     placeProyectoWeb = (proyectoWeb) => {
-        if(proyectoWeb !== null && proyectoWeb !== ''){
+        if(proyectoWeb !== null && proyectoWeb.trim() !== ''){
             return (<a className="redSocial" href={`${proyectoWeb}`} target="_blank">
                         <img className="proyectoWeb" src="/images/web.png" />
                     </a>);
