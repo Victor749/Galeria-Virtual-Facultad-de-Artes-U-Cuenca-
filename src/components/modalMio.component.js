@@ -103,7 +103,7 @@ export class ModalMio extends React.Component {
     placeImages = (images, handleChange) => {
         if (images !== null) {
             return (<div className="row justify-self-end justify-content-center col-12 col-sm-4 pl-3 " style={{ height: '350px' }}>
-                <input type="image" className="" src={`${images[0]}`} style={{ height: '100%' }} onClick={() => { this.setState({ isOpen: true }); this.cerrarModal(handleChange) }} />
+                <input type="image" className="" src={`${images[0]}`} style={{ width: '100%' }} onClick={() => { this.setState({ isOpen: true }); this.cerrarModal(handleChange) }} />
             </div>);
         } else {
             return false;
