@@ -62,7 +62,14 @@ export class ButtonComentario extends React.Component{
                                     '</div></div></td></tr>';
                                     $('#listaComentarios').append(info);
                             $('#tabla').animate({ scrollTop: $('#tabla').prop("scrollHeight")}, 1000); 
-                                
+                            //Para probar
+                            /*var $body =  $('#tabla');
+                            $body.bind('scroll', function() {
+                                // "Desactivar" el scroll horizontal
+                                if ($body.scrollLeft() !== 0) {
+                                    $body.scrollLeft(0);
+                                }
+                            }); */  
                         } else {
                             console.error(data);
                         }
