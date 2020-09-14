@@ -112,8 +112,8 @@ export default class BrowserInfoModule extends Module {
                 listaCaux = [];
                 if(!(typeof listaC === 'undefined')){
                     for ( var i = 0; i<listaC.length; i++){
-                        if(!listaCaux.includes(listaC[i])){
-                            cod = '<h6><a class="dropdown-item" href="#">'+listaC[i]+' - '+id+'</a></h6>';
+                        if(!listaCaux.includes(listaC[i]) && (listaC[i] != 'null')){
+                            cod = '<h6><a class="dropdown-item" href="#">'+listaC[i]+'</a></h6>';
                             $('#curadores').append(cod);
                             listaCaux.push(listaC[i]);
                         }
@@ -122,8 +122,8 @@ export default class BrowserInfoModule extends Module {
                 }
                 if(!( typeof listaE === 'undefined')){
                     for ( var i = 0; i<listaE.length; i++){
-                        if(!listaEaux.includes(listaE[i])){
-                            cod = '<h6><a class="dropdown-item" href="#">'+listaE[i]+' - '+id+'</a></h6>';
+                        if(!listaEaux.includes(listaE[i]) && (listaE[i] != 'null')){
+                            cod = '<h6><a class="dropdown-item" href="#">'+listaE[i]+'</a></h6>';
                             $('#expositores').append(cod);
                             listaEaux.push(listaE[i]);
                         }
