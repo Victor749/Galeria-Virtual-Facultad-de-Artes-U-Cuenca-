@@ -114,7 +114,7 @@ class TourInfoButton extends React.Component {
     if(this.state.obra != null){
       const {imagenes} = this.state.obra;
       // Se obtienen todos los nombres separados por ;
-      if (imagenes !== null && imagenes !== '') {
+      if (imagenes !== null && imagenes.trim() !== '') {
         let nombresElementos = imagenes.split(";");
         nombresElementos = nombresElementos.filter(item => item !== '');
         rutaElemento = '';
