@@ -299,12 +299,13 @@ function transformation(){
     ajaxRequest.onreadystatechange = function() {
         if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
             info = JSON.parse(ajaxRequest.responseText);
-            var numSalasObras = 0;
+            //var numSalasObras = 0;
+            var ejecutarPdf = false;
             for (var i = 0; i <info.length; i++){
                 obras = info[i].obras;
-                if(obras.length > 0){
+                /*if(obras.length > 0){
                     numSalasObras+=1;
-                }
+                }*/
                 for (var j = 0; j<obras.length;j++){
                     obra = obras[j];
                     obra.imagenes = obra.imagenes.trim();
@@ -316,17 +317,19 @@ function transformation(){
                         longImg = img.length;
                         if(longImg == 1){
                                 cantidadT+=1;
+                                ejecutarPdf = true;
                                 toBase64(img[0]);
                         }else{
                             for (var k=0;k<longImg;k++){
                                 cantidadT+=1;
+                                ejecutarPdf = true;
                                 toBase64(img[k]);
                             }
                         }
                     }
                 }
             }
-            if(numSalasObras == 0){
+            if(!ejecutarPdf){
                 formPDF(info);
             }
             
