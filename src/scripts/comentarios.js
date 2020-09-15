@@ -45,7 +45,7 @@ function actualizar(nuevoContenido, fecha){
 }
 
 function guardarEdicion(idComentario){
-    console.log(globalBoton);
+   // console.log(globalBoton);
     var nuevoC = $("#comentarioEditado").val();
     if(nuevoC == ''){
         $('#errorMensaje').show();
@@ -79,7 +79,7 @@ function guardarEdicion(idComentario){
                 actualizar(nuevoC,data.fecha);
                 cleanEdicionAntigua();
             } else {
-                console.error(comentarioAnswer);
+               // console.error(comentarioAnswer);
                 $('#errorMensaje').hide();
                 $('#errorMensaje2').show();
             }
@@ -92,14 +92,14 @@ function cleanEdicionAntigua() {
     $('#myModalEditar').modal('hide');
     var element = document.getElementById("forModalEditar");
     while (element.firstChild) {
-        console.log('over here');
+    //    console.log('over here');
         element.removeChild(element.firstChild);
     }
 }
 
 function eliminar(idComentario){
     $('.'+idComentario).remove();
-    console.log(idComentario);
+  //  console.log(idComentario);
     var url = "/comentarios/deleteComentario/"+idComentario;
     var xhr = new XMLHttpRequest();
     xhr.open("DELETE", url, true);
@@ -110,7 +110,7 @@ function eliminar(idComentario){
            cleanEdicionAntigua();
            window.dispatchEvent(new Event('deleteComentario'));
         } else {
-            console.error(users);
+           alert("Ha ocurrido un error");
         }
     }
     xhr.send(null);

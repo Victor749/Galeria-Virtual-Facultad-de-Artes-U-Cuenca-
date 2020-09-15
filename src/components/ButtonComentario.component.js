@@ -54,8 +54,8 @@ export class ButtonComentario extends React.Component{
                         var data = JSON.parse(xhr.responseText);
                         if (xhr.readyState == 4 && xhr.status == "200") {
                             info = '<tr class="'+data.idComentario+'"><td>'+'<div class="row justify-content-center mb-5" >'+
-                                    '<div class="col col-sm-1 mr-5"><img src="'+data.linkFoto+'" height=60 width=60></div>'+
-                                    '<div class="col col-sm-9"><div class="row align-items-left ml-2" ><b style="color:black;">'+data.nombreUsuario+'</b></div>'+
+                                    '<div class="col col-sm-1 col-auto mr-5"><img src="'+data.linkFoto+'" height=60 width=60></div>'+
+                                    '<div class="col col-sm-9 col-auto"><div class="row align-items-left ml-2" ><b style="color:black;">'+data.nombreUsuario+'</b></div>'+
                                     '<div class="row align-items-left ml-3 mb-2" ><p class="text-muted">'+data.fecha+'</p></div>'+
                                     '<div class="row align-items-left ml-2 text-justify" ><p>'+data.contenido+'</p></div>'+
                                     '<div class="'+data.identificador+'"><div class="row align-items-right" ><button onclick="editar(\''+data.idComentario+'\', $(this))" class="btn btn-info mr-3">Editar</button><button onclick="eliminar('+data.idComentario+')" class="btn btn-danger">Eliminar</button></div></div>'+
@@ -71,13 +71,15 @@ export class ButtonComentario extends React.Component{
                                 }
                             }); */  
                         } else {
-                            console.error(data);
+                           // console.error(data);
+                           alert("Ha ocurrido un error. Intentelo mas tarde");
                         }
                     }
                     xhr.send(null);
                     
                 }else{
-                    console.log('error', request.responseText);
+                    alert("Ha ocurrido un error. Intentelo mas tarde");
+                   // console.log('error', request.responseText);
                 }
             }
             request.send(params);

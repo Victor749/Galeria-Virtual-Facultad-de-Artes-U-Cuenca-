@@ -200,7 +200,7 @@ class PanelImageTooltip extends React.Component {
   render() {
 
     const {tooltip, styles} = this.props;
-    console.log(tooltip);
+    //console.log(tooltip);
 
     return (
       // <View

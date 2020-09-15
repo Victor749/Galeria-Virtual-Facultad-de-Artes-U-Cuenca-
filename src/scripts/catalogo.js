@@ -68,7 +68,7 @@ function ficha(obra, doc, y, numPages, pageHeight){
     //obra = info[1].obras[1];
     lines = doc.splitTextToSize(obra.descripcion, 135);
     //La ficha no puede ser cortada ---
-    console.log(y);
+   // console.log(y);
     lFicha = 135 + ((lines.length)*3+15); 
     if(!validar(y+lFicha, doc, numPages, pageHeight)){
         numPages+=1;
@@ -129,15 +129,15 @@ function ficha(obra, doc, y, numPages, pageHeight){
     doc.setFontSize(10);
     doc.setFontType('normal');
     y+=10;
-    console.log(lines);
+   // console.log(lines);
     doc.text(35, y, lines);
     y+=((lines.length)*3+15);
     doc.line(25, y, 175, y);
     doc.setLineWidth(0.1);
     doc.line(25.1, c, 25.1, y);
     doc.line(174.99, c, 174.99, y);
-    console.log(y+15-((lines.length)*3+15));
-    console.log(obra.imagenes);
+ //   console.log(y+15-((lines.length)*3+15));
+   // console.log(obra.imagenes);
     if (obra.imagenes != 'null' && obra.imagenes != ' ' && obra.imagenes != ''){
         listaIMG = obra.imagenes.split(';');
         listaIMG = listaIMG.filter(item => item !== '');
@@ -147,7 +147,7 @@ function ficha(obra, doc, y, numPages, pageHeight){
            // transformImages(doc,  115, c+10, 40, 60, obra.nombreElemento);
             y+=15;
         }else{
-            console.log(listaIMG);
+          //  console.log(listaIMG);
             y+=15;
             if(!validar(y+75,doc,numPages,pageHeight)){
                 y=40;
@@ -164,7 +164,7 @@ function ficha(obra, doc, y, numPages, pageHeight){
                     y=40;
                     numPages+=1;
                 }
-                console.log('maxV: ', maxV);
+             //   console.log('maxV: ', maxV);
                 for (var j=35;j<(50*maxV)+1;j++){
                     //transformar imagenes a base4
                     formato = img64[listaIMG[i]].split(';')[0].split('/')[1];
@@ -178,14 +178,14 @@ function ficha(obra, doc, y, numPages, pageHeight){
                 //i+=2;
                 //out-=(i);
                 i-=1;
-                console.log('i:', i, 'out', out);
+              //  console.log('i:', i, 'out', out);
             }
             y+=10;
         }
     }else{
         y+=30;
     }
-    console.log(obra.linkVideoYoutube);
+  //  console.log(obra.linkVideoYoutube);
     if(obra.linkVideoYoutube != "null"){
         y+=15;
         if(!validar(y+5,doc,numPages,pageHeight)){
@@ -224,7 +224,7 @@ function ficha(obra, doc, y, numPages, pageHeight){
 
 
 function formPDF(info){
-    console.log('ol');
+ //   console.log('ol');
     numPages = 0;
     var doc = new jsPDF();
     pageHeight= doc.internal.pageSize.height;
@@ -309,11 +309,11 @@ function transformation(){
                 for (var j = 0; j<obras.length;j++){
                     obra = obras[j];
                     obra.imagenes = obra.imagenes.trim();
-                    console.log('soy el trim', obra.imagenes);
+                  //  console.log('soy el trim', obra.imagenes);
                     if (obra.imagenes != 'null' && obra.imagenes != ' ' && obra.imagenes != ''){
                         img = obra.imagenes.split(';');
                         img = img.filter(item => item !== '');
-                        console.log(img);
+                      //  console.log(img);
                         longImg = img.length;
                         if(longImg == 1){
                                 cantidadT+=1;
@@ -352,7 +352,7 @@ function toBase64(name){
         canvas.width = img.naturalWidth;
         ctx.drawImage(img, 0, 0);
         var uri = canvas.toDataURL('image/jpeg');
-        console.log(img64);
+        //console.log(img64);
         //nextInfo = img64[0];
         //img64.shift();
         //console.log(nextInfo);
@@ -360,14 +360,14 @@ function toBase64(name){
         //indexObra = nextInfo[1];
         //console.log(indexSala, indexObra, img.src);
         name = img.src.split('/')[4].replace('%20',' ');
-        console.log(name);
+        //console.log(name);
         if(img64[name] === undefined){
             img64[name] = uri;
         }
         cantidadT-=1;
         if(cantidadT == 0){
-            console.log('end');
-            console.log(img64);
+           // console.log('end');
+           // console.log(img64);
             formPDF(info);
         }
     };

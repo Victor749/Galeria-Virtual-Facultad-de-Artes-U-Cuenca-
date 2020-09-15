@@ -49,7 +49,7 @@ BatchedBridge.registerCallableModule(/*BrowserBridge.name*/ 'BrowserBridge', bro
 
 
 function play(estado, ambient){
-  console.log(estado, ambient);
+ // console.log(estado, ambient);
   if (estado == 'activo' && ambient) {
       AudioModule.playEnvironmental({
         source: asset(ambient.uri),
@@ -85,8 +85,8 @@ class TourAppTemplate extends React.Component {
   }
 
   componentDidMount() {
-    console.log('1');
-    console.log(this.state);
+   // console.log('1');
+    //console.log(this.state);
     fetch('/museo/api/json')
       .then(response => response.json())
       .then(responseData => {
@@ -100,7 +100,7 @@ class TourAppTemplate extends React.Component {
 
   init(tourConfig) {
     // Initialize the tour based on data file.
-    console.log('2');
+  //  console.log('2');
     this.setState({
       data: tourConfig,
       locationId: null,
@@ -146,8 +146,8 @@ class TourAppTemplate extends React.Component {
       return null;
     }
 
-    console.log('3');
-    console.log(this.state);
+   // console.log('3');
+   // console.log(this.state);
 
     const {useDynamicSurface, mainSurfaceWidth, mainSurfaceHeight, handleModal} = this.props;
     const {locationId, nextLocationId, data} = this.state;
@@ -203,7 +203,7 @@ class TourAppTemplate extends React.Component {
           // info buttons, which show tooltip on hover, or nav buttons, which
           // change the current location in the tour.
           if (tooltip.type) {
-            console.log("Id obra index: ");
+          //  console.log("Id obra index: ");
             // console.log(tooltip.idObra);
             // console.log(index);
             return (

@@ -9,7 +9,7 @@ $(document).ready(function() {
     $('.dropdown-menu').on("click.bs.dropdown", function (e) {
         e.stopPropagation();              
     });
-    console.log(document.getElementsByTagName('div')[10]);
+  //  console.log(document.getElementsByTagName('div')[10]);
     element = document.getElementsByTagName('div')[10];
     element.style.width = 40;
     element.style.height = 40;
@@ -18,7 +18,7 @@ $(document).ready(function() {
 });
 
 function getSalas(){
-    console.log('callingSalas');
+  //  console.log('callingSalas');
     $('#sala').hide();
     $('#temaC').hide();
     $('#expositores').hide();
@@ -54,7 +54,7 @@ function cleanSalas(){
 }
 
 function goSala(id){
-    console.log(id);
+   // console.log(id);
     document.getElementById('changeSala').value = id; 
     $("#btn_sala").trigger("click");
 }

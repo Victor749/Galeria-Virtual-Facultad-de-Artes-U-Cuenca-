@@ -68,7 +68,7 @@ export default class BrowserInfoModule extends Module {
   
 
     getSala(id){
-        console.log(id, 'get');
+        //console.log(id, 'get');
         this._rnctx.callFunction('RCTDeviceEventEmitter', 'emit', [
             id,
         ]);
@@ -80,14 +80,14 @@ export default class BrowserInfoModule extends Module {
 
     setLocationId(id_coming) {
         //aqui  hago consulta con id_sala envio datos
-        console.log(id_coming.split('-')[1]);
+        //console.log(id_coming.split('-')[1]);
         id = 1;
         if(id_coming.split('-').length > 0 ){
             id = id_coming.split('-')[1];
         }else{
             id=id_coming;
         }
-        console.log('id_coming', id);
+       // console.log('id_coming', id);
         clean('curadores');
         clean('expositores');
         clean('temaC');
@@ -99,7 +99,7 @@ export default class BrowserInfoModule extends Module {
         ajaxRequest.onreadystatechange = function() {
             if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
                 info = JSON.parse(ajaxRequest.responseText);
-                console.log('data to show', info);
+                //console.log('data to show', info);
                 if(!(typeof info.temaCuratorial === 'undefined')){
                     temaC = info.temaCuratorial;
                     cod = '<h6><a class="dropdown-item" href="#">'+temaC+'</a></h6>';
