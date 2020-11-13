@@ -162,7 +162,7 @@ export class ButtonComentario extends React.Component{
                 <div>
                     <div id="gSignInWrapper" className="pr-4">
                         <div id="customBtnSignIn" className="customGPlusSignIn ">
-                            <img className="googleIcon" src="/static_assets/google.png"></img>
+                            <img className="googleIcon" src="https://facultadartescuenca.com/museovirtual/static_assets/google.png"></img>
                             <span className="buttonText">Sign In</span>
                         </div>
                     </div>
@@ -179,7 +179,7 @@ export class ButtonComentario extends React.Component{
                 <div>
                     <div id="gSignInWrapper">
                         <div id="customBtnToSend" className="customGPlusSignIn ">
-                            <img className="googleIcon " src="/static_assets/google.png"></img>
+                            <img className="googleIcon " src="https://facultadartescuenca.com/museovirtual/static_assets/google.png"></img>
                             <span className="buttonText">Sign In to Send</span>
                         </div>
                     </div>

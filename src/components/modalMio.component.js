@@ -141,7 +141,7 @@ export class ModalMio extends React.Component {
       //  console.log('idObra ', idObra, listaComentarios, tabla, progreso, this.state.actual, this.state.limit, identificador);
         $.ajax({
             type: 'GET',
-            url: '/comentarios/getComentario/'+idObra+'/'+this.state.actual+'/'+this.state.limit+'/'+identificador,
+            url: 'https://facultadartescuenca.com/museovirtual/comentarios/getComentario/'+idObra+'/'+this.state.actual+'/'+this.state.limit+'/'+identificador,
             success: function (data) {
                 if (data != null || data.length!=0) {
                    // console.log(data);
