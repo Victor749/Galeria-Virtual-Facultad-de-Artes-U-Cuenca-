@@ -80,11 +80,11 @@ export class ModalMio extends React.Component {
     }
 
     place3DModel = (obj) => {
-        let link = "/visor3D/";
+        let link = "https://facultadartescuenca.com/museovirtual/visor3D/";
         if (obj !== null && obj.trim() !== '') {
             return (<div className="row justify-content-center align-items-center col-4">
                 <a className="redSocial" href={host + link + obj} target="_blank">
-                    <img className="instagram" src={`${host}/images/3Dicon.png`} />
+                    <img className="instagram" src={`https://facultadartescuenca.com/museovirtual/images/3Dicon.png`} />
                 </a>
             </div>);
         } else {
@@ -113,7 +113,7 @@ export class ModalMio extends React.Component {
     placeFacebook = (facebook) => {
         if(facebook !== null && facebook.trim() !== ''){
             return (<a className="redSocial" href={`${facebook}`} target="_blank">
-                     <img className="facebook" src="/static_assets/facebook.png" />
+                     <img className="facebook" src="https://facultadartescuenca.com/museovirtual/static_assets/facebook.png" />
                     </a>);
         }
         return false;
@@ -122,7 +122,7 @@ export class ModalMio extends React.Component {
     placeInstagram = (instagram) => {
         if(instagram !== null && instagram.trim() !== ''){
             return (<a className="redSocial" href={`${instagram}`} target="_blank">
-                        <img className="instagram" src="/static_assets/instagram.png" />
+                        <img className="instagram" src="https://facultadartescuenca.com/museovirtual/static_assets/instagram.png" />
                     </a>);
         }
         return false;
@@ -131,7 +131,7 @@ export class ModalMio extends React.Component {
     placeProyectoWeb = (proyectoWeb) => {
         if(proyectoWeb !== null && proyectoWeb.trim() !== ''){
             return (<a className="redSocial" href={`${proyectoWeb}`} target="_blank">
-                        <img className="proyectoWeb" src="/images/web.png" />
+                        <img className="proyectoWeb" src="https://facultadartescuenca.com/museovirtual/images/web.png" />
                     </a>);
         }
         return false;
@@ -254,8 +254,8 @@ export class ModalMio extends React.Component {
                 {/* <Container>
                         </Container> */}
                 <Modal show={show2} size='lg' /*style={{ visibility: this.state.hidden }}*/ onHide={() => { this.cerrarModal(handleChange) }} aria-labelledby="contained-modal-title-vcenter"  >
-                    <Carousel interval={null} controls={false} activeIndex={this.state.active} onSelect={this.hola} nextIcon={<img src="../static_assets/chevron-circle-right-solid.svg" style={styles.colorCircles} />}
-                        prevIcon={<img src="../static_assets/chevron-circle-left-solid.svg" style={styles.colorCircles} />}>
+                    <Carousel interval={null} controls={false} activeIndex={this.state.active} onSelect={this.hola} nextIcon={<img src="https://facultadartescuenca.com/museovirtual/static_assets/chevron-circle-right-solid.svg" style={styles.colorCircles} />}
+                        prevIcon={<img src="https://facultadartescuenca.com/museovirtual/static_assets/chevron-circle-left-solid.svg" style={styles.colorCircles} />}>
                         <Carousel.Item>
                             {/* <Modal.Header closeButton >
                                         <Modal.Title id="contained-modal-title-vcenter">
@@ -289,7 +289,7 @@ export class ModalMio extends React.Component {
                                     {this.place3DModel(obj_file)}
                                     <div className="d-flex justify-content-between align-items-center">
                                         {this.placeProyectoWeb(proyectoWeb)}
-                                        <img className="UPictureModal" src="/static_assets/UPictureModal.png" />
+                                        <img className="UPictureModal" src="https://facultadartescuenca.com/museovirtual/static_assets/UPictureModal.png" />
                                     </div>
                                 </div>
                                 <div className="row justify-content-center p-12 bd-highlight col-example" >
@@ -308,7 +308,7 @@ export class ModalMio extends React.Component {
                                         <span>{visitas}</span>
                                     </div>
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <img className="UPictureModal" src="/static_assets/UPictureModal.png" />
+                                        <img className="UPictureModal" src="https://facultadartescuenca.com/museovirtual/static_assets/UPictureModal.png" />
                                     </div>
                                 </div>
                             </div>
@@ -349,15 +349,15 @@ export class ModalMio extends React.Component {
                                 </div>
                                 <div className="d-flex row justify-content-center justify-content-sm-end  p-12 bd-highlight col-example" style={styles.modalUniversidad}>
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <img className="UPictureModal" src="/static_assets/UPictureModal.png" />
+                                        <img className="UPictureModal" src="https://facultadartescuenca.com/museovirtual/static_assets/UPictureModal.png" />
                                     </div>
                                 </div>
                                 
                             </div>
                         </Carousel.Item>
                     </Carousel>
-                    <button className="moveButton" style={styles.prevbutton} onClick={() => {  this.move(-1); }}><img src="/static_assets/chevron-circle-left-solid.svg" style={styles.colorCircles} /></button>
-                    <button className="moveButton" style={styles.nextbutton} onClick={() => {  this.move(1); }}><img src="/static_assets/chevron-circle-right-solid.svg" style={styles.colorCircles} /></button>
+                    <button className="moveButton" style={styles.prevbutton} onClick={() => {  this.move(-1); }}><img src="https://facultadartescuenca.com/museovirtual/static_assets/chevron-circle-left-solid.svg" style={styles.colorCircles} /></button>
+                    <button className="moveButton" style={styles.nextbutton} onClick={() => {  this.move(1); }}><img src="https://facultadartescuenca.com/museovirtual/static_assets/chevron-circle-right-solid.svg" style={styles.colorCircles} /></button>
                 </Modal>
                 {isOpen && (
                     <Lightbox

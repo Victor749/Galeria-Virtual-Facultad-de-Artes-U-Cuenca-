@@ -53,7 +53,7 @@ class ModalControl extends React.Component {
     // console.log('handleUser');
 
     let http = new XMLHttpRequest();
-    http.open('GET', `/usuarios/${identificador}/check`, true);
+    http.open('GET', `https://facultadartescuenca.com/museovirtual/usuarios/${identificador}/check`, true);
 
     http.onreadystatechange = () => {//Call a function when the state changes.
         if(http.readyState == 4 && http.status == 200) {
@@ -89,7 +89,7 @@ class ModalControl extends React.Component {
     
     if(identifier !== 'null'){
       let http = new XMLHttpRequest();
-      http.open('GET', `/usuarios/${identifier}/check`, true);
+      http.open('GET', `https://facultadartescuenca.com/museovirtual/usuarios/${identifier}/check`, true);
 
       // console.log("HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
       http.onreadystatechange = () => {//Call a function when the state changes.

@@ -25,10 +25,10 @@ $( "#btnSonido" ).click(function() {
     imgS = document.getElementById('imgSonido');
     if(estadoAnt === 'activo'){
         document.getElementById('btnSonido').setAttribute('estado', 'inactivo');
-        imgS.setAttribute('src', '/static_assets/inactiveA.png')
+        imgS.setAttribute('src', 'https://facultadartescuenca.com/museovirtual/static_assets/inactiveA.png')
     }else{
         document.getElementById('btnSonido').setAttribute('estado', 'activo');
-        imgS.setAttribute('src', '/static_assets/activeA.png')
+        imgS.setAttribute('src', 'https://facultadartescuenca.com/museovirtual/static_assets/activeA.png')
     }
     window.dispatchEvent(new Event('cambioAudio'));
 });
@@ -95,7 +95,7 @@ export default class BrowserInfoModule extends Module {
         listaC = [];
         temaC = '';
         let ajaxRequest = new XMLHttpRequest();
-        ajaxRequest.open("GET", "/salas/api/curatorial/"+id, false);
+        ajaxRequest.open("GET", "https://facultadartescuenca.com/museovirtual/salas/api/curatorial/"+id, false);
         ajaxRequest.onreadystatechange = function() {
             if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
                 info = JSON.parse(ajaxRequest.responseText);

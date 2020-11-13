@@ -87,7 +87,7 @@ class TourAppTemplate extends React.Component {
   componentDidMount() {
    // console.log('1');
     //console.log(this.state);
-    fetch('/museo/api/json')
+    fetch('https://facultadartescuenca.com/museovirtual/museo/api/json')
       .then(response => response.json())
       .then(responseData => {
         this.init(responseData);

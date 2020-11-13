@@ -38,7 +38,7 @@ export class ButtonComentario extends React.Component{
         if(identifier && comment.length){
             params = `identifier=${identifier}&idObra=${obraId}&contenido=${comentarioTokens}`;
            
-            request = this.makePostRequest('/comentarios/new');
+            request = this.makePostRequest('https://facultadartescuenca.com/museovirtual/comentarios/new');
 
             request.onreadystatechange = function() {//Call a function when the state changes.
                 if(request.readyState == '4' && request.status == '200') {
@@ -47,7 +47,7 @@ export class ButtonComentario extends React.Component{
                     idComentario = JSON.parse(request.responseText).insertId;
                     deleteSentComment();
                  //   console.log('well');
-                    var url  = "/comentarios/getNewComentario/"+idComentario;
+                    var url  = "https://facultadartescuenca.com/museovirtual/comentarios/getNewComentario/"+idComentario;
                     var xhr  = new XMLHttpRequest()
                     xhr.open('GET', url, true)
                     xhr.onload = function () {
@@ -101,7 +101,7 @@ export class ButtonComentario extends React.Component{
                     // console.log(usuario.aU);
                     params = `idUsuario=${usuario.aU}&nombreUsuario=${usuario.GV}&apellidoUsuario=${usuario.HT}&linkFoto=${usuario.jK}&email=${usuario.bu}`;
 
-                    request = this.makePostRequest('/usuarios/new');
+                    request = this.makePostRequest('https://facultadartescuenca.com/museovirtual/usuarios/new');
 
                     request.onreadystatechange = function() {//Call a function when the state changes.
                         if(request.readyState == 4 && request.status == 200) {
