@@ -49,7 +49,7 @@ class TourInfoButton extends React.Component {
     };
 
 
-    fetch(`/obras/api/json/${this.state.obraId}`, myInit)
+    fetch(`https://facultadartescuenca.com/museovirtual/obras/api/json/${this.state.obraId}`, myInit)
       .then(response => response.json())
       .then(responseData => {
         this.setState({ obra: responseData});
@@ -60,7 +60,7 @@ class TourInfoButton extends React.Component {
   }
 
   appearAndCount = (rutaElemento, metodo) => {
-    fetch(`/obras/contador/${this.state.obraId}?_method=PUT`,
+    fetch(`https://facultadartescuenca.com/museovirtual/obras/contador/${this.state.obraId}?_method=PUT`,
     {method: 'POST'})
     .then(response => response.json())
     .then(responseData => {this.contador = responseData.contador})
