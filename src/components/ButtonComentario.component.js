@@ -99,8 +99,7 @@ export class ButtonComentario extends React.Component{
                     // console.log(googleUser);
                     let usuario=googleUser.getBasicProfile();
                     // console.log(usuario.aU);
-                    params = `idUsuario=${usuario.aU}&nombreUsuario=${usuario.GV}&apellidoUsuario=${usuario.HT}&linkFoto=${usuario.jK}&email=${usuario.bu}`;
-
+                    params = `idUsuario=${usuario.getId()}&nombreUsuario=${usuario.getGivenName()}&apellidoUsuario=${usuario.getFamilyName()}&linkFoto=${usuario.getImageUrl()}&email=${usuario.getEmail()}`;
                     request = this.makePostRequest('https://facultadartescuenca.com/museovirtual/usuarios/new');
 
                     request.onreadystatechange = function() {//Call a function when the state changes.
